@@ -10,14 +10,12 @@ var songs = require('./routes/songs');
 app.use(bodyParser.json());
 app.use(express.static('server/public'));
 
-app.get('/', index);
-
 // spin up server
 console.log('listening on port 5812');
 app.listen(process.env.PORT || 5812);
 
 // Decodes the token in the request header and attaches the decoded token to req.decodedToken on the request
-app.use(decoder.token);
+// app.use(decoder.token);
 
 //routes
 app.use('/users', users);
