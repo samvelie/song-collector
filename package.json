@@ -1,7 +1,7 @@
 {
   "name": "song-collector",
   "version": "1.0.0",
-  "description": "**Prime Academy Phi Cohort iSongCollect Team**",
+  "description": "Prime Academy Phi Cohort iSongCollect Team",
   "main": "index.js",
   "scripts": {
     "test": "nodemon server/app.js",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/samvelie/song-collector.git"
   },
-  "author": "",
+  "author": "Sam Velie, Paige Bystrom, Catherine Jarocki, Celina Peterson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/samvelie/song-collector/issues"
