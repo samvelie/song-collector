@@ -1,4 +1,4 @@
-CREATE TABLE Master_Copies (
+CREATE TABLE song_collection (
     form_record_id VARCHAR(36),
     Song_Title_text VARCHAR(56) ,
     Tone_Set_note VARCHAR(34) ,
@@ -25,7 +25,8 @@ CREATE TABLE Master_Copies (
     Other_note VARCHAR(1112) ,
     Source_note VARCHAR(344) ,
     Attachments_file VARCHAR(71) ,
-    Mastercopy_Source_File_file VARCHAR(45)
+    Mastercopy_Source_File_file VARCHAR(45),
+    user_id INT REFERENCES users
 );
 INSERT INTO Master_Copies VALUES ('rec-49c2625786784edb91016e26f0047bb1','A La Puerta Del Cielo','s,  t, d r m f s l','Plagal do Major','Low ti, Harmonic Function I-V','q,n,h','nn’qn’qn’qq(*,2) qn’nq’qn’nq(3)   nn’qn’qq’h(f)','s,ddr/mfr/srr/mr (*) s,ddr/mfr/sff/mr (2) ssl/fmf/mmr/rdr (3) s,ddr/mfs/dt,/d (f)','2/4','7DD273CD-0BBE-48E0-B775-936BA0A37AD6.jpg',NULL,'2.  A los niños que duerman Dios benedice	      A las madres que velan Dios las asiste.	      Refrain			English Translation1.	At the gate of heaven little shoes they are selling,	       For the little bare-footed angels there dwelling.	       Slumber my baby, slumber my baby	       Slumber my baby, arru, arru.2.	God will bless children who go to sleep.    	       God will help mothers who pray.	       Refrain',NULL,NULL,'d-t-,d','4.4.4.4.','a.av.b.av','a.a.b.c','Verse-Refrain','Lullaby','New Mexico, Basque','Spanish','A-C',NULL,'Locke, Eleanor G.  Sail Away: 155 American Folksongs to sing read and play.  Boosey & Hawkes, 1955, 100.',NULL,'A LA PUERTA DEL CIELO.docx');
 INSERT INTO Master_Copies VALUES ('rec-7e672696ab164ec6a7d750ddd6e721cd','A Ram Sam Sam','s,   t, d r m f s','Major','Low ti','q iq h                                            ','Quarter anacrusis','s,/ddds,/dddt,d/rrrrrrdr/mdd (*,2)','4/4','E7FE3318-A00B-4406-BCC9-DE8A48573F4C.jpg',NULL,NULL,NULL,NULL,'d-t,-d','4.4.4.4.','aabb','aabb','Canon/Round','Canon/Round',NULL,'English','A-C','add bp: pat clap clap/bounce in chairs (ram sam sam), roll arms for guli, throw arms in air for “a rafi”.','Aurally shared by Kodaly educators, Minnesota',NULL,'A RAM SAM SAM.docx');
@@ -445,4 +446,7 @@ INSERT INTO Master_Copies VALUES ('rec-67586d83b1974c6abcd342b393b6b08d','Zousan
 INSERT INTO Master_Copies VALUES ('rec-e97e20be8a0a449181505ed35b2cb08a','Zudio','l,  drm','Authentic la tetratone','Community builder (dance), Low la, Ternary (ABA)','q,n,o,eqj',NULL,'l,l,dmmmr/rdrrm (*,5) l,l,dmmm/rdl, (2,f) l,dmm/rdrm (3) l,dmm/rdl, (4)','4/4','06BDE032-F43F-4A5A-A197-268BB43CB796.jpg',NULL,NULL,'Longways set, partners facing each other','on A section, partners hold hands and move them forward and back, like cutting down a tree.On B section, jump and clap away from each other, making alley large.On C section, head couple “struts” (moves to the end of the alley in a way they choose) to the foot of the alley, all others move up.  Begin again.','l,-d/d-l,','2.2.2.2.2.2.','A.B.Av.','A.B.C.','Single strophe','Singing Game','African American','English','C-E',NULL,'Hickox, Berta.  MSU Kodály Institute, 2015 from the singing of Barbara Woodring, Chicago, IL.',NULL,'Zudio.docx');
 INSERT INTO Master_Copies VALUES ('rec-81c6a68365a141fe84e09c4e1caf590c','Zum Gali Gali','m,  l,t,drm','Incomplete natural minor','Canon/Round, Natural minor, Low ti,, Binary (AB)','q,n,Q','qnnn’qnqq(*,2) Qnqq’qnqQ’Qnqq’qnqQ(f)','l,l,t,dt,dt,/l,l,l,m,l, (*,2) drmm/rdrm/drmm/rdt,l, (f)','4/4','F6721774-1956-4A17-A5AD-1AEA503339B5.jpg',NULL,NULL,NULL,NULL,'l,-t,-d/d-t,-d/d-t,-l,','2.2.2.2.','A.B.','A.B.','Canon/Round','Freedom','Israel','Hebrew','C-E',NULL,'Hebrew Folk Song, shared by music teachers of MN, 2015.',NULL,'ZUM GALI GALI.docx');
 
-SELECT * FROM master_copies ;
+CREATE TABLE users (
+id SERIAL PRIMARY KEY,
+user_name VARCHAR(60),
+user_email VARCHAR (120));
