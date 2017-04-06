@@ -1,6 +1,6 @@
-var iSongCollect = angular.module('SongCollect', ['ngRoute']);
+var app = angular.module('SongCollect', ['ngRoute', 'firebase']);
 
-iSongCollect.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/login', {
             templateUrl: '/views/login.html',
@@ -8,6 +8,6 @@ iSongCollect.config(['$routeProvider', function($routeProvider) {
             controllerAs: 'lc'
         })
         .otherwise({
-            redirectTo: 'lc'
-        })
-}])
+            redirectTo: 'login'
+        });
+}]);

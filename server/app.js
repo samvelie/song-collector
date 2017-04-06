@@ -8,6 +8,11 @@ var users = require('./routes/users');
 var songs = require('./routes/songs');
 // uses
 app.use(bodyParser.json());
+
+app.get('/', function(req, res){
+  res.sendFile(path.resolve('./server/public/views/index.html'));
+});
+
 app.use(express.static('server/public'));
 
 // spin up server
