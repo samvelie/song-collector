@@ -4,7 +4,8 @@
   "description": "**Prime Academy Phi Cohort iSongCollect Team**",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon server/app.js",
+    "start": "node server/app.js"
   },
   "repository": {
     "type": "git",
