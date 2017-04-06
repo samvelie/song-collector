@@ -4,6 +4,9 @@ var pg = require('pg');
 
 var pool = require('../modules/pg-pool');
 
-
+router.get('/', function(req, res) {
+  console.log('hit /users router.get, have this user info:', req.userInfo);
+  res.sendStatus(200);
+});
 
 module.exports = router;
