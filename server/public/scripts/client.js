@@ -9,5 +9,5 @@ iSongCollect.config(['$routeProvider', function($routeProvider) {
         })
         .otherwise({
             redirectTo: 'lc'
-        })
-}])
+        });
+}]);
