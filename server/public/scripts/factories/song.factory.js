@@ -1,6 +1,7 @@
 app.factory('SongFactory', ['$firebaseAuth', '$http', function ($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var songCollection = {};
+  var selectedSong = {};
 
   auth.$onAuthStateChanged(getAllSongs);
 
@@ -23,6 +24,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', function ($firebaseAuth, $
       console.log('cannot get when not logged in');
     }
   }
+  
   return {
     getAllSongs: getAllSongs,
     songCollection: songCollection
