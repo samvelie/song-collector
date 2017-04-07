@@ -15,8 +15,6 @@ header .navbar {
     background: lightblue;
 }
 
-.navbar-header .navbar-brand, .navbar-nav span {
-    color: white;
 .navbar-nav span {
   color: #5e5e5e;
 }
