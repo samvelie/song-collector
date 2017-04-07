@@ -44,7 +44,7 @@ var tokenDecoder = function (req, res, next) {
             res.sendStatus(500);
           } else {
             if (result.rowCount > 0) {
-              console.log('rowCount > 0 on user query, user identified:', result.rows);
+              console.log('user identified:', result.rows[0].user_name);
               req.userInfo = result.rows;
               next();
             } else {
@@ -64,7 +64,7 @@ var tokenDecoder = function (req, res, next) {
                   insertResult.rows[0].user_email = userEmail;
                   insertResult.rows[0].user_photo = userPhoto;
 
-                  console.log('user added and authenticated:', insertResult.rows);
+                  console.log('user added and authenticated:', userName);
                   req.userInfo = insertResult.rows;
                   next();
                 }
@@ -81,7 +81,7 @@ var tokenDecoder = function (req, res, next) {
         res.sendStatus(403);
       });
   } else {
-    console.log('idtoken null');
+    console.log('id_token not passed');
     // Seems to be hit when chrome makes request for map files
     // Will also be hit when user does not send back an idToken in the header
     res.sendStatus(403);
