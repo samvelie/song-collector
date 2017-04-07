@@ -30,9 +30,7 @@ if(process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY) {
 verify it against our firebase service account private_key.
 Then we add the decodedToken */
 var tokenDecoder = function (req, res, next) {
-  console.log(req.headers);
   if (req.headers.id_token) {
-    console.log('hitting if');
     admin.auth().verifyIdToken(req.headers.id_token).then(function (decodedToken) {
       // Adding the decodedToken to the request so that downstream processes can use it
       req.decodedToken = decodedToken;
@@ -46,10 +44,11 @@ var tokenDecoder = function (req, res, next) {
             res.sendStatus(500);
           } else {
             if (result.rowCount > 0) {
-              console.log('rowCount > 0 on user query, user identified:', result.rows);
+              console.log('user identified:', result.rows[0].user_name);
               req.userInfo = result.rows;
               next();
             } else {
+              //adding information from user into db if not already there
               var userPhoto = req.decodedToken.picture;
               var userName = req.decodedToken.name;
               var userEmail = req.decodedToken.email;
@@ -65,7 +64,7 @@ var tokenDecoder = function (req, res, next) {
                   insertResult.rows[0].user_email = userEmail;
                   insertResult.rows[0].user_photo = userPhoto;
 
-                  console.log('user added and authenticated:', insertResult.rows);
+                  console.log('user added and authenticated:', userName);
                   req.userInfo = insertResult.rows;
                   next();
                 }
@@ -82,7 +81,7 @@ var tokenDecoder = function (req, res, next) {
         res.sendStatus(403);
       });
   } else {
-    console.log('idtoken null');
+    console.log('id_token not passed');
     // Seems to be hit when chrome makes request for map files
     // Will also be hit when user does not send back an idToken in the header
     res.sendStatus(403);

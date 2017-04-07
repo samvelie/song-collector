@@ -12,7 +12,7 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'NewSongController',
             controllerAs: 'nsc'
         })
-        .when('/edit/:songId?', {
+        .when('/edit/:index?', { //eventually remove optionality of index
             templateUrl: '/views/edit-song.html',
             controller: 'EditSongController',
             controllerAs: 'esc'

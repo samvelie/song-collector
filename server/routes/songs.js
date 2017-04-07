@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT form_record_id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text FROM song_collection WHERE user_id=$1 LIMIT 30;', [userId], function(err, result) {
+      client.query('SELECT * FROM song_collection WHERE user_id=$1 LIMIT 30;', [userId], function(err, result) {
       if(err) {
         console.log('error making database query: ', err);
         res.sendStatus(500);
@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
         //   //
         // }
         res.send(result.rows);
-        console.log('result.rows for songs get =', result.rows);
+
       }
       }); // end client.query
     }
