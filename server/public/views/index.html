@@ -15,11 +15,18 @@
     <script src="../scripts/controllers/new-song.controller.js" charset="utf-8"></script>
     <script src="../scripts/controllers/print.controller.js" charset="utf-8"></script>
     <link rel="stylesheet" href="../vendors/bootstrap.css">
+    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.eot" />
+    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.svg" />
+    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.ttf" />
+    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.woff" />
+    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.woff2" />
+
   </head>
   <body ng-app="SongCollect">
-    <nav ng-include="'views/templates/header.html'"></nav>
-    <main ng-view>
-      merp
+    <header ng-include="'views/templates/header.html'"></header>
+    <main class="container" ng-view>
+
     </main>
+    <footer ng-include="'views/templates/footer.html'" class="footer navbar-fixed-bottom"></footer>
   </body>
 </html>
