@@ -36,10 +36,6 @@ header .navbar {
   width: 50%;
 }
 
-.filterExpanded {
-  height: 200px;
-  background: green;
-}
 /* end search bar styles */
 
 /* card styles */
