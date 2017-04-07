@@ -11,13 +11,11 @@
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
   </div></a>
   </div>
-  <div class="card" ng-repeat="cvc.featuresong"><h3>A Ram Sam Sam</h3><hr /><p>Tone Set: s, l, t, <underline>d</underline> r m f s l</p><p>Scale / Mode: Plagal do Major</p><p>Teachable Elements: Melodic Sequence</p></div>
+  <div class="card" ng-repeat="song in cc.songs.list"><h3>{{song.song_title_text}}</h3><hr /><p>{{song.tone_set_note}}</p><p>{{song.scale_mode_text}}</p><p>{{song.teachable_elements_text}}</p></div>
+  <!-- <div class="card"></div>
   <div class="card"></div>
   <div class="card"></div>
   <div class="card"></div>
-  <div class="card"></div>
-  <div class="card"></div>
+  <div class="card"></div> -->
     </div>
 </div>
-
-{{cc.songs}}
