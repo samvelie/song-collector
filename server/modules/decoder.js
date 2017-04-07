@@ -43,6 +43,7 @@ var tokenDecoder = function (req, res, next) {
           done();
           if (err) {
             console.log('Error querying db for users:', err);
+            res.sendStatus(500);
           } else {
             if (result.rowCount > 0) {
               console.log('rowCount > 0 on user query, user identified:', result.rows);
