@@ -1,24 +1,131 @@
 /*  header styles  */
+
 header .navbar {
-  background: lightblue;
+    background: lightblue;
 }
 
 .navbar-header .navbar-brand, .navbar-nav span {
-  color: white;
+    color: white;
 }
+
+
 /* end header styles */
 
+
 /* search bar styles */
+
 .search {
-  padding: 5px;
-  margin: 0 10px 10px 10px;
-  width: 50%;
+    padding: 5px;
+    margin: 0 10px 10px 10px;
+    width: 50%;
 }
 
 .card {
-  background: lightblue;
-  float: left;
-  height: 150px;
-  margin: 10px 10px;
+    background: lightblue;
+    float: left;
+    height: 150px;
+    margin: 10px 10px;
 }
+​
 /* end search bar styles */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* start song view styles*/
+label:after {
+    content: ":";
+}
+
+.no-gutter {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.half-gutter {
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+}
+
+.form-control:not(:focus) {
+    border: 0;
+    box-shadow: none;
+}
+
+.form-group {
+    margin-bottom: 0 !important;
+    /*min-height: 150px;*/
+}
+
+.form-control {
+    height: auto;
+}
+
+/* end song view styles*/
