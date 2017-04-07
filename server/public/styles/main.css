@@ -36,6 +36,13 @@ header .navbar {
   width: 50%;
 }
 
+.filterExpanded {
+  height: 200px;
+  background: green;
+}
+/* end search bar styles */
+
+/* card styles */
 .card {
   background: none;
   float: left;
@@ -54,7 +61,11 @@ header .navbar {
 .card h3, p {
   margin-top: 0px;
 }
-/* end search bar styles */
+/* end card styles */
+
+/* footer styles */
+
+/* end footer styles */
 
 /* misc */
 .circle-around-plus {
@@ -64,3 +75,4 @@ header .navbar {
   border-radius: 100%;
   margin: auto;
 }
+/* end misc */
