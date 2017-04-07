@@ -1,3 +1,14 @@
+/* imports */
+@font-face  {
+  font-family: 'Pacifico';
+  src: url('../styles/fonts/Pacifico-Regular.ttf');
+}
+/* end imports */
+
+/* text changes */
+
+/* end text changes */
+
 /*  header styles  */
 
 header .navbar {
@@ -6,8 +17,19 @@ header .navbar {
 
 .navbar-header .navbar-brand, .navbar-nav span {
     color: white;
+.navbar-nav span {
+  color: #5e5e5e;
 }
 
+.navbar-header a {
+  font-family: 'Pacifico';
+  font-size: 4em;
+}
+
+.navbar-default .navbar-brand {
+  /*color: #5e5e5e;*/
+  color: white;
+}
 
 /* end header styles */
 
@@ -20,84 +42,32 @@ header .navbar {
     width: 50%;
 }
 
-.card {
-    background: lightblue;
-    float: left;
-    height: 150px;
-    margin: 10px 10px;
+.filterExpanded {
+  height: 200px;
+  background: green;
 }
-​
 /* end search bar styles */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* card styles */
+.card {
+  background: none;
+  float: left;
+  width: 250px;
+  height: 230px;
+  margin: 10px 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+#first-card {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.card h3, p {
+  margin-top: 0px;
+}
+/* end card styles */
 
 /* start song view styles*/
 label:after {
@@ -129,3 +99,18 @@ label:after {
 }
 
 /* end song view styles*/
+
+
+/* footer styles */
+
+/* end footer styles */
+
+/* misc */
+.circle-around-plus {
+  height: 60px;
+  width: 60px;
+  border: 1px solid black;
+  border-radius: 100%;
+  margin: auto;
+}
+/* end misc */
