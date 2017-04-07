@@ -30,14 +30,16 @@ if(process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY) {
 verify it against our firebase service account private_key.
 Then we add the decodedToken */
 var tokenDecoder = function (req, res, next) {
+  console.log(req.headers);
   if (req.headers.id_token) {
+    console.log('hitting if');
     admin.auth().verifyIdToken(req.headers.id_token).then(function (decodedToken) {
       // Adding the decodedToken to the request so that downstream processes can use it
       req.decodedToken = decodedToken;
       pool.connect(function (err, client, done) {
         //this user_id property on the decodedToken comes from the google auth
         var googleId = req.decodedToken.user_id;
-        client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo, FROM users WHERE google_id = $1;', [googleId], function (err, result) {
+        client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo FROM users WHERE google_id = $1;', [googleId], function (err, result) {
           done();
           if (err) {
             console.log('Error querying db for users:', err);
