@@ -3,6 +3,8 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   console.log('in CollectionController');
   self.songs = SongFactory.songCollection;
 
+  var selectedSong = {};
+
   self.expandFilter = function() {
     if(self.spanClicked) {
       self.spanClicked = false;
@@ -10,4 +12,9 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
       self.spanClicked = true;
     }
   };
+
+  self.showSong = function (song) {
+    console.log('showSong clicked:', song);
+    selectedSong = song;
+  }
 }]);
