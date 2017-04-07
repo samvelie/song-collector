@@ -1,9 +1,30 @@
+/* imports */
+@font-face  {
+  font-family: 'Pacifico';
+  src: url('../styles/fonts/Pacifico-Regular.ttf');
+}
+/* end imports */
+
+/* text changes */
+
+/* end text changes */
+
 /*  header styles  */
 header .navbar {
   background: lightblue;
 }
 
-.navbar-header .navbar-brand, .navbar-nav span {
+.navbar-nav span {
+  color: #5e5e5e;
+}
+
+.navbar-header a {
+  font-family: 'Pacifico';
+  font-size: 4em;
+}
+
+.navbar-default .navbar-brand {
+  /*color: #5e5e5e;*/
   color: white;
 }
 /* end header styles */
@@ -16,9 +37,30 @@ header .navbar {
 }
 
 .card {
-  background: lightblue;
+  background: none;
   float: left;
-  height: 150px;
+  width: 250px;
+  height: 200px;
   margin: 10px 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+#first-card {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.card h3, p {
+  margin-top: 0px;
 }
 /* end search bar styles */
+
+/* misc */
+.circle-around-plus {
+  height: 60px;
+  width: 60px;
+  border: 1px solid black;
+  border-radius: 100%;
+  margin: auto;
+}
