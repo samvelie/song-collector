@@ -1,21 +1,24 @@
 <div class="col-md-12">
   <div class="search-bar text-center">
-    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-    <input type="text" class="search" placeholder="search..."/>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()"></span>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <div ng-show="cc.spanClicked" id="filterExpanded">
+      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title_text" />
+      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set_note" />
+    </div>
   </div>
 </div>
 <div class="container-fluid col-md-12">
   <div class="row">
-  <div class="card text-center" id="first-card"><a href="#!new"><div class="circle-around-plus">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-  </div></a>
+    <div class="card text-center" id="first-card"><a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
   </div>
-  <div class="card" ng-repeat="song in cc.songs.list"><h3>{{song.song_title_text}}</h3><hr /><p>{{song.tone_set_note}}</p><p>{{song.scale_mode_text}}</p><p>{{song.teachable_elements_text}}</p></div>
-  <!-- <div class="card"></div>
-  <div class="card"></div>
-  <div class="card"></div>
-  <div class="card"></div>
-  <div class="card"></div> -->
-    </div>
+  <div class="card" ng-repeat="song in cc.songs.list | filter:search">
+    <h3>{{song.song_title_text}}</h3>
+    <hr />
+    <p>Tone Set: {{song.tone_set_note}}</p>
+    <p>Scale / Mode: {{song.scale_mode_text}}</p>
+    <p>Teachable Element: {{song.teachable_elements_text}}</p>
+  </div>
+</div>
 </div>
