@@ -1,3 +1,24 @@
-/*  footer styles  */
+/*  header styles  */
+header .navbar {
+  background: lightblue;
+}
 
-/* end footer styles */
+.navbar-header .navbar-brand, .navbar-nav span {
+  color: white;
+}
+/* end header styles */
+
+/* search bar styles */
+.search {
+  padding: 5px;
+  margin: 0 10px 10px 10px;
+  width: 50%;
+}
+
+.card {
+  background: lightblue;
+  float: left;
+  height: 150px;
+  margin: 10px 10px;
+}
+/* end search bar styles */
