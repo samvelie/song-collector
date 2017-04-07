@@ -6,7 +6,9 @@
 /* end imports */
 
 /* text changes */
-
+.card h3, p {
+  color: #5e5e5e;
+}
 /* end text changes */
 
 /*  header styles  */
@@ -54,8 +56,9 @@ header .navbar {
 }
 
 #first-card {
-  display: table-cell;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 .card h3, p {
@@ -103,8 +106,30 @@ label:after {
 .circle-around-plus {
   height: 60px;
   width: 60px;
-  border: 1px solid black;
+  border: 1px solid #5e5e5e;
   border-radius: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 37%;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.circle-around-plus:hover {
+  background: #5e5e5e;
+  color: white;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+
+#first-card a {
   margin: auto;
+  color: lightblue;
+
+}
+
+#first-card a:hover {
+  text-decoration: none;
+
 }
 /* end misc */

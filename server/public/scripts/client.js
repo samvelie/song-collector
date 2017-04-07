@@ -12,7 +12,7 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'NewSongController',
             controllerAs: 'nsc'
         })
-        .when('/edit', {
+        .when('/edit/:songId?', {
             templateUrl: '/views/edit-song.html',
             controller: 'EditSongController',
             controllerAs: 'esc'
