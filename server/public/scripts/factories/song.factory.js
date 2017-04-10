@@ -62,10 +62,21 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', funct
       });
     }
 
+    // remove Image function
+    // function removeImage() {
+    //   var storedurl = filesUploaded.list[0].url;
+    //   console.log(filesUploaded.list[0].url);
+    //   var handle = storedurl.substr(storedurl.lastIndexOf("/") + 1);
+    //   console.log(handle);
+    //   client.remove(handle);
+    //   console.log('file removed successfully: ' + storedurl);
+    // }
+
     return {
       getAllSongs: getAllSongs,
       songCollection: songCollection,
       fileUpload: fileUpload,
-      filesUploaded: filesUploaded
+      filesUploaded: filesUploaded,
+      // removeImage: removeImage
     };
   }]);

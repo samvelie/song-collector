@@ -453,3 +453,24 @@ INSERT INTO song_collection VALUES ('rec-2abba2b83d0941edaa508390c52d6f15','Zood
 INSERT INTO song_collection VALUES ('rec-67586d83b1974c6abcd342b393b6b08d','Zousan (Mr. Elephant)','s,l,  drm sl',NULL,NULL,NULL,NULL,NULL,NULL,'0742777E-A32F-44E2-966B-134E1790FADB.jpg','647B81C3-F5B1-4996-8C06-C0DCD5CEAEA4.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Mitchell, Elizabeth You are my little bird CD SFW45063, Smithsonian folkways online, si.folkways.edu, accessed Aug. 8, 2016.  Lyrics from Japan site, http://thejapanesepage.com/audio/zousan_elephants_song.','03 Zousan (Little Elephant).m4a',NULL);
 INSERT INTO song_collection VALUES ('rec-e97e20be8a0a449181505ed35b2cb08a','Zudio','l,  drm','Authentic la tetratone','Community builder (dance), Low la, Ternary (ABA)','q,n,o,eqj',NULL,'l,l,dmmmr/rdrrm (*,5) l,l,dmmm/rdl, (2,f) l,dmm/rdrm (3) l,dmm/rdl, (4)','4/4','06BDE032-F43F-4A5A-A197-268BB43CB796.jpg',NULL,NULL,'Longways set, partners facing each other','on A section, partners hold hands and move them forward and back, like cutting down a tree.On B section, jump and clap away from each other, making alley large.On C section, head couple “struts” (moves to the end of the alley in a way they choose) to the foot of the alley, all others move up.  Begin again.','l,-d/d-l,','2.2.2.2.2.2.','A.B.Av.','A.B.C.','Single strophe','Singing Game','African American','English','C-E',NULL,'Hickox, Berta.  MSU Kodály Institute, 2015 from the singing of Barbara Woodring, Chicago, IL.',NULL,'Zudio.docx');
 INSERT INTO song_collection VALUES ('rec-81c6a68365a141fe84e09c4e1caf590c','Zum Gali Gali','m,  l,t,drm','Incomplete natural minor','Canon/Round, Natural minor, Low ti,, Binary (AB)','q,n,Q','qnnn’qnqq(*,2) Qnqq’qnqQ’Qnqq’qnqQ(f)','l,l,t,dt,dt,/l,l,l,m,l, (*,2) drmm/rdrm/drmm/rdt,l, (f)','4/4','F6721774-1956-4A17-A5AD-1AEA503339B5.jpg',NULL,NULL,NULL,NULL,'l,-t,-d/d-t,-d/d-t,-l,','2.2.2.2.','A.B.','A.B.','Canon/Round','Freedom','Israel','Hebrew','C-E',NULL,'Hebrew Folk Song, shared by music teachers of MN, 2015.',NULL,'ZUM GALI GALI.docx');
+
+CREATE TABLE images (
+id SERIAL PRIMARY KEY,
+image_file_name VARCHAR(200),
+image_type VARCHAR(100),
+image_size INTEGER,
+image_url VARCHAR(200),
+image_handle VARCHAR(50));
+
+CREATE TABLE images_users (
+id SERIAL PRIMARY KEY,
+image_id INT REFERENCES images,
+user_id INT REFERENCES users);
+
+ALTER TABLE song_collection
+ADD COLUMN id SERIAL PRIMARY KEY;
+
+CREATE TABLE images_songs (
+id SERIAL PRIMARY KEY,
+image_id INT REFERENCES images,
+song_id INT REFERENCES song_collection );

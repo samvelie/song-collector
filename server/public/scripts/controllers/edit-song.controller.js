@@ -9,4 +9,5 @@ app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFil
   self.fileUpload = SongFactory.fileUpload;
   self.filesUploaded = SongFactory.filesUploaded;
   self.songInfo = SongFactory.songCollection;
+  // self.removeImage = SongFactory.removeImage;
 }]);
