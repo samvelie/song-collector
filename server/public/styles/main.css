@@ -133,3 +133,17 @@ label:after {
 
 }
 /* end misc */
+
+/* print view stuff */
+
+#printButton {
+  float: right;
+}
+
+@media print {
+  header navbar, footer, div .search-bar, .col-sm-2, #printButton {
+      display: none;
+  }
+}
+
+/*end print view styling*/
