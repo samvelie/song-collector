@@ -18,6 +18,6 @@ app.controller('CollectionController', ['SongFactory', '$location', function(Son
     console.log('on index', index);
     selectedSong = song;
     //change url to edit with index
-    $location.url('/edit/' + index)
-  }
+    $location.url('/edit/' + index);
+  };
 }]);

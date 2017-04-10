@@ -5,11 +5,37 @@
 }
 /* end imports */
 
-/* text changes */
+/* body styles */
+html {
+  height: 100%;
+  padding-bottom: 100px;
+}
+/* end body styles */
+
+/* text styles */
 .card h3, p {
   color: #5e5e5e;
 }
-/* end text changes */
+
+label {
+  color: #5e5e5e;
+}
+/* end text styles */
+
+/* button styles */
+.btn-primary {
+  background: none;
+  color: #5e5e5e;
+  border: 1px solid lightblue;
+}
+
+.btn-primary:hover {
+  background: none;
+  color: #5e5e5e;
+  border: 1px solid lightblue;
+  box-shadow: 0 0 10px lightblue;
+}
+/* end button styles */
 
 /*  header styles  */
 
@@ -97,12 +123,31 @@ label:after {
 
 /* end song view styles*/
 
+/* edit song view styles */
+#songInfoContainer {
+  height: 650px;
+  padding-bottom: 75px;
+}
+
+.card-holder {
+  height:100%;
+  overflow-y: scroll;
+  border-right: 1px solid lightgrey;
+}
+/* end edit song view styles */
 
 /* footer styles */
-
+.panel-footer {
+  height: 50px;
+  padding: 0;
+  z-index: 9999;
+}
 /* end footer styles */
 
 /* misc */
+span.glyphicon {
+  color: #5e5e5e;
+}
 .circle-around-plus {
   height: 60px;
   width: 60px;
@@ -125,11 +170,9 @@ label:after {
 #first-card a {
   margin: auto;
   color: lightblue;
-
 }
 
 #first-card a:hover {
   text-decoration: none;
-
 }
 /* end misc */
