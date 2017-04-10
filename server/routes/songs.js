@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT form_record_id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text FROM song_collection WHERE user_id=$1 LIMIT 30;', [userId], function(err, result) {
+      client.query('SELECT * FROM song_collection WHERE user_id=$1 LIMIT 30;', [userId], function(err, result) {
       if(err) {
         console.log('error making database query: ', err);
         res.sendStatus(500);
@@ -48,28 +48,5 @@ router.post('/addImage', function(req, res) {
   }); // end pool.connect
 }); //end router.get
 
-
-// Object
-// filename
-// :
-// "Screen Shot 2017-04-09 at 1.15.52 PM.png"
-// handle
-// :
-// "eC6vNC9T7K5ppoakx4EZ"
-// mimetype
-// :
-// "image/png"
-// size
-// :
-// 51058
-// source
-// :
-// "local_file_system"
-// status
-// :
-// "Stored"
-// url
-// :
-// "https://cdn.filestackcontent.com/eC6vNC9T7K5ppoakx4EZ"
 
 module.exports = router;

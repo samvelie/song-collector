@@ -4,6 +4,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', funct
   var filesUploaded = {list:[]};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz';
   var client = filestack.init(fileStackAPI);
+  var selectedSong = {};
 
   auth.$onAuthStateChanged(getAllSongs);
 
