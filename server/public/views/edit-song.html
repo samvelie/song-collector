@@ -134,12 +134,13 @@
         <label for="notation" class="col-sm-3 control-label no-gutter">Notation</label>
         <div class="col-sm-6 half-gutter">
               <input type="button" value="Upload" ng-click="esc.fileUpload()" />
-              <div style="margin-top:10px;">
+              <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
                   <!-- Show the thumbnail only when the picture is uploaded -->
-                  <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail" ng-if="esc.filesUploaded.list.length > 0">
+                  <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail">
                   <!-- the picture is rendered with width: 500 and sharpened -->
                     <img ng-src="{{esc.filesUploaded.list[0].url}}">
                   </a>
+                  <!-- <button ng-click="esc.removeImage()">Delete</button> -->
                   <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
               </div>
             <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div>
