@@ -1,5 +1,10 @@
 var app = angular.module('SongCollect', ['ngRoute', 'firebase']);
 
+// angular.module('angularFilepicker', [])
+app.service('angularFilepicker', function($window){
+	return $window.filepicker;
+});
+
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/login', {
@@ -30,4 +35,9 @@ app.config(['$routeProvider', function($routeProvider) {
         .otherwise({
             redirectTo: 'login'
         });
+        // API key for filepicker service
+        // angularFilePicker.setKey('AIJdcA3UQs6mAMvmUvaTkz');
+
+
+
 }]);
