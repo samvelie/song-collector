@@ -1,176 +1,183 @@
 <div class="col-md-12">
-    <div class="search-bar text-center">
-        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-        <input type="text" class="search" placeholder="search..." />
-        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+  <div class="search-bar text-center">
+    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="esc.expandFilter()"></span>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <div ng-show="esc.spanClicked" id="filterExpanded">
+      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title_text" />
+      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set_note" />
     </div>
+  </div>
 </div>
 
 
 <!-- start full screen container -->
-<div class="col-sm-12">
-
-  <button type="button" class="btn btn-default" name="button" id="printButton" onClick="window.print()">
-    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Click Here to Print This Song!
-      </button>
+<div class="col-sm-12" id="songInfoContainer">
 
   <!-- start div for left column -->
-  <div class="col-sm-2">
-    Placeholder for cards
+  <p>
+    Songs in Collection : 415
+  </p>
+  <div class="col-sm-3 card-holder">
+
+    <div class="card col-sm-11" ng-repeat="song in esc.songs.list | filter:search" ng-click="esc.showSong(song, $index)">
+      <h3>{{song.song_title_text}}</h3>
+      <hr />
+      <p>Tone Set: {{song.tone_set_note}}</p>
+      <p>Scale / Mode: {{song.scale_mode_text}}</p>
+      <p>Teachable Element: {{song.teachable_elements_text}}</p>
+    </div>
   </div>
   <!-- end div for left column -->
 
-<!-- start div for right column -->
-  <div class="col-sm-10">
+  <!-- start div for right column -->
+  <div class="col-sm-5 card-holder">
 
-<!--  using index passed in params to pull information for specific song from factory list, i.e. esc.songInfo.list[esc.index] -->
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="songTitle" class="col-sm-3 control-label no-gutter">Song Title</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control" id="songTitle">{{esc.songInfo.list[esc.index].song_title_text}}</div>
+    <!--  using index passed in params to pull information for specific song from factory list, i.e. esc.songInfo.list[esc.index] -->
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control" id="songTitle">{{esc.songInfo.list[esc.index].song_title_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="toneSet" class="col-sm-3 control-label no-gutter">Tone Set</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control" id="toneSet">{{esc.songInfo.list[esc.index].tone_set_note}}</div>
+      </div>
+      <div class="form-group">
+        <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control" id="toneSet">{{esc.songInfo.list[esc.index].tone_set_note}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="scaleMode" class="col-sm-3 control-label no-gutter">Scale / Mode</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control" id="scaleMode">{{esc.songInfo.list[esc.index].scale_mode_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control" id="scaleMode">{{esc.songInfo.list[esc.index].scale_mode_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="teachableElements" class="col-sm-3 control-label no-gutter">Teachable Elements</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].teachable_elements_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].teachable_elements_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="rhythm" class="col-sm-3 control-label no-gutter">Rhythm</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].rhythm_note}}</div>
+      </div>
+      <div class="form-group">
+        <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].rhythm_note}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="extractableRhythms" class="col-sm-3 control-label no-gutter">Extractable Rhythms</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].extractable_rhythms_note}}</div>
+      </div>
+      <div class="form-group">
+        <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].extractable_rhythms_note}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="extractableMelodies" class="col-sm-3 control-label no-gutter">Extractable Melodies</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].extractable_melodies_note}}</div>
+      </div>
+      <div class="form-group">
+        <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].extractable_melodies_note}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="meter" class="col-sm-3 control-label no-gutter">Meter</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].meter_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].meter_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="intervalNoteGroup" class="col-sm-3 control-label no-gutter">Intervals / Note Group</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].intervals_note_groups_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].intervals_note_groups_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="phrases" class="col-sm-3 control-label no-gutter">Phrases</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].phrases_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].phrases_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="melodicForm" class="col-sm-3 control-label no-gutter">Melodic Form</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].melodic_form_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].melodic_form_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="rhythmicForm" class="col-sm-3 control-label no-gutter">Rhythmic Form</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].rhythmic_form_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].rhythmic_form_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="formType" class="col-sm-3 control-label no-gutter">Form Type</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].form_type_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].form_type_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="cultureOrigin" class="col-sm-3 control-label no-gutter">Culture / Origin</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].culture_origin_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].culture_origin_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="language" class="col-sm-3 control-label no-gutter">Language</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].language_text}}</div>
+      </div>
+      <div class="form-group">
+        <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].language_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="csp" class="col-sm-3 control-label no-gutter">CSP</label>
+      </div>
+      <div class="form-group">
+        <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
         <!-- comfortable starting pitch -->
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].csp_text}}</div>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].csp_text}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="other" class="col-sm-3 control-label no-gutter">Other</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].other_note}}</div>
+      </div>
+      <div class="form-group">
+        <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].other_note}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="source" class="col-sm-3 control-label no-gutter">Source</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].source_note}}</div>
+      </div>
+      <div class="form-group">
+        <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
+        <div class="col-sm-8 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].source_note}}</div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="notation" class="col-sm-3 control-label no-gutter">Notation</label>
-        <div class="col-sm-6 half-gutter">
-              <input type="button" value="Upload" ng-click="esc.fileUpload()" />
-              <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
-                  <!-- Show the thumbnail only when the picture is uploaded -->
-                  <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail">
-                  <!-- the picture is rendered with width: 500 and sharpened -->
-                    <img ng-src="{{esc.filesUploaded.list[0].url}}">
-                  </a>
-                  <!-- <button ng-click="esc.removeImage()">Delete</button> -->
-                  <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
-              </div>
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="notationExtended" class="col-sm-3 control-label no-gutter">Notation Extended</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_extended_photo}}</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="attachment" class="col-sm-3 control-label no-gutter">Attachment</label>
-        <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].attachments_file}}</div>
-        </div>
-    </div>
-    <div class="form-group">
+      </div>
+
+      <!-- <div class="form-group">
         <label for="mastercopy" class="col-sm-3 control-label no-gutter">Mastercopy Source File</label>
         <div class="col-sm-6 half-gutter">
-            <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].mastercopy_source_file_file}}</div>
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].mastercopy_source_file_file}}</div>
         </div>
+      </div> -->
+
     </div>
+    <!-- end div for right column -->
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
+        <div class="col-sm-12 half-gutter">
+          <input type="button" class="btn btn-primary" value="Upload" ng-click="esc.fileUpload()" />
+          <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
+            <!-- Show the thumbnail only when the picture is uploaded -->
+            <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail">
+              <!-- the picture is rendered with width: 500 and sharpened -->
+              <img ng-src="{{esc.filesUploaded.list[0].url}}">
+            </a>
+            <!-- <button ng-click="esc.removeImage()">Delete</button> -->
+            <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
+          </div>
+          <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
+        </div>
+      </div>
 
+      <!-- <div class="form-group">
+        <label for="attachment" class="col-sm-3 control-label no-gutter">Attachment</label>
+        <div class="col-sm-6 half-gutter">
+          <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].attachments_file}}</div>
+        </div>
+      </div> -->
+    </div>
   </div>
-  <!-- end div for right column -->
-
-</div>
-<!-- end full screen container -->
+  <!-- end full screen container -->
