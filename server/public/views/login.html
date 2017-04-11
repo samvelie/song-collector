@@ -19,5 +19,14 @@
     <button ng-click="lc.logout()" class="btn btn-primary">LOG OUT</button>
   </div>
 
+  <div ng-if="!lc.loggedIn.loginStatus">
+    !lc.loggedIn.loginStatus = logged out
+    <button ng-click="lc.login()" class="btn btn-primary">LOG IN</button>
+  </div>
+  <div ng-if="!!lc.loggedIn.loginStatus">
+    !!lc.loggedIn.loginStatus = logged in
+    <button ng-click="lc.logout()" class="btn btn-primary">LOG OUT</button>
+  </div>
+
   <!-- <img class="log-in-photo" ng-src="{{lc.user.info[0].user_photo}}">  NOTE: commented out because unnecessary functionality? -->
 </div>
