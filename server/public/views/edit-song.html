@@ -49,17 +49,17 @@
         <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
         <div class="col-sm-8 half-gutter">
           <!-- <div contenteditable class="form-control" id="toneSet"> -->
-            <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="esc.oneSong.details.tone_set_note" placeholder="override default placeholder">
-              <ng-quill-toolbar>
-                <div id="ng-quill-toolbar">
-                  <span class="ql-formats">
-                    <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
-                    <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
-                    <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
-                  </span>
-                </div>
-              </ng-quill-toolbar>
-            </ng-quill-editor>
+          <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="esc.oneSong.details.tone_set_note" placeholder="override default placeholder">
+            <ng-quill-toolbar>
+              <div id="ng-quill-toolbar">
+                <span class="ql-formats">
+                  <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
+                  <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
+                  <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
+                </span>
+              </div>
+            </ng-quill-toolbar>
+          </ng-quill-editor>
           <!-- </div> -->
         </div>
       </div>
@@ -160,46 +160,32 @@
           <div contenteditable class="form-control">{{esc.oneSong.details.source_note}}</div>
         </div>
       </div>
-
-      <!-- <div class="form-group">
-      <label for="mastercopy" class="col-sm-3 control-label no-gutter">Mastercopy Source File</label>
-      <div class="col-sm-6 no-gutter">
-      <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].mastercopy_source_file_file}}</div>
-    </div>
-  </div> -->
-
-</div>
-<!-- end div for right column -->
-<div class="col-sm-4">
-  <div class="form-group">
-    <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
-    <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="esc.fileUpload()">Upload</button>
-      <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
-        <!-- Show the thumbnail only when the picture is uploaded -->
-        <!-- <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail"> -->
-        <!-- the picture is rendered with width: 500 and sharpened -->
-        <img class="thumbnail" ng-src="{{esc.filesUploaded.list[0].url}}">
-        <!-- </a> -->
-        <!-- <button ng-click="esc.removeImage()">Delete</button> -->
-        <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
-      </div>
-      <div> <!-- existing attachments -->
-        <img ng-repeat="photo in esc.attachments.list" ng-src="{{photo.url}}"/>
-        <!-- SAMPLE IMAGE THING -->
-        <img align="right" ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" src="http://res.cloudinary.com/simpleview/image/upload/v1470836048/clients/norway/naeroyfjorden_fjord_norway_2_1_001b9127-14ad-4b3d-99b6-29d8b3aae412.jpg">
-        
-      </div>
-      <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
-    </div>
+    </form>
   </div>
+      <!-- end div for right column -->
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
+          <div> <!-- existing attachments -->
+            <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in esc.attachments.list" ng-src="{{photo.image_url}}"/>
+          </div>
+          <div class="col-sm-12 half-gutter">
+            <button class="btn btn-primary" ng-click="esc.fileUpload()">Upload</button>
+            <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
+              <!-- Show the thumbnail only when the picture is uploaded -->
+              <!-- <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail"> -->
+              <!-- the picture is rendered with width: 500 and sharpened -->
+              <img class="thumbnail" ng-src="{{esc.filesUploaded.list[0].url}}">
+              <!-- </a> -->
+              <!-- <button ng-click="esc.removeImage()">Delete</button> -->
+              <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
+            </div>
 
-  <!-- <div class="form-group">
-  <label for="attachment" class="col-sm-3 control-label no-gutter">Attachment</label>
-  <div class="col-sm-6 half-gutter">
-  <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].attachments_file}}</div>
-</div>
-</div> -->
-</div>
-</div>
-<!-- end full screen container -->
+            <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
+          </div>
+        </div>
+      </div>
+      <!-- end div for right column -->
+
+    <!-- end full screen container -->
+  </div>
