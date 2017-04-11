@@ -233,6 +233,15 @@ span.glyphicon {
   }
 }
 
+#newSongDiv {
+  padding: 5px;
+}
+
+#setOne, #setTwo, #setThree, #setFour {
+  display: inline-block;
+  text-align: center;
+}
+
 /*end print view styling*/
 
 /* Image Alternator Click Example*/
