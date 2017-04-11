@@ -1,7 +1,8 @@
-app.controller('CollectionController', ['SongFactory', '$location', function(SongFactory, $location) {
+app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   var self = this;
   console.log('in CollectionController');
   self.songs = SongFactory.songCollection;
+  self.showSong = SongFactory.showSong;
 
   var selectedSong = {};
 
@@ -11,13 +12,5 @@ app.controller('CollectionController', ['SongFactory', '$location', function(Son
     } else {
       self.spanClicked = true;
     }
-  };
-
-  self.showSong = function (song, index) {
-    console.log('showSong clicked:', song);
-    console.log('on index', index);
-    selectedSong = song;
-    //change url to edit with index
-    $location.url('/edit/' + index);
   };
 }]);

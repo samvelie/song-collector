@@ -1,13 +1,23 @@
-app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', function ($firebaseAuth, $http, angularFilepicker) {
+app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams', function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
   var auth = $firebaseAuth();
   var songCollection = {};
+  var oneSong = {details: {}};
   var filesUploaded = {list:[]};
-  var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz';
+  var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
 
   auth.$onAuthStateChanged(getAllSongs);
+  if($routeParams.id) {
+    auth.$onAuthStateChanged(getOneSong);
+  }
 
+  // on click function that redirects us to the card's full view
+  function showSong(id) {
+    $location.url('/edit/' + id);
+  }
+
+  // gets all songs from the db
   function getAllSongs() {
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
@@ -28,9 +38,30 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', funct
     }
   }
 
-  // on success of pickFile, add files to array
+  // get's one song from the database based on the song's ID grabbed from $routeParams
+  function getOneSong() {
+    var firebaseUser = auth.$getAuth();
+    if(firebaseUser) {
+      firebaseUser.getToken().then(function (idToken) {
+        $http({
+          method: 'GET',
+          url: '/songs/singleSong/' + $routeParams.id,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          oneSong.details = response.data;
+        });
+      });
+    } else {
+      songCollection = {};
+      console.log('cannot get when not logged in');
+    }
+  }
 
+  // send file to FileStack and db at the same time
   function fileUpload() {
+    console.log('file sending to FileStack...');
     client.pick(
       {
         accept: 'image/*',
@@ -40,11 +71,12 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', funct
         // location: 's3'
         // }
       }).then(function(result) {
-        console.log(result.filesUploaded);
+        console.log('file uploaded, now sending to database... ', result.filesUploaded);
         filesUploaded.list = result.filesUploaded;
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
           firebaseUser.getToken().then(function (idToken) {
+            console.log('firebase user authenticated');
             $http({
               method: 'POST',
               url: '/songs/addImage',
@@ -53,7 +85,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', funct
                 id_token: idToken
               }
             }).then(function() {
-              console.log('we did the post thing!');
+              console.log('file posted to database!');
             });
           });
         } else {
@@ -73,8 +105,11 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', funct
     // }
 
     return {
+      showSong: showSong,
       getAllSongs: getAllSongs,
       songCollection: songCollection,
+      getOneSong: getOneSong,
+      oneSong: oneSong,
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
       // removeImage: removeImage
