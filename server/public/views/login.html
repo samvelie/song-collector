@@ -15,8 +15,12 @@
     </p>
   </div>
   <div class="button-holder text-center"> <!-- button holder -->
-    <button ng-click="lc.login()" class="btn btn-primary">LOG IN</button>
-    <button ng-click="lc.logout()" class="btn btn-primary">LOG OUT</button>
+    <div ng-if="!lc.loggedIn.loginStatus">
+      <button ng-click="lc.login()" class="btn btn-primary">Sign In</button>
+    </div>
+    <div ng-if="!!lc.loggedIn.loginStatus">
+      <button ng-click="lc.logout()" class="btn btn-primary">Sign Out</button>
+    </div>
   </div>
 
   <!-- <img class="log-in-photo" ng-src="{{lc.user.info[0].user_photo}}">  NOTE: commented out because unnecessary functionality? -->
