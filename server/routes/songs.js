@@ -65,6 +65,7 @@ router.post('/addImage/:id', function(req, res) {
   }); // end pool.connect
 }); //end router.post
 
+// get attachments from db and add to dom
 router.get('/getAttachments/:id', function(req, res) {
   var userId = req.userInfo[0].id; // will become user id pulled from decoder token
   var songId = req.params.id;
@@ -85,6 +86,7 @@ router.get('/getAttachments/:id', function(req, res) {
   }); // end pool.connect
 }); //end router.get
 
+// get single song from db for view
 router.get('/singleSong/:id', function(req, res) {
   var userId = req.userInfo[0].id; // will become user id pulled from decoder token
   var songId = req.params.id;

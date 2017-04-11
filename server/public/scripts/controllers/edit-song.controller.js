@@ -4,6 +4,7 @@ app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFil
 
   SongFactory.getOneSong();
   SongFactory.getAllSongs();
+  SongFactory.getAttachments();
   console.log('SongFactory.oneSong', SongFactory.oneSong);
 
   self.songs = SongFactory.songCollection; // for the left-hand card view sidebar
@@ -13,7 +14,7 @@ app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFil
   self.oneSong = SongFactory.oneSong;
   self.showSong = SongFactory.showSong;
   self.attachments = SongFactory.attachments;
-  
+  console.log('attachments', self.attachments);
   // move to factory -- used in both edit-song.controller and collection.controller
   self.expandFilter = function() {
     if(self.spanClicked) {

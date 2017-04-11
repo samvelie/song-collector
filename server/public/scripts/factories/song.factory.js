@@ -17,6 +17,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   // on click function that redirects us to the card's full view
   function showSong(id) {
     $location.url('/edit/' + id);
+    getAttachments();
   }
 
   // gets all songs from the db
@@ -136,6 +137,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       oneSong: oneSong,
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
+      getAttachments: getAttachments,
       attachments: attachments
       // removeImage: removeImage
     };
