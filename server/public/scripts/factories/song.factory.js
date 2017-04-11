@@ -61,6 +61,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
 
   // send file to FileStack and db at the same time
   function fileUpload() {
+    console.log('file sending to FileStack...');
     client.pick(
       {
         accept: 'image/*',
@@ -70,11 +71,12 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         // location: 's3'
         // }
       }).then(function(result) {
-        console.log(result.filesUploaded);
+        console.log('file uploaded, now sending to database... ', result.filesUploaded);
         filesUploaded.list = result.filesUploaded;
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
           firebaseUser.getToken().then(function (idToken) {
+            console.log('firebase user authenticated');
             $http({
               method: 'POST',
               url: '/songs/addImage',
@@ -83,7 +85,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
                 id_token: idToken
               }
             }).then(function() {
-              console.log('we did the post thing!');
+              console.log('file posted to database!');
             });
           });
         } else {

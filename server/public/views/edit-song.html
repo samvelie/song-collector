@@ -160,9 +160,9 @@
           <input type="button" class="btn btn-primary" value="Upload" ng-click="esc.fileUpload()" />
           <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
-            <a href="{{esc.filesUploaded.list.url}}" class="thumbnail">
+            <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail">
               <!-- the picture is rendered with width: 500 and sharpened -->
-              <img ng-src="{{esc.filesUploaded.list.url}}">
+              <img ng-src="{{esc.filesUploaded.list[0].url}}">
             </a>
             <!-- <button ng-click="esc.removeImage()">Delete</button> -->
             <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
