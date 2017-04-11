@@ -1,5 +1,6 @@
-<div class="container text-center">
+<div class="container text-center log-in-info">
   <div>
+    <h1>iSongCollect</h1>
     <p>
       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
     </p>
@@ -13,7 +14,10 @@
       Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
     </p>
   </div>
-  <button ng-click="lc.login()" class="btn btn-primary">LOG YOURSELF IN</button>
-  <button ng-click="lc.logout()" class="btn btn-primary">LOG YOURSELF OUT</button>
-  <img class="log-in-photo" ng-src="{{lc.user.info[0].user_photo}}">
+  <div class="button-holder text-center"> <!-- button holder -->
+    <button ng-click="lc.login()" class="btn btn-primary">LOG IN</button>
+    <button ng-click="lc.logout()" class="btn btn-primary">LOG OUT</button>
+  </div>
+
+  <!-- <img class="log-in-photo" ng-src="{{lc.user.info[0].user_photo}}">  NOTE: commented out because unnecessary functionality? -->
 </div>
