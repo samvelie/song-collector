@@ -1,6 +1,6 @@
 app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams', function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
   var auth = $firebaseAuth();
-  var songCollection = {};
+  var songCollection = {list: []};
   var oneSong = {details: {}};
   var filesUploaded = {list:[]};
   var attachments = {list: []};
