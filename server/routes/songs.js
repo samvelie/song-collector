@@ -77,7 +77,7 @@ router.get('/getAttachments/:id', function(req, res) {
       client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1;', [songId], function(err, result) {
         if(err) {
           console.log('error making database query: ', err);
-          res.sendStatus(500);
+          res.sendStatus(666);
         } else {
           res.send(result.rows);
         }
