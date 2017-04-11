@@ -3,6 +3,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var songCollection = {};
   var oneSong = {details: {}};
   var filesUploaded = {list:[]};
+  var attachments = {list: []};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
@@ -94,6 +95,28 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       });
     }
 
+    function getAttachments() {
+      console.log('hitting get attachments function');
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+          console.log('firebase user authenticated');
+          $http({
+            method: 'GET',
+            url: '/songs/getAttachments/' + $routeParams.id,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            attachments.list = response.data;
+            console.log('getting attachments!');
+          });
+        });
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
     // remove Image function
     // function removeImage() {
     //   var storedurl = filesUploaded.list[0].url;
@@ -112,6 +135,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       oneSong: oneSong,
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
+      attachments: attachments
       // removeImage: removeImage
     };
   }]);

@@ -12,11 +12,16 @@
 <!-- start full screen container -->
 <div class="col-sm-12" id="songInfoContainer">
 
+  <button type="button" class="btn btn-default" name="button" id="printButton" value="Print" onclick="window.print()">
+    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+    Print this Song!
+  </button>
+
   <!-- start div for left column -->
   <p>
     Songs in Collection : 415
   </p>
-  <div class="col-sm-3 card-holder">
+  <div class="col-sm-3 card-holder" id="cardHolder">
 
     <div class="card col-sm-11" ng-repeat="song in esc.songs.list | filter:search" ng-click="esc.showSong(song.id)">
       <h3>{{song.song_title_text}}</h3>
@@ -30,7 +35,7 @@
   <!-- end div for left column -->
 
   <!-- start div for right column -->
-  <div class="col-sm-5 card-holder">
+  <div class="col-sm-5 card-holder" id="scrollableDiv">
 
     <!--  using index passed in params to pull information for specific song from factory list, i.e. esc.songInfo.list[esc.index] -->
     <form class="form-horizontal">
@@ -160,12 +165,15 @@
           <button class="btn btn-primary" ng-click="esc.fileUpload()">Upload</button>
           <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
-            <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail">
+            <!-- <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail"> -->
               <!-- the picture is rendered with width: 500 and sharpened -->
-              <img ng-src="{{esc.filesUploaded.list[0].url}}">
-            </a>
+              <img class="thumbnail" ng-src="{{esc.filesUploaded.list[0].url}}">
+            <!-- </a> -->
             <!-- <button ng-click="esc.removeImage()">Delete</button> -->
             <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
+          </div>
+          <div> <!-- existing attachments -->
+            <img ng-repeat="photo in esc.attachments.list" ng-src="{{photo.url}}"/>
           </div>
           <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
         </div>
