@@ -1,4 +1,4 @@
-var app = angular.module('SongCollect', ['ngRoute', 'firebase']);
+var app = angular.module('SongCollect', ['ngRoute', 'firebase', 'ngQuill', 'ngSanitize']);
 
 // angular.module('angularFilepicker', [])
 app.service('angularFilepicker', function($window){
@@ -37,7 +37,5 @@ app.config(['$routeProvider', function($routeProvider) {
         });
         // API key for filepicker service
         // angularFilePicker.setKey('AIJdcA3UQs6mAMvmUvaTkz');
-
-
 
 }]);

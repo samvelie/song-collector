@@ -234,3 +234,20 @@ span.glyphicon {
 }
 
 /*end print view styling*/
+
+/* Image Alternator Click Example*/
+.small {
+  color: blue;
+  width: 25%;
+  float: right;
+}
+
+.large {
+  color: red;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  overflow: auto;
+  padding-left: 20px;
+  right: 0;
+}
