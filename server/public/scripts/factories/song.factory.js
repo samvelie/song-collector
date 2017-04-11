@@ -11,11 +11,13 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   auth.$onAuthStateChanged(getAllSongs);
   if($routeParams.id) {
     auth.$onAuthStateChanged(getOneSong);
+    auth.$onAuthStateChanged(getAttachments);
   }
 
   // on click function that redirects us to the card's full view
   function showSong(id) {
     $location.url('/edit/' + id);
+    getAttachments();
   }
 
   // gets all songs from the db
@@ -80,7 +82,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             console.log('firebase user authenticated');
             $http({
               method: 'POST',
-              url: '/songs/addImage',
+              url: '/songs/addImage/' + $routeParams.id,
               data: result.filesUploaded,
               headers: {
                 id_token: idToken
@@ -109,7 +111,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }
           }).then(function(response) {
             attachments.list = response.data;
-            console.log('getting attachments!');
+            console.log('getting attachments!', attachments.list);
           });
         });
       } else {
@@ -135,6 +137,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       oneSong: oneSong,
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
+      getAttachments: getAttachments,
       attachments: attachments
       // removeImage: removeImage
     };
