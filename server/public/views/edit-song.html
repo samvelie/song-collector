@@ -157,7 +157,7 @@
       <div class="form-group">
         <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
         <div class="col-sm-12 half-gutter">
-          <input type="button" class="btn btn-primary" value="Upload" ng-click="esc.fileUpload()" />
+          <button class="btn btn-primary" ng-click="esc.fileUpload()">Upload</button>
           <div style="margin-top:10px;" ng-if="esc.filesUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
             <a href="{{esc.filesUploaded.list[0].url}}" class="thumbnail">
