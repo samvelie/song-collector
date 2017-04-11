@@ -2,9 +2,11 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
   var auth = $firebaseAuth();
   var loggedIn = {};
   var userInfo = {};
-
+  var newLoggedIn;
   auth.$onAuthStateChanged(function(firebaseUser) {
     // Check directly if firebaseUser is null
+    newLoggedIn = !!firebaseUser;
+    console.log(newLoggedIn);
     loggedIn.value = firebaseUser !== null;
     if (loggedIn.value) {
       console.log('user is logged in');
@@ -48,6 +50,7 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
     return {
       logIn: logIn,
       logOut: logOut,
-      userInfo: userInfo
+      userInfo: userInfo,
+      newLoggedIn: newLoggedIn
     };
   }]);
