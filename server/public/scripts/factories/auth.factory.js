@@ -12,7 +12,7 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
     if (loggedIn.value) {
       console.log('user is logged in');
       getUserData(firebaseUser);
-       $location.path('/collection');
+      //  $location.path('/collection');
     } else {
       console.log('user is not logged in');
     }

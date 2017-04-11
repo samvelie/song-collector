@@ -19,6 +19,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   function showSong(id) {
     $location.url('/edit/' + id);
     getAttachments();
+    getOneSong();
   }
 
   // gets all songs from the db
