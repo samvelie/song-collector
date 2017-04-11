@@ -1,8 +1,9 @@
 app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams', function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
   var auth = $firebaseAuth();
-  var songCollection = {};
+  var songCollection = {list: []};
   var oneSong = {details: {}};
   var filesUploaded = {list:[]};
+  var attachments = {list: []};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
@@ -10,11 +11,13 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   auth.$onAuthStateChanged(getAllSongs);
   if($routeParams.id) {
     auth.$onAuthStateChanged(getOneSong);
+    auth.$onAuthStateChanged(getAttachments);
   }
 
   // on click function that redirects us to the card's full view
   function showSong(id) {
     $location.url('/edit/' + id);
+    getAttachments();
   }
 
   // gets all songs from the db
@@ -79,7 +82,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             console.log('firebase user authenticated');
             $http({
               method: 'POST',
-              url: '/songs/addImage',
+              url: '/songs/addImage/' + $routeParams.id,
               data: result.filesUploaded,
               headers: {
                 id_token: idToken
@@ -92,6 +95,28 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           console.log('not logged in!');
         }
       });
+    }
+
+    function getAttachments() {
+      console.log('hitting get attachments function');
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+          console.log('firebase user authenticated');
+          $http({
+            method: 'GET',
+            url: '/songs/getAttachments/' + $routeParams.id,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            attachments.list = response.data;
+            console.log('getting attachments!', attachments.list);
+          });
+        });
+      } else {
+        console.log('not logged in!');
+      }
     }
 
     // remove Image function
@@ -112,6 +137,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       oneSong: oneSong,
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
+      getAttachments: getAttachments,
+      attachments: attachments
       // removeImage: removeImage
     };
   }]);

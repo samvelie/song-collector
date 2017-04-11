@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>iSongCollect</title>
-    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-    <script src="../vendors/angular.js" charset="utf-8"></script>
-    <script src="https://static.filestackapi.com/v3/filestack-0.4.2.js"></script>
-    <script src="../vendors/angular-route.js" charset="utf-8"></script>
-    <script src="../vendors/angularfire.js" charset="utf-8"></script>
-    <script src="../scripts/config.js" charset="utf-8"></script>
-    <script src="../scripts/client.js" charset="utf-8"></script>
-    <script src="../scripts/factories/auth.factory.js" charset="utf-8"></script>
-    <script src="../scripts/factories/song.factory.js" charset="utf-8"></script>
-    <script src="../scripts/controllers/login.controller.js" charset="utf-8"></script>
-    <script src="../scripts/controllers/collection.controller.js" charset="utf-8"></script>
-    <script src="../scripts/controllers/edit-song.controller.js" charset="utf-8"></script>
-    <script src="../scripts/controllers/new-song.controller.js" charset="utf-8"></script>
-    <script src="../scripts/controllers/print.controller.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="../vendors/bootstrap.css">
-    <link rel="stylesheet" href="../styles/main.css" />
-    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.eot" />
-    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.svg" />
-    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.ttf" />
-    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.woff" />
-    <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.woff2" />
-    <link rel="stylesheet" media="print" href="/styles/print.css">
+<head>
+  <meta charset="utf-8">
+  <title>iSongCollect</title>
+  <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+  <script src="../vendors/angular.js" charset="utf-8"></script>
+  <script src="https://static.filestackapi.com/v3/filestack-0.4.2.js"></script>
+  <script src="../vendors/angular-route.js" charset="utf-8"></script>
+  <script src="../vendors/angularfire.js" charset="utf-8"></script>
+  <script src="../vendors/angular-sanitize.min.js" charset="utf-8"></script>
+  <!-- External CDN for Quill-->
+  <script src="//cdn.quilljs.com/1.2.3/quill.min.js"></script>
 
-    <link rel="shortcut icon" type="image/x-icon" href="/styles/musicnote.png">
+  <!-- Theme included stylesheets for Quill-->
+  <link href="//cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
+  <link href="//cdn.quilljs.com/1.2.3/quill.bubble.css" rel="stylesheet">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  </head>
-  <body ng-app="SongCollect">
-    <header ng-include="'views/templates/header.html'"></header>
-    <main ng-view>
+  <script src="../vendors/ng-quill.min.js" charset="utf-8"></script>
+  <script src="../scripts/config.js" charset="utf-8"></script>
+  <script src="../scripts/client.js" charset="utf-8"></script>
+  <script src="../scripts/factories/auth.factory.js" charset="utf-8"></script>
+  <script src="../scripts/factories/song.factory.js" charset="utf-8"></script>
+  <script src="../scripts/controllers/login.controller.js" charset="utf-8"></script>
+  <script src="../scripts/controllers/collection.controller.js" charset="utf-8"></script>
+  <script src="../scripts/controllers/edit-song.controller.js" charset="utf-8"></script>
+  <script src="../scripts/controllers/new-song.controller.js" charset="utf-8"></script>
+  <script src="../scripts/controllers/print.controller.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="../vendors/bootstrap.css">
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.eot" />
+  <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.svg" />
+  <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.ttf" />
+  <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.woff" />
+  <link rel="stylesheet" href="../styles/fonts/glyphicons-halflings-regular.woff2" />
+  <link rel="stylesheet" media="print" href="/styles/print.css">
 
-    </main>
-    <footer ng-include="'views/templates/footer.html'" class="footer navbar-fixed-bottom"></footer>
-  </body>
+  <link rel="shortcut icon" type="image/x-icon" href="/styles/musicnote.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body ng-app="SongCollect">
+  <header ng-include="'views/templates/header.html'"></header>
+  <main ng-view>
+
+  </main>
+  <footer ng-include="'views/templates/footer.html'" class="footer navbar-fixed-bottom"></footer>
+</body>
 </html>

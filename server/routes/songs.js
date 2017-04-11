@@ -27,9 +27,10 @@ router.get('/', function(req, res) {
 }); //end router.get
 
 // post uploaded file to database
-router.post('/addImage', function(req, res) {
+router.post('/addImage/:id', function(req, res) {
   var userId = req.userInfo[0].id; // will become user id pulled from decoder token
   var imageObject = req.body;
+  var songId = req.params.id;
   console.log('imageObject: ', imageObject);
   pool.connect(function(err, client, done) {
     if(err) {
@@ -41,13 +42,51 @@ router.post('/addImage', function(req, res) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          res.sendStatus(200);
+          client.query('SELECT id FROM images WHERE image_url = $1;', [imageObject[0].url], function(err, result) {
+            if(err) {
+              console.log('error making database query: ', err);
+              res.sendStatus(500);
+            } else {
+              var imageId = result.rows[0].id;
+              console.log('image id from select', imageId);
+              client.query('INSERT INTO images_songs (image_id, song_id) VALUES ($1, $2);', [imageId, songId], function(err, result) {
+                if(err) {
+                  console.log('error making database query: ', err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(200);
+                }
+              }); // end client.query
+            }
+          }); // end client.query
+        }
+      }); // end client.query
+    }
+  }); // end pool.connect
+}); //end router.post
+
+// get attachments from db and add to dom
+router.get('/getAttachments/:id', function(req, res) {
+  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var songId = req.params.id;
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1;', [songId], function(err, result) {
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          res.send(result.rows);
         }
       }); // end client.query
     }
   }); // end pool.connect
 }); //end router.get
 
+// get single song from db for view
 router.get('/singleSong/:id', function(req, res) {
   var userId = req.userInfo[0].id; // will become user id pulled from decoder token
   var songId = req.params.id;
