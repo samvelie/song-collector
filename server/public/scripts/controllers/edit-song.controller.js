@@ -1,15 +1,17 @@
-app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFilepicker', '$location', function (SongFactory, $routeParams, angularFilepicker, $location) {
+app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFilepicker', function (SongFactory, $routeParams, angularFilepicker) {
 
   var self = this;
 
-  self.index = $routeParams.index;
-  self.songs = SongFactory.songCollection;
-  self.message = 'This is the EditSongController View';
-  // self.showPicker = SongFactory.showPicker;
+  SongFactory.getOneSong();
+  SongFactory.getAllSongs();
+  console.log('SongFactory.oneSong', SongFactory.oneSong);
+
+  self.songs = SongFactory.songCollection; // for the left-hand card view sidebar
   self.fileUpload = SongFactory.fileUpload;
-  self.filesUploaded = SongFactory.filesUploaded;
-  self.songInfo = SongFactory.songCollection;
+  self.filesUploaded = SongFactory.filesUploaded; // will grab existing files uploaded by the user
   // self.removeImage = SongFactory.removeImage;
+  self.oneSong = SongFactory.oneSong;
+  self.showSong = SongFactory.showSong;
 
   // move to factory -- used in both edit-song.controller and collection.controller
   self.expandFilter = function() {
@@ -20,11 +22,5 @@ app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFil
     }
   };
 
-  self.showSong = function (song, index) {
-    console.log('showSong clicked:', song);
-    console.log('on index', index);
-    selectedSong = song;
-    //change url to edit with index
-    $location.url('/edit/' + index);
-  };
+
 }]);
