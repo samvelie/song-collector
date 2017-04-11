@@ -12,4 +12,9 @@
     display: none;
   }
 
+  #scrollableDiv{
+    width: 100%;
+    height: 100%;
+   }
+
 }
