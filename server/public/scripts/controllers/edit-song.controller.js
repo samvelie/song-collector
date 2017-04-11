@@ -12,7 +12,8 @@ app.controller('EditSongController', ['SongFactory', '$routeParams', 'angularFil
   // self.removeImage = SongFactory.removeImage;
   self.oneSong = SongFactory.oneSong;
   self.showSong = SongFactory.showSong;
-
+  self.attachments = SongFactory.attachments;
+  
   // move to factory -- used in both edit-song.controller and collection.controller
   self.expandFilter = function() {
     if(self.spanClicked) {
