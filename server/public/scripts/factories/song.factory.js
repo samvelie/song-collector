@@ -4,11 +4,12 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var oneSong = {details: {}};
   var filesUploaded = {list:[]};
   var attachments = {list: []};
+  var dropdowns = {formType: [], songType: [], language: [], meter: [], scaleMode: [], teachableElements: []};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
-
   auth.$onAuthStateChanged(getAllSongs);
+  auth.$onAuthStateChanged(getDropdownValues);
   if($routeParams.id) {
     auth.$onAuthStateChanged(getOneSong);
     auth.$onAuthStateChanged(getAttachments);
@@ -119,6 +120,74 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       }
     }
 
+    function getDropdownValues() {
+      console.log('getting dropdowns?');
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+          console.log('firebase user authenticated');
+          $http({
+            method: 'GET',
+            url: '/dropdowns/form-type',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            dropdowns.formType = response.data;
+          });
+          $http({
+            method: 'GET',
+            url: '/dropdowns/song-type',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            dropdowns.songType = response.data;
+          });
+          $http({
+            method: 'GET',
+            url: '/dropdowns/language',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            dropdowns.language = response.data;
+          });
+          $http({
+            method: 'GET',
+            url: '/dropdowns/meter',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            dropdowns.meter = response.data;
+          });
+          $http({
+            method: 'GET',
+            url: '/dropdowns/scale-mode',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            dropdowns.scaleMode = response.data;
+          });
+          $http({
+            method: 'GET',
+            url: '/dropdowns/teachable-elements',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            dropdowns.teachableElements = response.data;
+          });
+          console.log(dropdowns);
+        });
+
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
     // remove Image function
     // function removeImage() {
     //   var storedurl = filesUploaded.list[0].url;
@@ -138,7 +207,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
       getAttachments: getAttachments,
-      attachments: attachments
+      attachments: attachments,
+      dropdowns: dropdowns
       // removeImage: removeImage
     };
   }]);
