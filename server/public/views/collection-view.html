@@ -12,10 +12,25 @@
 </div>
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
+<div  ng-if="cc.songClicked" class="col-sm-12 panel text-right" id="toolbar">
+  <!-- <div class="col-sm-3">
 
+  </div> -->
+  <div class="col-sm-6 half-gutter text-left">
+    <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
+  </div>
+<button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
+ <button type="button" class="btn btn-primary">Save</button>
+ <button type="button" class="btn btn-primary">Share</button>
+ <button type="button" class="btn btn-primary">Delete</button>
+
+ <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">
+   <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+ </button>
+</div>
   <!-- This number needs to be determined by db query -->
   <p>
-    Songs in Collection : 415
+    <!-- Songs in Collection : 415 -->
   </p>
 
   <!-- dynamic-width div for song cards -->
@@ -33,27 +48,23 @@
     </div>
   </div>
 
-  <button ng-if="cc.songClicked" type="button" class="btn btn-default" name="button" id="printButton" value="Print" onclick="window.print()">
-    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-    Print this Song!
-  </button>
+
 
   <div ng-if="cc.songClicked" class="col-sm-9 card-holder">
 
 
     <!-- start div for right column -->
-    <div class="col-sm-5 card-holder">
+    <div class="col-sm-8 card-holder">
 
       <form class="form-horizontal">
         <!-- Button that needs styling to hide song -->
-        <button ng-click="cc.songClicked=false">Minimize</button>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
           <div class="col-sm-8 half-gutter">
             <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
           </div>
-        </div>
+        </div> -->
         <div class="form-group">
           <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
           <div class="col-sm-8 half-gutter">
