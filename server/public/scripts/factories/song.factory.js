@@ -127,7 +127,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
         firebaseUser.getToken().then(function (idToken) {
-          console.log('firebase user authenticated');
           $http({
             method: 'GET',
             url: '/dropdowns/form-type',
@@ -182,9 +181,25 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           }).then(function(response) {
             dropdowns.teachableElements = response.data;
           });
-          console.log(dropdowns);
         });
 
+      } else {
+      }
+    }
+
+    function saveNewSong(newSong) {
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+          $http({
+            method: 'POST',
+            url: '/songs/newSong',
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            console.log(response.data);
+          });
+        });
       } else {
         console.log('not logged in!');
       }
@@ -210,7 +225,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       filesUploaded: filesUploaded,
       getAttachments: getAttachments,
       attachments: attachments,
-      dropdowns: dropdowns
+      dropdowns: dropdowns,
+      saveNewSong: saveNewSong
       // removeImage: removeImage
     };
   }]);

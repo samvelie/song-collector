@@ -160,7 +160,8 @@ label:after {
 }
 
 .form-control {
-    height: auto;
+    /*height: auto;*/
+    margin: 5px 0;
 }
 
 /* end song view styles*/
