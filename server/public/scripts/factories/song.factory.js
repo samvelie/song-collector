@@ -19,7 +19,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   function showSong(id) {
     $location.url('/edit/' + id);
     getAttachments();
-    getOneSong();
+    getOneSong(id);
   }
 
   // gets all songs from the db
@@ -44,13 +44,13 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   }
 
   // get's one song from the database based on the song's ID grabbed from $routeParams
-  function getOneSong() {
+  function getOneSong(id) {
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
         $http({
           method: 'GET',
-          url: '/songs/singleSong/' + $routeParams.id,
+          url: '/songs/singleSong/' + id,
           headers: {
             id_token: idToken
           }
