@@ -26,7 +26,7 @@
       </div>
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3>{{song.song_title_text}}</h3>
-        <p>Tone Set: {{song.tone_set_note}}</p>
+        <p>Tone Set: <span  ng-bind-html="song.tone_set_note"></span></p>
         <p>Scale / Mode: {{song.scale_mode_text}}</p>
         <p>Teachable Element: {{song.teachable_elements_text}}</p>
       </div>

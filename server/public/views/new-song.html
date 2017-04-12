@@ -1,7 +1,7 @@
 <!-- start full screen container -->
 <div class="col-sm-12" id="songInfoContainer">
 
-  <button type="submit" ng-click="nsc.saveNewSong(newSongObject)">Save New Song</button>
+  <button type="submit" ng-click="nsc.saveNewSong(nsc.newSongObject)">Save New Song</button>
 
   <button type="button" class="btn btn-default" name="button" id="printButton" value="Print" onclick="window.print()">
     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -40,13 +40,13 @@
       <div class="form-group">
         <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
         <div class="col-sm-8 half-gutter">
-          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode">
+          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode"></select>
         </div>
       </div>
       <div class="form-group">
         <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
         <div class="col-sm-8 half-gutter">
-          <select name="teachableElements" ng-model="nsc.newSongObject.teachableElements" class="form-control" placeholder="Teachable Elements" ng-options="teachableElements.teachableElements for teachableElements in nsc.dropdowns.teachable_elements">
+          <select name="teachableElements" ng-model="nsc.newSongObject.teachableElements" class="form-control" placeholder="Teachable Elements" ng-options="teachableElements.teachable_elements for teachableElements in nsc.dropdowns.teachableElements"></select>
         </div>
       </div>
       <div class="form-group">
@@ -72,6 +72,24 @@
         <div class="col-sm-8 half-gutter">
           <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in nsc.dropdowns.meter">
           </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Verses</label>
+        <div class="col-sm-8 half-gutter">
+          <input class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Verses" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Formation</label>
+        <div class="col-sm-8 half-gutter">
+          <input class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Action</label>
+        <div class="col-sm-8 half-gutter">
+          <input class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
         </div>
       </div>
       <div class="form-group">
@@ -161,8 +179,6 @@
           </div>
         </div>
       </div>
-
-      {{nsc.newSongObject}}
       <!-- end div for right column -->
 
     <!-- end full screen container -->
