@@ -474,3 +474,45 @@ CREATE TABLE images_songs (
 id SERIAL PRIMARY KEY,
 image_id INT REFERENCES images,
 song_id INT REFERENCES song_collection );
+
+CREATE TABLE scale_mode_options (
+id SERIAL PRIMARY KEY,
+scale_mode VARCHAR(50));
+
+CREATE TABLE teachable_elements_options (
+id SERIAL PRIMARY KEY,
+teachable_elements VARCHAR(200));
+
+CREATE TABLE meter_options (
+id SERIAL PRIMARY KEY,
+meter VARCHAR(20));
+
+CREATE TABLE form_type_options (
+id SERIAL PRIMARY KEY,
+form_type VARCHAR(100));
+
+CREATE TABLE song_type_options (
+id SERIAL PRIMARY KEY,
+song_type VARCHAR(50));
+
+CREATE TABLE language_options (
+id SERIAL PRIMARY KEY,
+language VARCHAR(50));
+
+INSERT INTO scale_mode_options (scale_mode)
+VALUES ('Aeolian'), ('Authentic do hexachord'), ('Authentic do hexatone'), ('Authentic do major'), ('Authentic do pentachord'), ('Authentic do pentatone'), ('Authentic do tetratone'), ('Authentic do trichord'), ('Authentic do tritone'), ('Authentic la hexatone'), ('Authentic la pentachord'), ('Authentic la pentatone'), ('Authentic la tetratone'), ('Authentic la tritone'), ('Authentic mi bitone'), ('Authentic mi tritone'), ('Authentic sol hexachord'), ('Authentic sol hexatone'), ('Authentic sol pentatone'), ('Authentic so tetratone'), ('Blue scale'), ('Do tetratone'), ('Dorian'), ('Extended do major'), ('Extended do pentachord'), ('Extended do pentatone'), ('Extended la'), ('Extended la minor'), ('Extended la pentachord'), ('Extended mi hexachord'), ('Harmonic minor'), ('Incomplete do major'), ('Incomplete do pentatone'), ('Incomplete la scale'), ('Incomplete natural minor'), ('Ionian'), ('Locrian'), ('Lydian'), ('Major'), ('Melodic minor'), ('Mixed meter'), ('Mixolydian'), ('Natural minor'), ('Phrygian'), ('Plagal do major'), ('Plagal do hexachord'), ('Plagal do hexatone'), ('Plagal do incomplete major'), ('Plagal do incomplete blues scale'), ('Plagal do pentachord'), ('Plagal do tetratone'), ('Plagal do tritone'), ('Plagal la hexatone'), ('Plagal la pentatone'), ('Quarter note and two eighth notes'), ('do hexachord'), ('do hexatone'), ('do tetrachord'), ('do tritone'), ('la hexachord'), ('la pentatone'), ('la tetratone'), ('mi hexachord'), ('mi pentachord'), ('mi tritone'), ('re pentachord'), ('so tritone'), ('Soprano recorder');
+
+INSERT INTO teachable_elements_options (teachable_elements)
+VALUES ('Two eighth note anacrusis'), (' dotted quarter eighth'), (' low sol'), (' Aeolian'), (' Asymmetrical meter'), (' Binary (AB)'), (' Call and Response'), (' Blues scale'), (' Canon/Round'), (' Children’s literature connection'), (' Community builder (choosing game)'), (' Community builder (dance and game)'), (' Community builder (dance)'), (' Community builder (name game)'), (' D.C.'), (' Dorian'), (' Dotted eighth sixteenth'), (' Dynamics'), (' Echo song'), (' Eighth dotted quarter'), (' Eighth two sixteenths'), (' Fermata'), (' First and Second Endings'), (' Following the leader'), (' Greeting song'), (' Half note'), (' Hambone'), (' Half rest'), (' Harmonic Function I-IV-V'), (' Harmonic Function I-V'), (' Harmonic minor'), (' High and low (comparitive)'), (' High ti’'), (' History'), (' Instrumental (Orff) piece'), (' Ionian'), (' Irregular meter'), (' Language'), (' Locrian'), (' Loud and soft (comparitive)'), (' Low la'), (' Low sol'), (' Major'), (' Melodic Sequence'), (' Melodic minor'), (' Mixed meter'), (' Mixolydian'), (' Movement'), (' Moving body parts'), (' Natural minor'), (' Pentatonic'), (' Phrygian'), (' Quarter and two eighth notes'), (' Quarter eighth (triple)'), (' Quarter note anacrusis'), (' Quarter note rest'), (' Question answer'), (' Recorder skills'), (' Repeats'), (' Sixteenth dotted eighth'), (' Sixteenth note variations'), (' Sixteenth note variations (triple)'), (' Sixteenth notes'), (' Songtale'), (' Spanish'), (' Steady Beat'), (' Ternary (ABA)'), (' Triple meter'), (' Triplet in duple'), (' Two sixteenth eighth'), (' Two sixteenth note anacrusis'), (' Verse-chorus'), (' Verse-refrain'), (' Vocal exploration'), (' body percussion/ostinati'), (' canon'), (' combination'), (' do'), (' dotted eighth sixteenth eighth (triple)'), (' dotted half note'), (' dotted quarter note and three eighths (triple)'), (' dotted quarter rest (triple)'), (' fa'), (' fingerplay'), (' high do’'), (' la'), (' la pentatone'), (' low la and low sol combination'), (' lydian'), (' partner song'), (' re'), (' round'), (' seasonal'), (' sixteenth eighth sixteenth (duple)'), (' sixteenth-eighth-sixteenth'), (' sol mi song'), (' sol pentatone'), (' soprano recorder'), (' ties'), (' whole notes'), (' Low ti'), (' Eighth note anacrusis'), (' Syncopa');
+
+INSERT INTO meter_options (meter)
+VALUES ('2/2'), ('2/4'), ('3/2'), ('3/4'), ('3/8'), ('4/4'), ('5/8'), ('6/8'), ('9/8'), ('cut'), ('mixed');
+
+INSERT INTO song_type_options (song_type)
+VALUES ('Action (songs that have actions)'), ('Animal song (songs that feature animals)'), ('Art song'), ('Ballad'), ('Blues'), ('Canon/Round'), ('Carol'), ('Ceremonial'), ('Chant/Rhyme'), ('Children’s song'), ('Comic'), ('Counting'), ('Courting'), ('Cowboy'), ('Cumulative'), ('Dance'), ('Dialogue'), ('Freedom'), ('Historical'), ('Holiday Song'), ('Hymn'), ('Lament'), ('Love Song'), ('Lullaby'), ('Nonsense and Play'), ('Nursery Rhyme'), ('Patriotic'), ('Play Party'), ('Poetry to song'), ('Riddle'), ('Ring Play'), ('Ritual'), ('Sea Shanty'), ('Singing Game'), ('Songtale'), ('Spiritual'), ('Street Cry'), ('Welcome song'), ('Worksong');
+
+INSERT INTO form_type_options (form_type)
+VALUES ('Binary'), ('Call and Response'), ('Canon/Round'), ('Cumulative'), ('Dialogue'), ('Echo song'), ('Fifth Change'), ('Question Answer'), ('Rondo'), ('Round (where there are clear stopping points for chords)'), ('Sectional (d.c.'), (' dal segno'), (' etc..)'), ('Single Strope with Spoken Dialogue'), ('Single strophe'), ('Single strophe with spoken text'), ('Strophic'), ('Strophic with refrain'), ('Strophic with spoken dialogue'), ('Strophic with substitution'), ('Ternary'), ('Theme and Variation'), ('Through-composed'), ('Verse-Refrain'), ('Verse-chorus (chorus is equal in length or longer than verse)'), ('Verse/chorus with refrain');
+
+INSERT INTO language_options (language)
+VALUES ('Akan (Ghana)'), ('Chinese'), ('Farsi'), ('Filipino'), ('French'), ('Hebrew'), ('Japanese'), ('Korean'), ('Latin'), ('Middle English'), ('Nigerian'), ('Norwegian'), ('Serbian'), ('Spanish'), ('Thai'), ('Vocables'), ('English');

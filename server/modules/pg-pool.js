@@ -12,7 +12,7 @@ if(process.env.DATABASE_URL) {
     port: params.port,
     database: params.pathname.split('/')[1],
     ssl: true,
-    max: 20, // how many connections at one time
+    max: 10, // how many connections at one time
     idleTimeoutMillis: 5000 // 30 seconds to try to connect
   };
 } else {

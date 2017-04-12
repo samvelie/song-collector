@@ -1,16 +1,18 @@
 app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', function($firebaseAuth, $http, $location, $window) {
   var auth = $firebaseAuth();
   var loggedIn = {};
-  var userInfo = {};
-  var newLoggedIn;
+  var userInfo = { info: '' };
+  var newLoggedIn = { loginStatus: false };
+
   auth.$onAuthStateChanged(function(firebaseUser) {
     // Check directly if firebaseUser is null
-    newLoggedIn = !!firebaseUser;
-    console.log(newLoggedIn);
+    newLoggedIn.loginStatus = !!firebaseUser;
+    console.log('newLoggedIn is', newLoggedIn);
     loggedIn.value = firebaseUser !== null;
     if (loggedIn.value) {
       console.log('user is logged in');
       getUserData(firebaseUser);
+      //  $location.path('/collection');
     } else {
       console.log('user is not logged in');
     }
@@ -35,7 +37,8 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
           }
         }).then(function(response) {
           console.log('from user get', response.data);
-          userInfo.info = response.data;
+          userInfo.info = response.data[0];
+          console.log('user is logged in as', userInfo.info.user_email);
         });
       });
     }
