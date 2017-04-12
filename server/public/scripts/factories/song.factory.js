@@ -10,14 +10,15 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var selectedSong = {};
   auth.$onAuthStateChanged(getAllSongs);
   auth.$onAuthStateChanged(getDropdownValues);
-  if($routeParams.id) {
-    auth.$onAuthStateChanged(getOneSong);
-    auth.$onAuthStateChanged(getAttachments);
-  }
+
+  // if($routeParams.id) {  //removed as not being passed in dynamic main page
+  //   auth.$onAuthStateChanged(getOneSong);
+  //   auth.$onAuthStateChanged(getAttachments);
+  // }
 
   // on click function that redirects us to the card's full view
   function showSong(id) {
-    $location.url('/edit/' + id);
+    // $location.url('/edit/' + id); //removed for dynamic main page
     getAttachments(id);
     getOneSong(id);
   }
