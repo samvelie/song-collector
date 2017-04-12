@@ -11,4 +11,17 @@ app.controller('NewSongController', ['SongFactory', function(SongFactory) {
 
   self.saveNewSong = SongFactory.saveNewSong;
 
+  self.teachableElementsModel = [];
+  self.teachableElementsSettings = {
+    displayProp: 'teachable_elements',
+    closeOnBlur: true,
+    clearSearchOnClose: true,
+    showCheckAll: false,
+    enableSearch: true,
+    smartButtonMaxItems: 10,
+    scrollableHeight: '300px',
+    scrollable: true
+  };
+
+
 }]);
