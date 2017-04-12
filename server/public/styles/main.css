@@ -102,6 +102,27 @@ header .navbar {
 
 /* end search bar styles */
 
+/* toolbar styles */
+#toolbar {
+  border-bottom: 1px solid lightblue;
+  border-left: 1px solid lightblue;
+  border-right: 1px solid lightblue;
+
+  width: 100%;
+  padding:10px;
+}
+
+#songTitle {
+  font-size: 2em;
+  line-height: .8;
+}
+
+#toolbar button {
+  color: #333;
+}
+
+/* end toolbar styles */
+
 /* card styles */
 .card {
   background: none;
@@ -223,10 +244,10 @@ span.glyphicon {
 
 /* print view stuff */
 
-#printButton {
+/*#printButton {
   float: right;
   background-color: lightblue;
-}
+}*/
 
 @media print {
   header navbar, footer, div .search-bar, .col-sm-2, #printButton {

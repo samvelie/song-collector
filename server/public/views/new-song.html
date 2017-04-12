@@ -1,7 +1,19 @@
 <!-- start full screen container -->
 <div class="col-sm-12" id="songInfoContainer">
 
-  <button type="submit" ng-click="nsc.saveNewSong(nsc.newSongObject)">Save New Song</button>
+  <div class="col-sm-12 panel text-right" id="toolbar">
+    <div class="form-group">
+      <div class="col-sm-8 half-gutter text-center">
+        <input class="form-control" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="Title" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" ng-click="nsc.saveNewSong(nsc.newSongObject)">Save New Song</button>
+   <button type="button" class="btn btn-primary">Cancel</button>
+
+   <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">
+     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+   </button>
+  </div>
 
   <button type="button" class="btn btn-default" name="button" id="printButton" value="Print" onclick="window.print()">
     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -13,12 +25,7 @@
 
     <!--  using index passed in params to pull information for specific song from factory list, i.e. esc.songInfo.list[esc.index] -->
     <form class="form-horizontal">
-      <div class="form-group">
-        <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
-        <div class="col-sm-8 half-gutter">
-          <input class="form-control" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="Title" />
-        </div>
-      </div>
+
       <div class="form-group">
         <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
         <div class="col-sm-8 half-gutter">
