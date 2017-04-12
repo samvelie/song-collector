@@ -8,9 +8,10 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.songClicked = false;
 
   self.showSong = function(index) {
-    self.songClicked = true;
+    // self.songClicked = true;
     console.log('songClicked:', self.songClicked);
     console.log('show song of index ' + index);
+    console.log(self.songs.list[index]);
   }
 
   self.expandFilter = function() {
