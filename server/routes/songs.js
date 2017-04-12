@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE user_id=$1 LIMIT 30;', [userId], function(err, result) {
+      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE user_id=$1;', [userId], function(err, result) {
       done();
       if(err) {
         console.log('error making database query: ', err);
@@ -113,16 +113,15 @@ router.get('/singleSong/:id', function(req, res) {
   }); // end pool.connect
 }); //end router.get
 
-router.get('/singleSong/:id', function(req, res) {
+router.post('/newSong', function(req, res) {
   var userId = req.userInfo[0].id; // will become user id pulled from decoder token
-  var songId = req.params.id;
-  console.log('songId', songId);
+  var songObject = req.body;
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE id = $1;', [songId], function(err, result) {
+      client.query('INSERT INTO song_collection (song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23);', [songObject.title, songObject.toneSet, songObject.scaleMode.scale_mode, songObject.teachableElements.teachable_elements, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter.meter, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType.form_type, songObject.songType.song_type, songObject.cultureOrigin, songObject.language.language, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
