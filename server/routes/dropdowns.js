@@ -14,6 +14,7 @@ router.get('/form-type', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM form_type_options;', function(err, result) {
+        done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
@@ -34,6 +35,7 @@ router.get('/song-type', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM song_type_options;', function(err, result) {
+        done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
@@ -54,6 +56,7 @@ router.get('/language', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM language_options;', function(err, result) {
+        done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
@@ -74,6 +77,7 @@ router.get('/meter', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM meter_options;', function(err, result) {
+        done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
@@ -94,6 +98,7 @@ router.get('/scale-mode', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM scale_mode_options;', function(err, result) {
+        done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
@@ -114,6 +119,7 @@ router.get('/teachable-elements', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM teachable_elements_options;', function(err, result) {
+        done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);

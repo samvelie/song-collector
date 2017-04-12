@@ -18,7 +18,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   // on click function that redirects us to the card's full view
   function showSong(id) {
     $location.url('/edit/' + id);
-    getAttachments();
+    getAttachments(id);
     getOneSong(id);
   }
 
@@ -44,13 +44,13 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   }
 
   // get's one song from the database based on the song's ID grabbed from $routeParams
-  function getOneSong(id) {
+  function getOneSong(songId) {
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
         $http({
           method: 'GET',
-          url: '/songs/singleSong/' + id,
+          url: '/songs/singleSong/' + (typeof(songId) == "number" ? songId : $routeParams.id),
           headers: {
             id_token: idToken
           }
@@ -99,7 +99,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       });
     }
 
-    function getAttachments() {
+    function getAttachments(songId) {
       console.log('hitting get attachments function');
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
@@ -107,7 +107,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           console.log('firebase user authenticated');
           $http({
             method: 'GET',
-            url: '/songs/getAttachments/' + $routeParams.id,
+            url: '/songs/getAttachments/' + (typeof(songId) == "number" ? songId : $routeParams.id),
             headers: {
               id_token: idToken
             }
