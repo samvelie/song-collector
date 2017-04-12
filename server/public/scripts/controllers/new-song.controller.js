@@ -14,4 +14,8 @@ app.controller('NewSongController', ['SongFactory', function(SongFactory) {
           console.log(JSON.stringify(result.filesUploaded));
       });
   };
+
+  self.example1model = [];
+  self.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"} ];
+
 }]);
