@@ -35,4 +35,14 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
       self.spanClicked = true;
     }
   };
+
+  // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
+  self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';
+
+  self.dynamicPopover = {
+    content: 'Hello, World!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Share this song:'
+  };
+
 }]);
