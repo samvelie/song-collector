@@ -3,6 +3,11 @@
   font-family: 'Pacifico';
   src: url('../styles/fonts/Pacifico-Regular.ttf');
 }
+
+@font-face {
+  font-family: 'MusiSync';
+  src: url('../styles/fonts/MusiSync.ttf') format('truetype');
+}
 /* end imports */
 
 /* body styles */
@@ -197,6 +202,15 @@ label:after {
 }
 
 /* end song view styles*/
+
+/* music note field style */
+
+.music-font {
+  font-family: 'MusiSync';
+  font-size: 28px;
+}
+
+/* end music note field style */
 
 /* edit song view styles */
 #songInfoContainer {
