@@ -1,0 +1,70 @@
+<div class="col-md-12">
+
+
+    <button href="#!print" class="btn btn-default">
+      <span class="glyphicon glyphicon-print" aria-hidden="true" onclick="window.print()"></span></button>
+
+  <!--  using index passed in params to pull information for specific song from factory list, i.e. pc.songInfo.list[pc.index] -->
+
+      <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
+      <div class="form-control" id="songTitle">{{pc.oneSong.details.song_title_text}}</div>
+
+      <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
+      <div id="toneSet" theme="bubble" class="form-control" ng-model="pc.oneSong.details.tone_set_note" placeholder="override default placeholder"></div>
+
+      <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
+      <div class="form-control" id="scaleMode">{{pc.oneSong.details.scale_mode_text}}</div>
+
+      <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
+        <div class="form-control">{{pc.oneSong.details.teachable_elements_text}}</div>
+
+      <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
+        <div class="form-control">{{pc.oneSong.details.rhythm_note}}</div>
+
+      <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
+        <div class="form-control">{{pc.oneSong.details.extractable_rhythms_note}}</div>
+
+      <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
+        <div class="form-control">{{pc.oneSong.details.extractable_melodies_note}}</div>
+
+      <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
+        <div class="form-control">{{pc.oneSong.details.meter_text}}</div>
+
+      <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
+        <div class="form-control">{{pc.oneSong.details.intervals_note_groups_text}}</div>
+
+      <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
+        <div class="form-control">{{pc.oneSong.details.phrases_text}}</div>
+
+      <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
+        <div class="form-control">{{pc.oneSong.details.melodic_form_text}}</div>
+
+      <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
+        <div class="form-control">{{pc.oneSong.details.rhythmic_form_text}}</div>
+
+      <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
+        <div class="form-control">{{pc.oneSong.details.form_type_text}}</div>
+
+      <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
+        <div class="form-control">{{pc.oneSong.details.culture_origin_text}}</div>
+
+      <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
+        <div class="form-control">{{pc.oneSong.details.language_text}}</div>
+
+      <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
+        <div class="form-control">{{pc.oneSong.details.csp_text}}</div>
+
+      <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
+        <div class="form-control">{{pc.oneSong.details.other_note}}</div>
+
+      <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
+        <div class="form-control">{{pc.oneSong.details.source_note}}</div>
+
+    <!-- end div for right column -->
+
+
+          <!-- <div class="form-control">{{pc.songInfo.list[pc.index].notation_photo}}</div> -->
+        </div>
+      </div>
+    </div>
+    <!-- end div for right column -->
