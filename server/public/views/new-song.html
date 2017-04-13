@@ -8,7 +8,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary" ng-click="nsc.saveNewSong(nsc.newSongObject)">Save New Song</button>
-   <button type="button" class="btn btn-primary">Cancel</button>
+    <button type="button" class="btn btn-primary">Cancel</button>
   </div>
 
   <!-- start div for right column -->
@@ -51,15 +51,26 @@
       <div class="form-group">
         <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm">
+          <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
         </div>
+      </div>
+      <div class="display">
+        <span ng-repeat="component in nsc.rhythm track by $index">
+          <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
+        </span>
       </div>
       <div class="form-group">
         <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms">
+          <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
         </div>
       </div>
+      <div class="display">
+        <span ng-repeat="extract in nsc.extractableRhythms track by $index">
+          <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
+        </span>
+      </div>
+      <div cla
       <div class="form-group">
         <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
         <div class="col-sm-8 half-gutter">
@@ -164,21 +175,21 @@
     </form>
   </div>
 
-      <!-- end div for right column -->
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
-          <div> <!-- existing attachments -->
-            <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in nsc.attachments.list" ng-src="{{photo.image_url}}"/>
-          </div>
-          <div class="col-sm-12 half-gutter">
-            <button class="btn btn-primary" ng-click="nsc.fileUpload()">Upload</button>
-
-            <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
-          </div>
-        </div>
+  <!-- end div for right column -->
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
+      <div> <!-- existing attachments -->
+        <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in nsc.attachments.list" ng-src="{{photo.image_url}}"/>
       </div>
-      <!-- end div for right column -->
+      <div class="col-sm-12 half-gutter">
+        <button class="btn btn-primary" ng-click="nsc.fileUpload()">Upload</button>
 
-    <!-- end full screen container -->
+        <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
+      </div>
+    </div>
   </div>
+  <!-- end div for right column -->
+
+  <!-- end full screen container -->
+</div>

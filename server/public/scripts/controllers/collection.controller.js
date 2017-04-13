@@ -12,6 +12,15 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.filesUploaded = SongFactory.filesUploaded; //files for single song
   self.attachments = SongFactory.attachments; //attachments for single song
 
+// have a promise so that after a song is deleted, user gets redirected back to the main card view
+// need to create a confirmation popup and an alert of deletion popup
+  self.deleteFunction = function(songId) {
+    SongFactory.deleteSong(songId).then(function() {
+      self.songClicked = false;
+      self.deleteSuccessMessage = 'Song Deleted';
+    });
+  };
+
   self.showSong = function(songId) {
         console.log('show song of id ' + songId);
     self.songClicked = true;

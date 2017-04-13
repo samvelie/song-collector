@@ -158,5 +158,24 @@ router.post('/newSong', function(req, res) {
   }); // end pool.connect
 }); //end router.get
 
-
+router.delete('/removeSong/:id', function(req, res) {
+  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var songId = req.params.id;
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('DELETE FROM song_collection WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      }); // end client.query
+    }
+  }); // end pool.connect
+}); // end router.delete
 module.exports = router;
