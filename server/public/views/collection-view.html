@@ -21,7 +21,7 @@
 
 <div  ng-if="cc.songClicked" class="col-sm-9 text-right panel" id="toolbar">
   <div class="col-sm-6 half-gutter text-left">
-    <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
+    <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title_text">
   </div>
 <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
  <button type="button" class="btn btn-primary">Save</button>
@@ -57,19 +57,12 @@
     <div class="col-sm-8 card-holder">
 
       <form class="form-horizontal">
-        <!-- Button that needs styling to hide song -->
 
-        <!-- <div class="form-group">
-          <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
-          <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
-          </div>
-        </div> -->
         <div class="form-group">
           <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
           <div class="col-sm-8 half-gutter">
             <!-- <div contenteditable class="form-control" id="toneSet"> -->
-            <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="cc.oneSong.details.tone_set_note" placeholder="override default placeholder">
+            <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="nsc.newSongObject.toneSet" placeholder="Tone Set">
               <ng-quill-toolbar>
                 <div id="ng-quill-toolbar">
                   <span class="ql-formats">
@@ -86,98 +79,128 @@
         <div class="form-group">
           <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control" id="scaleMode">{{cc.oneSong.details.scale_mode_text}}</div>
+            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_text" selected="cc.oneSong.details.scale_mode_text" class="form-control" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by cc.oneSong.details.scale_mode_text">
+            </select>
           </div>
+
         </div>
         <div class="form-group">
           <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.teachable_elements_text}}</div>
+            <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
           </div>
         </div>
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.rhythm_note}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm">
           </div>
         </div>
         <div class="form-group">
           <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.extractable_rhythms_note}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms">
           </div>
         </div>
         <div class="form-group">
           <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.extractable_melodies_note}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.extractableMelodies" placeholder="Extractable Melodies">
           </div>
         </div>
         <div class="form-group">
           <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.meter_text}}</div>
+            <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in nsc.dropdowns.meter">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Verses</label>
+          <div class="col-sm-8 half-gutter">
+            <input class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Verses" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Formation</label>
+          <div class="col-sm-8 half-gutter">
+            <input class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Action</label>
+          <div class="col-sm-8 half-gutter">
+            <input class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
           </div>
         </div>
         <div class="form-group">
           <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.intervals_note_groups_text}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroup" placeholder="Intervals / Note Group" />
           </div>
         </div>
         <div class="form-group">
           <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.phrases_text}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.phrases" placeholder="Phrases" />
           </div>
         </div>
         <div class="form-group">
           <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.melodic_form_text}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.melodicForm" placeholder="Melodic Form" />
           </div>
         </div>
         <div class="form-group">
           <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.rhythmic_form_text}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.rhythmicForm" placeholder="Rhythmic Form" />
           </div>
         </div>
         <div class="form-group">
           <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.form_type_text}}</div>
+            <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in nsc.dropdowns.formType">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
+          <div class="col-sm-8 half-gutter">
+            <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in nsc.dropdowns.songType">
+            </select>
           </div>
         </div>
         <div class="form-group">
           <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.culture_origin_text}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.cultureOrigin" placeholder="Culture / Origin" />
           </div>
         </div>
         <div class="form-group">
           <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.language_text}}</div>
+            <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.language for language in nsc.dropdowns.language">
+            </select>
           </div>
         </div>
         <div class="form-group">
           <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
           <!-- comfortable starting pitch -->
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.csp_text}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.csp" placeholder="CSP" />
           </div>
         </div>
         <div class="form-group">
           <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.other_note}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.other" placeholder="Other Notes" />
           </div>
         </div>
         <div class="form-group">
           <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.source_note}}</div>
+            <input class="form-control" ng-model="nsc.newSongObject.source" placeholder="Source Notes" />
           </div>
         </div>
       </form>
