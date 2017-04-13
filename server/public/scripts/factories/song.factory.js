@@ -201,6 +201,26 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }
           }).then(function(response) {
             console.log(response.data);
+            getAllSongs();
+          });
+        });
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
+    function deleteSong(songId) {
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        return firebaseUser.getToken().then(function (idToken) {
+          $http({
+            method: 'DELETE',
+            url: '/songs/removeSong/' + songId,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            getAllSongs();
           });
         });
       } else {
@@ -229,7 +249,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       getAttachments: getAttachments,
       attachments: attachments,
       dropdowns: dropdowns,
-      saveNewSong: saveNewSong
+      saveNewSong: saveNewSong,
+      deleteSong: deleteSong
       // removeImage: removeImage
     };
   }]);
