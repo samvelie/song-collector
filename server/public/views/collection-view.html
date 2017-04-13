@@ -25,13 +25,22 @@
   </div>
 <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
  <button type="button" class="btn btn-primary">Save</button>
- <button type="button" class="btn btn-primary">Share</button>
+ <button popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" type="button" class="btn btn-default">Share</button>
  <button type="button" class="btn btn-primary" ng-click="cc.deleteFunction(cc.oneSong.details.id)">Delete</button>
-
- <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">
-   <!-- <span class="glyphicon glyphicon-print" aria-hidden="true"></span> -->Print
- </button>
+ <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">Print</button>
 </div>
+
+<script type="text/ng-template" id="myPopoverTemplate.html">
+    <div>{{cc.dynamicPopover.content}}</div>
+    <form>
+  <div class="input-group">
+    <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+    <span class="input-group-btn">
+      <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+    </span>
+  </div>
+</form>
+</script>
 
   <!-- dynamic-width div for song cards -->
   <div ng-class="['container-fluid', 'card-holder', cc.songClicked ? 'col-sm-3':'col-md-12']">
