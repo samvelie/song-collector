@@ -8,7 +8,7 @@
     display: block;
   }
 
-  header navbar, footer, div .search-bar, .col-sm-2, #printButton, #cardHolder, p {
+  header navbar, footer, div .search-bar, .col-sm-3 card-holder, #printButton, #cardHolder, p {
     display: none;
   }
 
