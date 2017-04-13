@@ -1,4 +1,9 @@
-var app = angular.module('SongCollect', ['ngRoute', 'firebase']);
+var app = angular.module('SongCollect', ['ngRoute', 'firebase', 'ngQuill', 'ngSanitize', 'angularjs-dropdown-multiselect']);
+
+// angular.module('angularFilepicker', [])
+app.service('angularFilepicker', function($window){
+	return $window.filepicker;
+});
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
@@ -12,7 +17,7 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'NewSongController',
             controllerAs: 'nsc'
         })
-        .when('/edit', {
+        .when('/edit/:id?', { //eventually remove optionality of index
             templateUrl: '/views/edit-song.html',
             controller: 'EditSongController',
             controllerAs: 'esc'
@@ -30,4 +35,7 @@ app.config(['$routeProvider', function($routeProvider) {
         .otherwise({
             redirectTo: 'login'
         });
+        // API key for filepicker service
+        // angularFilePicker.setKey('AIJdcA3UQs6mAMvmUvaTkz');
+
 }]);
