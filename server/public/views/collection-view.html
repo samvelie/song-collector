@@ -12,10 +12,14 @@
 </div>
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
-<div  ng-if="cc.songClicked" class="col-sm-12 panel text-right" id="toolbar">
-  <!-- <div class="col-sm-3">
+<div ng-if="cc.songClicked" class="col-sm-3 text-left panel songCount" id="toolbar">
+  <!-- This number needs to be determined -->
+  <p>
+    Songs in Collection : 415
+  </p>
+</div>
 
-  </div> -->
+<div  ng-if="cc.songClicked" class="col-sm-9 text-right panel" id="toolbar">
   <div class="col-sm-6 half-gutter text-left">
     <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
   </div>
@@ -25,17 +29,13 @@
  <button type="button" class="btn btn-primary">Delete</button>
 
  <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">
-   <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+   <!-- <span class="glyphicon glyphicon-print" aria-hidden="true"></span> -->Print
  </button>
 </div>
-  <!-- This number needs to be determined by db query -->
-  <p>
-    <!-- Songs in Collection : 415 -->
-  </p>
 
   <!-- dynamic-width div for song cards -->
   <div ng-class="['container-fluid', 'card-holder', cc.songClicked ? 'col-sm-3':'col-md-12']">
-    <div ng-class="cc.songClicked ? card : row">
+    <div ng-class="cc.songClicked ? card : row" class="text-center">
       <div ng-if="!cc.songClicked" class="card text-center vertical-center" id="first-card">
         <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
