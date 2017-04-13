@@ -244,16 +244,16 @@ span.glyphicon {
 
 /* print view stuff */
 
-/*#printButton {
+#printButton {
   float: right;
-  background-color: lightblue;
-}*/
+  background-color: white;
+}
 
-/*@media print {
+@media print {
   header navbar, footer, div .search-bar, .col-sm-2, .card col-sm-11, #printButton {
       display: none;
   }
-}*/
+}
 
 #newSongDiv {
   padding: 5px;
