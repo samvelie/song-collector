@@ -28,7 +28,7 @@ transporter.verify(function (error, success) {
 // end nodemailer-smtp-transport
 
 router.get('/', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -52,7 +52,7 @@ router.get('/', function(req, res) {
 
 // post uploaded file to database
 router.post('/addImage/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var imageObject = req.body;
   var songId = req.params.id;
   console.log('imageObject: ', imageObject);
@@ -92,7 +92,7 @@ router.post('/addImage/:id', function(req, res) {
 
 // get attachments from db and add to dom
 router.get('/getAttachments/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songId = req.params.id;
   pool.connect(function(err, client, done) {
     if(err) {
@@ -114,7 +114,7 @@ router.get('/getAttachments/:id', function(req, res) {
 
 // get single song from db for view
 router.get('/singleSong/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songId = req.params.id;
   console.log('songId', songId);
   pool.connect(function(err, client, done) {
@@ -137,7 +137,7 @@ router.get('/singleSong/:id', function(req, res) {
 }); //end router.get
 
 router.post('/newSong', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songObject = req.body;
   pool.connect(function(err, client, done) {
     if(err) {
@@ -159,7 +159,7 @@ router.post('/newSong', function(req, res) {
 }); //end router.get
 
 router.delete('/removeSong/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songId = req.params.id;
   pool.connect(function(err, client, done) {
     if(err) {

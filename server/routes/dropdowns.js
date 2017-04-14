@@ -7,7 +7,7 @@ var pool = require('../modules/pg-pool');
 // dropdowns
 // form-type dropdown
 router.get('/form-type', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -28,7 +28,7 @@ router.get('/form-type', function(req, res) {
 
 // song-type dropdown
 router.get('/song-type', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -49,7 +49,7 @@ router.get('/song-type', function(req, res) {
 
 // language dropdown
 router.get('/language', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -70,7 +70,7 @@ router.get('/language', function(req, res) {
 
 // meter dropdown
 router.get('/meter', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -91,7 +91,7 @@ router.get('/meter', function(req, res) {
 
 // scale-mode dropdown
 router.get('/scale-mode', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -112,7 +112,7 @@ router.get('/scale-mode', function(req, res) {
 
 // teachable elements dropdown
 router.get('/teachable-elements', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);

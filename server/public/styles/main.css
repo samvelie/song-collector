@@ -12,8 +12,12 @@
 
 /* body styles */
 html {
-  height: 100%;
-  padding-bottom: 100px;
+  /*height: 100%;*/
+  /*padding-bottom: 100px;*/
+}
+
+body {
+  height: 100vh;
 }
 /* end body styles */
 
@@ -139,6 +143,26 @@ header .navbar {
 
 /* end toolbar styles */
 
+
+/* edit song view styles */
+#songInfoContainer {
+  /*height: 650px;*/
+  /*height: 100%;*/
+  /*padding-bottom: 75px;*/
+  /*border: 1px dashed purple;*/
+}
+
+.card-holder {
+  /*height: 100%;*/
+  overflow-y: scroll;
+  border-right: 1px solid lightgrey;
+  /*background-color: orange;*/
+  height: 90vh;
+}
+
+/* end edit song view styles */
+
+
 /* card styles */
 .card {
   background: none;
@@ -212,19 +236,6 @@ label:after {
 
 /* end music note field style */
 
-/* edit song view styles */
-#songInfoContainer {
-  height: 650px;
-  padding-bottom: 75px;
-}
-
-.card-holder {
-  height:100%;
-  overflow-y: scroll;
-  border-right: 1px solid lightgrey;
-}
-
-/* end edit song view styles */
 
 /* footer styles */
 .panel-footer {
