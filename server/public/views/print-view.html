@@ -8,6 +8,12 @@
       <tbody>
         <tr>
           <td>
+            <!-- images not saving to db so this is a blank field -->
+            <img class="thumbnail" ng-src="{{cc.filesUploaded.list[0].url}}">
+          </td>
+        </tr>
+        <tr>
+          <td>
             <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
             <div id="songTitle">{{pc.oneSong.details.song_title_text}}</div>
           </td>
