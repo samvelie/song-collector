@@ -106,14 +106,24 @@
         </div>
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-          <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.rhythm_note}}</div>
+          <div class="col-sm-8 half-gutter" ng-switch on="cc.editingRhythm">
+            <input id="rhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" ng-switch-when="true" ng-blur="cc.loseFocus('rhythm')" autofocus>
+            <div class="display" ng-switch-when="false" ng-click="cc.findFocus('rhythm')">
+              <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
+                <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-          <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.extractable_rhythms_note}}</div>
+          <div class="col-sm-8 half-gutter" ng-switch on="cc.editingExtractableRhythm">
+            <input id="extractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" ng-switch-when="true" ng-blur="cc.loseFocus('extractableRhythm')" autofocus>
+            <div class="display" ng-switch-when="false" ng-click="cc.findFocus('extractableRhythm')">
+              <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
+                <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">

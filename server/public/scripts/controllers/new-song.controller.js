@@ -46,19 +46,19 @@ app.controller('NewSongController', ['SongFactory', function(SongFactory) {
       textString += 'all syncopated ';
     }
     self.rhythm = [newString, textString];
-  }
+  };
 
   self.checkAndDisplayExtractableRhythms = function(str) {
-  var res = str.split(/\(([^)]+)\)/);
+    var res = str.split(/\(([^)]+)\)/);
 
-  for (var i = 0; i < res.length; i++) {
-    if(i%2!==0) {
-      res[i] = '(' + res[i] + ')';
+    for (var i = 0; i < res.length; i++) {
+      if(i%2!==0) {
+        res[i] = '(' + res[i] + ')';
+      }
     }
-  }
-  console.log(res);
-  self.extractableRhythms = res;
-}
+    console.log(res);
+    self.extractableRhythms = res;
+  };
 
 
 }]);
