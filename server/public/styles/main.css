@@ -149,14 +149,14 @@ header .navbar {
   /*height: 650px;*/
   /*height: 100%;*/
   /*padding-bottom: 75px;*/
-  border: 1px dashed purple;
+  /*border: 1px dashed purple;*/
 }
 
 .card-holder {
   /*height: 100%;*/
   overflow-y: scroll;
   border-right: 1px solid lightgrey;
-  background-color: orange;
+  /*background-color: orange;*/
   height: 90vh;
 }
 

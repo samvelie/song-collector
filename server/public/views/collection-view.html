@@ -16,72 +16,72 @@
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
 
-  <!-- start left column filtering text section -->
-  <div ng-if="cc.songClicked" class="col-sm-3 text-left panel songCount" id="toolbar">
-    <p>
-      <!-- NOTE: this is a placeholder for filtering details. This number needs to be determined -->
-      Songs in Collection : 415
-    </p>
-  </div>
-  <!-- end left column filtering text section -->
-
-  <!-- start right column for title and toolbar section -->
-  <div ng-if="cc.songClicked" class="col-sm-9 text-right panel" id="toolbar">
-
-    <!-- start song title section -->
-    <div class="col-sm-6 half-gutter text-left">
-      <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
-    </div>
-    <!-- end song title section -->
-
-    <!-- start toolbar section -->
-    <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
-    <button type="button" class="btn btn-primary">Save</button>
-    <button popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" type="button" class="btn btn-default">Share</button>
-    <button type="button" class="btn btn-primary" ng-click="cc.deleteFunction(cc.oneSong.details.id)">Delete</button>
-    <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">Print</button>
-    <!-- end toolbar section -->
-
-  </div>
-  <!-- end right column for title and toolbar section -->
-
-  <!-- start Share popover template -->
-  <script type="text/ng-template" id="myPopoverTemplate.html">
-    <div>{{cc.dynamicPopover.content}}</div>
-    <form>
-      <div class="input-group">
-        <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
-        <span class="input-group-btn">
-          <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
-        </span>
-      </div>
-    </form>
-  </script>
-  <!-- end Share popover template -->
-
   <!-- dynamic-width div for song cards -->
   <div ng-class="['container-fluid', 'card-holder', cc.songClicked ? 'col-sm-3':'col-md-12']">
     <div ng-class="cc.songClicked ? card : row">
+
+
+      <div class="text-center panel songCount" id="toolbar">
+        Songs in collection: 415
+      </div>
+
+      <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
         <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
+      <!-- end container for first "add song" card -->
+
+      <!-- start container for all song cards -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3 class="text-center">{{song.song_title_text}}</h3>
         <p>Tone Set: <span  ng-bind-html="song.tone_set_note"></span></p>
         <p>Scale / Mode: {{song.scale_mode_text}}</p>
         <p>Teachable Element: {{song.teachable_elements_text}}</p>
       </div>
+      <!-- end container for all song cards -->
+
     </div>
   </div>
 
 
 
-  <div ng-if="cc.songClicked" class="col-sm-9 card-holder">
+  <div ng-if="cc.songClicked" class="col-sm-9 card-holder no-gutter">
+
+    <div class="text-right panel" id="toolbar">
+      <div class="col-sm-6 half-gutter text-left">
+        <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
+      </div>
+      <!-- end song title section -->
+
+      <!-- start toolbar section -->
+      <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
+      <button type="button" class="btn btn-primary">Save</button>
+      <button popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" type="button" class="btn btn-default">Share</button>
+      <button type="button" class="btn btn-primary" ng-click="cc.deleteFunction(cc.oneSong.details.id)">Delete</button>
+      <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">Print</button>
+      <!-- end toolbar section -->
+
+      <!-- start Share popover template -->
+      <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div>{{cc.dynamicPopover.content}}</div>
+        <form>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+            </span>
+          </div>
+        </form>
+      </script>
+      <!-- end Share popover template -->
+
+    </div>
 
     <!-- start div for right column -->
     <div class="col-sm-8 card-holder">
 
       <form class="form-horizontal">
+
         <!-- Button that needs styling to hide song -->
 
         <!-- <div class="form-group">
