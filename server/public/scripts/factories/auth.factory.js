@@ -37,7 +37,9 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
           }
         }).then(function(response) {
           console.log('from user get', response.data);
-          userInfo.info = response.data[0];
+          userInfo.info = response.data;
+          console.log('userInfo is', userInfo);
+          console.log('userInfo.info is', userInfo.info);
           console.log('user is logged in as', userInfo.info.user_email);
         });
       });
