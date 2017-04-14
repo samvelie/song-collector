@@ -7,6 +7,9 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   //boolean to hide/show single song
   self.songClicked = false;
 
+  self.editingRhythm = false;
+  self.editingExtractableRhythm = false;
+
   self.oneSong = SongFactory.oneSong; //single song information
   self.fileUpload = SongFactory.fileUpload; //function for uploading
   self.filesUploaded = SongFactory.filesUploaded; //files for single song
@@ -35,6 +38,25 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
       self.spanClicked = true;
     }
   };
+
+  self.loseFocus = function(fieldId) {
+    if(fieldId == 'rhythm') {
+      self.editingRhythm = false;
+    }
+    if(fieldId == 'extractableRhythm') {
+      self.editingExtractableRhythm = false;
+    }
+  };
+
+  self.findFocus = function(fieldId) {
+    if(fieldId == 'rhythm') {
+      self.editingRhythm = true;
+    }
+    if(fieldId == 'extractableRhythm') {
+      self.editingExtractableRhythm = true;
+    }
+  };
+
 
   // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
   self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';

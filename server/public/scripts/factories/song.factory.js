@@ -57,6 +57,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           }
         }).then(function(response) {
           oneSong.details = response.data;
+          oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm_note); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
+          oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms_note); //"" as above but for extractable rhythms
         });
       });
     } else {
@@ -237,6 +239,42 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     //   client.remove(handle);
     //   console.log('file removed successfully: ' + storedurl);
     // }
+
+    function prepareRhythmForFont(rhythmString) {
+        var textString = '';
+        var newString = rhythmString;
+        if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
+          newString = newString.replace('internal', '');
+          newString = newString.replace('(internal)', '');
+          textString += 'internal ';
+        }
+        if (rhythmString.indexOf("eighth")>=0) {
+          newString = newString.replace('eighth', '');
+          textString += 'eighth ';
+        }
+        if (rhythmString.indexOf("anacrusis")>=0 || rhythmString.indexOf("anacrusic")>=0) {
+          newString = newString.replace('anacrusis', '');
+          newString = newString.replace('anacrusic', '');
+          textString += 'anacrusis ';
+        }
+        if (rhythmString.indexOf("all syncopated")>=0) {
+          newString = newString.replace('all syncopated', '');
+          textString += 'all syncopated ';
+        }
+        return [newString, textString];
+    }
+
+    function prepareExtractableRhythmForFont(extractableRhythmString) {
+        var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
+
+        for (var i = 0; i < resultArray.length; i++) {
+          if(i%2!==0) {
+            resultArray[i] = '(' + resultArray[i] + ')';
+          }
+        }
+
+        return resultArray;
+    }
 
     return {
       showSong: showSong,
