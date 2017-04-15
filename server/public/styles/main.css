@@ -3,12 +3,21 @@
   font-family: 'Pacifico';
   src: url('../styles/fonts/Pacifico-Regular.ttf');
 }
+
+@font-face {
+  font-family: 'MusiSync';
+  src: url('../styles/fonts/MusiSync.ttf') format('truetype');
+}
 /* end imports */
 
 /* body styles */
 html {
-  height: 100%;
-  padding-bottom: 100px;
+  /*height: 100%;*/
+  /*padding-bottom: 100px;*/
+}
+
+body {
+  height: 100vh;
 }
 /* end body styles */
 
@@ -108,8 +117,19 @@ header .navbar {
   border-left: 1px solid lightblue;
   border-right: 1px solid lightblue;
 
-  width: 100%;
+  /*width: 100%;*/
+  height: 60px;
   padding:10px;
+
+}
+
+#toolbar:first-child {
+  border-right: 0;
+}
+
+.songCount p{
+  margin-top: 10px;
+  color: #5e5e5e;
 }
 
 #songTitle {
@@ -122,6 +142,26 @@ header .navbar {
 }
 
 /* end toolbar styles */
+
+
+/* edit song view styles */
+#songInfoContainer {
+  /*height: 650px;*/
+  /*height: 100%;*/
+  /*padding-bottom: 75px;*/
+  /*border: 1px dashed purple;*/
+}
+
+.card-holder {
+  /*height: 100%;*/
+  overflow-y: scroll;
+  border-right: 1px solid lightgrey;
+  /*background-color: orange;*/
+  height: 90vh;
+}
+
+/* end edit song view styles */
+
 
 /* card styles */
 .card {
@@ -187,19 +227,15 @@ label:after {
 
 /* end song view styles*/
 
-/* edit song view styles */
-#songInfoContainer {
-  height: 650px;
-  padding-bottom: 75px;
+/* music note field style */
+
+.music-font {
+  font-family: 'MusiSync';
+  font-size: 28px;
 }
 
-.card-holder {
-  height:100%;
-  overflow-y: scroll;
-  border-right: 1px solid lightgrey;
-}
+/* end music note field style */
 
-/* end edit song view styles */
 
 /* footer styles */
 .panel-footer {

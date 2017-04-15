@@ -7,10 +7,22 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   //boolean to hide/show single song
   self.songClicked = false;
 
+  self.editingRhythm = false;
+  self.editingExtractableRhythm = false;
+
   self.oneSong = SongFactory.oneSong; //single song information
   self.fileUpload = SongFactory.fileUpload; //function for uploading
   self.filesUploaded = SongFactory.filesUploaded; //files for single song
   self.attachments = SongFactory.attachments; //attachments for single song
+
+// have a promise so that after a song is deleted, user gets redirected back to the main card view
+// need to create a confirmation popup and an alert of deletion popup
+  self.deleteFunction = function(songId) {
+    SongFactory.deleteSong(songId).then(function() {
+      self.songClicked = false;
+      self.deleteSuccessMessage = 'Song Deleted';
+    });
+  };
 
   self.showSong = function(songId) {
         console.log('show song of id ' + songId);
@@ -26,4 +38,33 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
       self.spanClicked = true;
     }
   };
+
+  self.loseFocus = function(fieldId) {
+    if(fieldId == 'rhythm') {
+      self.editingRhythm = false;
+    }
+    if(fieldId == 'extractableRhythm') {
+      self.editingExtractableRhythm = false;
+    }
+  };
+
+  self.findFocus = function(fieldId) {
+    if(fieldId == 'rhythm') {
+      self.editingRhythm = true;
+    }
+    if(fieldId == 'extractableRhythm') {
+      self.editingExtractableRhythm = true;
+    }
+  };
+
+
+  // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
+  self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';
+
+  self.dynamicPopover = {
+    content: 'Hello, World!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Share this song:'
+  };
+
 }]);

@@ -1,11 +1,34 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+var emailMessage = require('./email-message');
+var gmailpass = require('./gmailpass');
 
 var pool = require('../modules/pg-pool');
 
+
+// start nodemailer-smtp-transport
+var transporter = nodemailer.createTransport(smtpTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'isongcollect@gmail.com',
+    pass: gmailpass().password
+  }
+}));
+
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Server is ready to take our messages');
+  }
+});
+// end nodemailer-smtp-transport
+
 router.get('/', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
@@ -29,7 +52,7 @@ router.get('/', function(req, res) {
 
 // post uploaded file to database
 router.post('/addImage/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var imageObject = req.body;
   var songId = req.params.id;
   console.log('imageObject: ', imageObject);
@@ -69,7 +92,7 @@ router.post('/addImage/:id', function(req, res) {
 
 // get attachments from db and add to dom
 router.get('/getAttachments/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songId = req.params.id;
   pool.connect(function(err, client, done) {
     if(err) {
@@ -91,7 +114,7 @@ router.get('/getAttachments/:id', function(req, res) {
 
 // get single song from db for view
 router.get('/singleSong/:id', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songId = req.params.id;
   console.log('songId', songId);
   pool.connect(function(err, client, done) {
@@ -114,7 +137,7 @@ router.get('/singleSong/:id', function(req, res) {
 }); //end router.get
 
 router.post('/newSong', function(req, res) {
-  var userId = req.userInfo[0].id; // will become user id pulled from decoder token
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songObject = req.body;
   pool.connect(function(err, client, done) {
     if(err) {
@@ -135,5 +158,24 @@ router.post('/newSong', function(req, res) {
   }); // end pool.connect
 }); //end router.get
 
-
+router.delete('/removeSong/:id', function(req, res) {
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
+  var songId = req.params.id;
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('DELETE FROM song_collection WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      }); // end client.query
+    }
+  }); // end pool.connect
+}); // end router.delete
 module.exports = router;
