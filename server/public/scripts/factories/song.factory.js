@@ -57,6 +57,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           }
         }).then(function(response) {
           oneSong.details = response.data;
+          oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm_note); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
+          oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms_note); //"" as above but for extractable rhythms
         });
       });
     } else {
@@ -201,6 +203,26 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }
           }).then(function(response) {
             console.log(response.data);
+            getAllSongs();
+          });
+        });
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
+    function deleteSong(songId) {
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        return firebaseUser.getToken().then(function (idToken) {
+          $http({
+            method: 'DELETE',
+            url: '/songs/removeSong/' + songId,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            getAllSongs();
           });
         });
       } else {
@@ -218,6 +240,42 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     //   console.log('file removed successfully: ' + storedurl);
     // }
 
+    function prepareRhythmForFont(rhythmString) {
+        var textString = '';
+        var newString = rhythmString;
+        if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
+          newString = newString.replace('internal', '');
+          newString = newString.replace('(internal)', '');
+          textString += 'internal ';
+        }
+        if (rhythmString.indexOf("eighth")>=0) {
+          newString = newString.replace('eighth', '');
+          textString += 'eighth ';
+        }
+        if (rhythmString.indexOf("anacrusis")>=0 || rhythmString.indexOf("anacrusic")>=0) {
+          newString = newString.replace('anacrusis', '');
+          newString = newString.replace('anacrusic', '');
+          textString += 'anacrusis ';
+        }
+        if (rhythmString.indexOf("all syncopated")>=0) {
+          newString = newString.replace('all syncopated', '');
+          textString += 'all syncopated ';
+        }
+        return [newString, textString];
+    }
+
+    function prepareExtractableRhythmForFont(extractableRhythmString) {
+        var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
+
+        for (var i = 0; i < resultArray.length; i++) {
+          if(i%2!==0) {
+            resultArray[i] = '(' + resultArray[i] + ')';
+          }
+        }
+
+        return resultArray;
+    }
+
     return {
       showSong: showSong,
       getAllSongs: getAllSongs,
@@ -229,7 +287,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       getAttachments: getAttachments,
       attachments: attachments,
       dropdowns: dropdowns,
-      saveNewSong: saveNewSong
+      saveNewSong: saveNewSong,
+      deleteSong: deleteSong
       // removeImage: removeImage
     };
   }]);

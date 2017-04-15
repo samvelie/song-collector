@@ -43,9 +43,9 @@ var tokenDecoder = function (req, res, next) {
             console.log('Error querying db for users:', err);
             res.sendStatus(500);
           } else {
-            if (result.rowCount > 0) {
-              console.log('user identified:', result.rows[0].user_name);
-              req.userInfo = result.rows;
+            if (result.rows.length > 0) {
+              req.userInfo = result.rows[0];
+              console.log('user identified:', req.userInfo.user_name);
               next();
             } else {
               //adding information from user into db if not already there
@@ -65,7 +65,7 @@ var tokenDecoder = function (req, res, next) {
                   insertResult.rows[0].user_photo = userPhoto;
 
                   console.log('user added and authenticated:', userName);
-                  req.userInfo = insertResult.rows;
+                  req.userInfo = insertResult.rows[0];
                   next();
                 }
               }); // end client.query

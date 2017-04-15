@@ -1,4 +1,4 @@
-<!-- Search Bar Area -->
+<!-- start Search Bar Area -->
 <div class="col-md-12">
   <div class="search-bar text-center">
     <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()"></span>
@@ -10,8 +10,12 @@
     </div>
   </div>
 </div>
+<!-- end Search Bar area -->
+
+
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
+<<<<<<< HEAD
 <div  ng-if="cc.songClicked" class="col-sm-12 panel text-right" id="toolbar">
   <!-- <div class="col-sm-3">
 
@@ -32,31 +36,75 @@
   <p>
     <!-- Songs in Collection : 415 -->
   </p>
+=======
+>>>>>>> f75c9c318d382c03dd037f8938311b6428bfcd1c
 
   <!-- dynamic-width div for song cards -->
   <div ng-class="['container-fluid', 'card-holder', cc.songClicked ? 'col-sm-3':'col-md-12']">
     <div ng-class="cc.songClicked ? card : row">
-      <div ng-if="!cc.songClicked" class="card text-center vertical-center" id="first-card">
+
+
+      <div class="text-center panel songCount" id="toolbar">
+        Songs in collection: 415
+      </div>
+
+      <!-- start container for first "add song" card -->
+      <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
         <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
+      <!-- end container for first "add song" card -->
+
+      <!-- start container for all song cards -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
-        <h3>{{song.song_title_text}}</h3>
+        <h3 class="text-center">{{song.song_title_text}}</h3>
         <p>Tone Set: <span  ng-bind-html="song.tone_set_note"></span></p>
         <p>Scale / Mode: {{song.scale_mode_text}}</p>
         <p>Teachable Element: {{song.teachable_elements_text}}</p>
       </div>
+      <!-- end container for all song cards -->
+
     </div>
   </div>
 
 
 
-  <div ng-if="cc.songClicked" class="col-sm-9 card-holder">
+  <div ng-if="cc.songClicked" class="col-sm-9 card-holder no-gutter">
 
+    <div class="text-right panel" id="toolbar">
+      <div class="col-sm-6 half-gutter text-left">
+        <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
+      </div>
+      <!-- end song title section -->
+
+      <!-- start toolbar section -->
+      <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
+      <button type="button" class="btn btn-primary">Save</button>
+      <button popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" type="button" class="btn btn-default">Share</button>
+      <button type="button" class="btn btn-primary" ng-click="cc.deleteFunction(cc.oneSong.details.id)">Delete</button>
+      <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">Print</button>
+      <!-- end toolbar section -->
+
+      <!-- start Share popover template -->
+      <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div>{{cc.dynamicPopover.content}}</div>
+        <form>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+            </span>
+          </div>
+        </form>
+      </script>
+      <!-- end Share popover template -->
+
+    </div>
 
     <!-- start div for right column -->
     <div class="col-sm-8 card-holder">
 
       <form class="form-horizontal">
+
         <!-- Button that needs styling to hide song -->
 
         <!-- <div class="form-group">
@@ -97,14 +145,24 @@
         </div>
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-          <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.rhythm_note}}</div>
+          <div class="col-sm-8 half-gutter" ng-switch on="cc.editingRhythm">
+            <input id="rhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" ng-switch-when="true" ng-blur="cc.loseFocus('rhythm')" autofocus>
+            <div class="display" ng-switch-when="false" ng-click="cc.findFocus('rhythm')">
+              <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
+                <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-          <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.extractable_rhythms_note}}</div>
+          <div class="col-sm-8 half-gutter" ng-switch on="cc.editingExtractableRhythm">
+            <input id="extractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" ng-switch-when="true" ng-blur="cc.loseFocus('extractableRhythm')" autofocus>
+            <div class="display" ng-switch-when="false" ng-click="cc.findFocus('extractableRhythm')">
+              <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
+                <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -163,7 +221,7 @@
         </div>
         <div class="form-group">
           <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
-          <!-- comfortable starting pitch -->
+          <!-- NOTE: CSP stands for: comfortable starting pitch -->
           <div class="col-sm-8 half-gutter">
             <div contenteditable class="form-control">{{cc.oneSong.details.csp_text}}</div>
           </div>
