@@ -111,6 +111,35 @@ header .navbar {
 
 /* end search bar styles */
 
+
+/* music note field style */
+
+.music-font {
+  font-family: 'MusiSync';
+  font-size: 28px;
+}
+
+.ql-bubble .ql-picker.ql-expanded .ql-picker-label {
+  color: #777;
+  z-index: 2 !important;
+}
+.ql-bubble .ql-picker.ql-expanded .ql-picker-label .ql-fill {
+  fill: purple;
+}
+.ql-bubble .ql-picker.ql-expanded .ql-picker-label .ql-stroke {
+  stroke: #777;
+}
+
+.ql-editor ul[data-checked=true] > li::before,
+.ql-editor ul[data-checked=false] > li::before {
+  color: #777;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+/* end music note field style */
+
+
 /* toolbar styles */
 #toolbar {
   border-bottom: 1px solid lightblue;
@@ -227,22 +256,13 @@ label:after {
 
 /* end song view styles*/
 
-/* music note field style */
-
-.music-font {
-  font-family: 'MusiSync';
-  font-size: 28px;
-}
-
-/* end music note field style */
-
 
 /* footer styles */
-.panel-footer {
+/*.panel-footer {
   height: 50px;
   padding: 0;
   z-index: 9999;
-}
+}*/
 /* end footer styles */
 
 /* misc */
