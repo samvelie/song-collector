@@ -1,4 +1,4 @@
-/* Print Style Sheet */
+/* Print Style Sheet
 @media print {
 
   #songInfoContainer {
@@ -8,7 +8,7 @@
     display: block;
   }
 
-  header navbar, footer, div .search-bar, .col-sm-3 card-holder, #printButton, #cardHolder, p {
+  header navbar, footer, div .search-bar, #printButton, #cardHolder, p {
     display: none;
   }
 
@@ -18,3 +18,4 @@
    }
 
 }
+*/
