@@ -20,15 +20,18 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.deleteFunction = function(songId) {
     SongFactory.deleteSong(songId).then(function() {
       self.songClicked = false;
+      self.editingRhythm = false;
+      self.editingExtractableRhythm = false;
       self.deleteSuccessMessage = 'Song Deleted';
     });
   };
 
   self.showSong = function(songId) {
         console.log('show song of id ' + songId);
-    self.songClicked = true;
     SongFactory.showSong(songId);
-
+    self.songClicked = true;
+    self.editingRhythm = false;
+    self.editingExtractableRhythm = false;
   };
 
   self.expandFilter = function() {
@@ -39,15 +42,17 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
     }
   };
 
-  self.loseFocus = function(fieldId) {
+  self.loseFocus = function(fieldId, rhythmString) {
     if(fieldId == 'rhythm') {
       self.editingRhythm = false;
     }
     if(fieldId == 'extractableRhythm') {
       self.editingExtractableRhythm = false;
     }
+
   };
 
+  //placeholder function that needs to focus on input field as it appears
   self.findFocus = function(fieldId) {
     if(fieldId == 'rhythm') {
       self.editingRhythm = true;
@@ -55,6 +60,14 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
     if(fieldId == 'extractableRhythm') {
       self.editingExtractableRhythm = true;
     }
+  };
+
+  self.updateRhythmDisplay = function (rhythmString) {
+    self.oneSong.details.rhythmArray = SongFactory.prepareRhythmForFont(rhythmString);
+  };
+
+  self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
+    self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(rhythmString);
   };
 
 
