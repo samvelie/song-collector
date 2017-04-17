@@ -267,6 +267,9 @@ span.glyphicon {
   transition: all 0.1s ease-in-out;
 }
 
+div.ql-editor {
+  padding: 0;
+}
 .ql-bubble * {
   z-index: 1;
 }
