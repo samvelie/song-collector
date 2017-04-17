@@ -267,6 +267,9 @@ span.glyphicon {
   transition: all 0.1s ease-in-out;
 }
 
+.ql-bubble * {
+  z-index: 1;
+}
 
 #first-card a {
   margin: auto;
