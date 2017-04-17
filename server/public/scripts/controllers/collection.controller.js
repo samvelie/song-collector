@@ -5,7 +5,7 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.songs = SongFactory.songCollection;
   self.editSongObject = {};
   //boolean to hide/show single song
-  self.songClicked = false;
+  self.songClicked = SongFactory.songClicked;
 
   self.editingRhythm = false;
   self.editingExtractableRhythm = false;
@@ -150,6 +150,12 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
     content: 'Hello, World!',
     templateUrl: 'myPopoverTemplate.html',
     title: 'Share this song:'
+  };
+
+  self.deletePopover = {
+    content: 'Are you sure you want to delete this song?',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Delete this song?'
   };
 
 }]);

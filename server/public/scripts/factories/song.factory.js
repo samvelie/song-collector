@@ -1,4 +1,4 @@
-app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams', function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
+app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams',function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
   var auth = $firebaseAuth();
   var songCollection = {list: []};
   var oneSong = {details: {}};
@@ -8,6 +8,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
+  var songClicked = false;
   auth.$onAuthStateChanged(getAllSongs);
   auth.$onAuthStateChanged(getDropdownValues);
 
@@ -15,6 +16,10 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   //   auth.$onAuthStateChanged(getOneSong);
   //   auth.$onAuthStateChanged(getAttachments);
   // }
+  function changeSongClickedStatus(status) {
+    songClicked = status;
+    console.log('songclicked status', status);
+  }
 
   // on click function that redirects us to the card's full view
   function showSong(id) {
@@ -302,7 +307,9 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       saveNewSong: saveNewSong,
       deleteSong: deleteSong,
       prepareRhythmForFont: prepareRhythmForFont,
-      prepareExtractableRhythmForFont: prepareExtractableRhythmForFont
+      prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
+      changeSongClickedStatus: changeSongClickedStatus,
+      songClicked: songClicked
       // removeImage: removeImage
     };
   }]);
