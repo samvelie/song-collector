@@ -59,8 +59,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         }).then(function(response) {
           console.log('onesong from database', oneSong);
           oneSong.details = response.data;
-          oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm_note); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
-          oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms_note); //"" as above but for extractable rhythms
+          oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
+          oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms); //"" as above but for extractable rhythms
         });
       });
     } else {

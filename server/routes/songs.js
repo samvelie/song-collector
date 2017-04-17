@@ -40,7 +40,7 @@ router.get('/', function(req, res) {
         console.log('error making database query: ', err);
         res.sendStatus(500);
       } else {
-        console.log('result from get all songs', result.rows);
+        // client.query('')
         // if(result.rows > 0) {
         //   //
         // }
@@ -198,7 +198,7 @@ router.delete('/removeSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('DELETE FROM song_collection WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+      client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
