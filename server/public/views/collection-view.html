@@ -119,9 +119,17 @@
         <div class="form-group">
           <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
           <div class="col-sm-8 half-gutter">
-            <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.editSongObject.teachableElementsModel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div>
+            <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div>
           </div>
-          {{cc.editSongObject.teachableElementsModel}}
+          <!-- {{cc.editSongObject.teachableElementsModel.teachable_elements}} -->
+          <!-- cc.oneSong.details.teachable_elements_id: {{cc.oneSong.details.teachable_elements_id}} <br> -->
+          <!-- cc.oneSong.details.teachable_elements: {{cc.oneSong.details.teachable_elements}} <br> -->
+          <!-- cc.te_id: {{cc.te_id}} <br>
+          cc.te_value: {{cc.te_value}} <br> -->
+          <!-- cc.editSongObject.teachableElementsModel: {{cc.editSongObject.teachableElementsModel}} -->
+          cc.testmodel is {{cc.testmodel}} <br>
+          <div ng-dropdown-multiselect options="cc.testdata" selected-model="cc.testmodel" extra-settings="cc.testsettings" events="cc.testevents"></div>
+
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
           <div class="col-sm-8 half-gutter">
