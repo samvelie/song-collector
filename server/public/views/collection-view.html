@@ -34,9 +34,9 @@
       <!-- start container for all song cards -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3 class="text-center">{{song.song_title}}</h3>
-        <p>Tone Set: <span  ng-bind-html="song.tone_set"></span></p>
-        <p>Scale / Mode: {{song.scale_mode}}</p>
-        <p>Teachable Element: {{song.teachable_elements}}</p>
+        <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
+        <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
+        <p><b>Teachable Element:</b> <span ng-repeat="element in song.teachableElements">{{element.name}},</span></p>
       </div>
       <!-- end container for all song cards -->
 
@@ -111,16 +111,14 @@
         <div class="form-group">
           <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
           <div class="col-sm-8 half-gutter">
-            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by scaleMode.id">
+            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by cc.oneSong.details.scale_mode_id">
             </select>
-            {{cc.oneSong.details}}
           </div>
         </div>
         <div class="form-group">
           <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
           <div class="col-sm-8 half-gutter">
-            <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div>
-          </div>
+            <!-- <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div> -->
           <!-- {{cc.editSongObject.teachableElementsModel.teachable_elements}} -->
           <!-- cc.oneSong.details.teachable_elements_id: {{cc.oneSong.details.teachable_elements_id}} <br> -->
           <!-- cc.oneSong.details.teachable_elements: {{cc.oneSong.details.teachable_elements}} <br> -->
@@ -129,7 +127,8 @@
           <!-- cc.editSongObject.teachableElementsModel: {{cc.editSongObject.teachableElementsModel}} -->
           cc.testmodel is {{cc.testmodel}} <br>
           <div ng-dropdown-multiselect options="cc.testdata" selected-model="cc.testmodel" extra-settings="cc.testsettings" events="cc.testevents"></div>
-
+        </div>
+          {{cc.editSongObject.teachableElementsModel}}
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
           <div class="col-sm-8 half-gutter">

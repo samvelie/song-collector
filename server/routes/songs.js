@@ -35,16 +35,35 @@ router.get('/', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id WHERE user_id = $1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
-      done();
-      if(err) {
-        console.log('error making database query: ', err);
-        res.sendStatus(500);
-      } else {
-        console.log('result from get all songs', result.rows);
-        // if(result.rows > 0) {
-        //   //
-        // }
-        res.send(result.rows);
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          var allSongs = result.rows;
+          console.log('allsong', allSongs);
+          client.query('SELECT teachable_elements_options.teachable_elements,teachable_elements_options.id  AS teid, songs.id FROM teachable_elements_options LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.teachable_elements_id = teachable_elements_options.id LEFT JOIN songs ON songs.id = song_collection_teachable_elements.song_id WHERE songs.user_id = $1;', [userId], function(err, result) {
+            // console.log('all these things', result.rows);
+
+            for(var j = 0; j < allSongs.length; j++) {
+              allSongs[j].teachableElements = [];
+
+              for (var i = 0; i < result.rows.length; i++) {
+                // console.log((result.rows[i].id));
+                  if(result.rows[i].id == allSongs[j].id) {
+                    allSongs[j].teachableElements.push({teachable_elements: (result.rows[i].teachable_elements), id: (result.rows[i].teid)});
+                  }
+                }
+            }
+            // console.log('new array', allSongs);
+
+          if (err) {
+            console.log('error making database query: ', err);
+            res.sendStatus(500);
+          } else {
+            res.send(allSongs);
+          }
+        }); // end client.query
       }
       }); // end client.query
     }
@@ -198,7 +217,7 @@ router.delete('/removeSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('DELETE FROM song_collection WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+      client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
