@@ -148,13 +148,13 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
 
   self.dynamicPopover = {
     content: 'Hello, World!',
-    templateUrl: 'myPopoverTemplate.html',
+    templateUrl: 'sharePopover.html', // getting from collection-view.html
     title: 'Share this song:'
   };
 
   self.deletePopover = {
     content: 'Are you sure you want to delete this song?',
-    templateUrl: 'myPopoverTemplate.html',
+    templateUrl: 'deletePopover.html',// getting from collection-view.html
     title: 'Delete this song?'
   };
 
