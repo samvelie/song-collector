@@ -6,5 +6,5 @@ app.directive('focusing', ['$timeout', function($timeout) {
         $element[0].focus();
       });
     }
-  }
+  };
 }]);

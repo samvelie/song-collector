@@ -9,7 +9,7 @@
         <tr>
           <td>
             <!-- images not saving to db so this is a blank field -->
-            <img class="thumbnail" ng-src="{{cc.filesUploaded.list[0].url}}">
+            <img class="thumbnail" ng-repeat="photo in pc.attachments.list" ng-src="{{photo.image_url}}">
           </td>
         </tr>
         <tr>
