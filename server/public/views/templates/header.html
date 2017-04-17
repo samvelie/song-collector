@@ -5,7 +5,7 @@
       <a class="navbar-brand" ng-click="lc.songClicked=false">iSongCollect</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li ng-click="lc.songClicked=false"><a href="#!collection" ><span class="glyphicon glyphicon-home" aria-hidden="true" ></span></a></li>
+      <li ng-click="lc.songClicked=false"><a href="#!collection" ><span class="glyphicon glyphicon-th-large" aria-hidden="true" ></span></a></li>
       <li><a href="#!new"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
       <li ng-if="!lc.loggedIn.loginStatus"><a href="#!login" ng-click="lc.login()"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp;Sign In</a></li>
       <li ng-if="!!lc.loggedIn.loginStatus" ng-click="lc.logout()"><a href="#!logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign out</a></li>
