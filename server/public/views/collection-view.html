@@ -36,7 +36,7 @@
         <h3 class="text-center">{{song.song_title}}</h3>
         <p>Tone Set: <span  ng-bind-html="song.tone_set"></span></p>
         <p>Scale / Mode: {{song.scale_mode}}</p>
-        <p>Teachable Element: {{song.teachable_elements}}</p>
+        <p>Teachable Element: <span ng-repeat="element in song.teachableElements">{{element.name}},</span></p>
       </div>
       <!-- end container for all song cards -->
 
