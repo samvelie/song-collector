@@ -19,33 +19,18 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
   // self.testmodel = [{id: 1 }];
+
+  // var tacoId = oneSong.details.teachableElements.id;
+
   var taco = [
     {
       "id": 1,
-      "teachable_elements": "Two eigth note anacrusis"
+      "teachable_elements": "Two eigth note anacrusis",
     }
   ];
 
   console.log('taco[0]', taco[0]);
   console.log('self.testmodel is', self.testmodel);
-
-
-  // self.testmodel = [ taco[0] ];
-
-  // self.testing = true;
-	// self.testmodel = [{ id: 1 }, { id: 2 }];
-	// self.testdata = [
-	// 		{ id: 1, label: 'David' },
-	// 		{ id: 2, label: 'Jhon' },
-	// 		{ id: 3, label: 'Danny' },
-	// 	];
-	// self.testsettings = {
-	// 		selectionLimit: 1,
-	// 		selectedToTop: true,
-	// 		idProperty: 'id',
-  //     smartButtonMaxItems: 3,
-	// 	};
-
 
   self.testing = true;
   self.testmodel = [{ id: 1 }, { id: 3 }, { id: 5 }];
