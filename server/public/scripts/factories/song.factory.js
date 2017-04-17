@@ -47,6 +47,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
 
   // get's one song from the database based on the song's ID grabbed from $routeParams
   function getOneSong(songId) {
+    filesUploaded.list = [];
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
@@ -70,7 +71,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   }
 
   // send file to FileStack and db at the same time
-  function fileUpload() {
+  function fileUpload(songId) {
     console.log('file sending to FileStack...');
     client.pick(
       {
@@ -89,7 +90,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             console.log('firebase user authenticated');
             $http({
               method: 'POST',
-              url: '/songs/addImage/' + $routeParams.id,
+              url: '/songs/addImage/' + songId,
               data: result.filesUploaded,
               headers: {
                 id_token: idToken
