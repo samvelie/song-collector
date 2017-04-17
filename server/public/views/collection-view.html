@@ -123,7 +123,7 @@
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
           <div class="col-sm-8 half-gutter">
-            <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm_note)" ng-blur="cc.loseFocus('rhythm')" autofocus>
+            <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm_note)" ng-blur="cc.loseFocus('rhythm')" focusing>
             <div class="display" ng-click="cc.findFocus('rhythm')">
               <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
                 <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
@@ -134,7 +134,7 @@
         <div class="form-group">
           <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
           <div class="col-sm-8 half-gutter">
-            <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms_note)" ng-blur="cc.loseFocus('extractableRhythm')" autofocus>
+            <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms_note)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
             <div class="display" ng-click="cc.findFocus('extractableRhythm')">
               <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
                 <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
