@@ -37,6 +37,7 @@ var tokenDecoder = function (req, res, next) {
       pool.connect(function (err, client, done) {
         //this user_id property on the decodedToken comes from the google auth
         var googleId = req.decodedToken.user_id;
+        console.log(googleId);
         client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo FROM users WHERE google_id = $1;', [googleId], function (err, result) {
           done();
           if (err) {
