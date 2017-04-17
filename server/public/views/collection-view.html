@@ -34,9 +34,9 @@
       <!-- start container for all song cards -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3 class="text-center">{{song.song_title}}</h3>
-        <p>Tone Set: <span  ng-bind-html="song.tone_set"></span></p>
-        <p>Scale / Mode: {{song.scale_mode}}</p>
-        <p>Teachable Element: <span ng-repeat="element in song.teachableElements">{{element.name}},</span></p>
+        <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
+        <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
+        <p><b>Teachable Element:</b> <span ng-repeat="element in song.teachableElements">{{element.name}},</span></p>
       </div>
       <!-- end container for all song cards -->
 
@@ -113,8 +113,6 @@
           <div class="col-sm-8 half-gutter">
             <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by cc.oneSong.details.scale_mode_id">
             </select>
-            {{cc.oneSong.details}}
-            {{cc.dropdowns.scaleMode}}
           </div>
         </div>
         <div class="form-group">
