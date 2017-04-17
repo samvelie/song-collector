@@ -45,8 +45,9 @@
       <div class="form-group">
         <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
         <div class="col-sm-8 half-gutter">
-          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
+          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
         </div>
+        {{nsc.newSongObject.teachableElementsModel}}
       </div>
       <div class="form-group">
         <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>

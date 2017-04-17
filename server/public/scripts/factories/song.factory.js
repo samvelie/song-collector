@@ -36,6 +36,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           }
         }).then(function(response) {
           songCollection.list = response.data;
+          console.log('songcollection', songCollection.list);
         });
       });
     } else {
@@ -56,6 +57,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             id_token: idToken
           }
         }).then(function(response) {
+          console.log('onesong from database', oneSong);
           oneSong.details = response.data;
           oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm_note); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
           oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms_note); //"" as above but for extractable rhythms

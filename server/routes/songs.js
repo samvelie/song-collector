@@ -34,12 +34,13 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE user_id=$1;', [userId], function(err, result) {
+      client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id WHERE user_id = $1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
       done();
       if(err) {
         console.log('error making database query: ', err);
         res.sendStatus(500);
       } else {
+        console.log('result from get all songs', result.rows);
         // if(result.rows > 0) {
         //   //
         // }
@@ -122,13 +123,14 @@ router.get('/singleSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE id = $1;', [songId], function(err, result) {
+      client.query('SELECT songs.id, song_collection_teachable_elements.teachable_elements_id, teachable_elements_options.teachable_elements, song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id FROM songs LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.song_id=songs.id LEFT JOIN teachable_elements_options ON song_collection_teachable_elements.teachable_elements_id = teachable_elements_options.id WHERE songs.id = $1;', [songId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          console.log('result.rows', result.rows[0]);
+          console.log('result.rows', result.rows);
+
           res.send(result.rows[0]);
         }
       }); // end client.query
@@ -145,14 +147,43 @@ router.post('/newSong', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('INSERT INTO songs (song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);', [songObject.title, songObject.toneSet, songObject.scaleMode.id, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter.id, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType.id, songObject.songType.id, songObject.cultureOrigin, songObject.language.id, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
+      client.query('INSERT INTO songs (song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) returning id;', [songObject.title, songObject.toneSet, songObject.scaleMode.id, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter.id, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType.id, songObject.songType.id, songObject.cultureOrigin, songObject.language.id, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          console.log('result.rows', result.rows[0]);
-          res.send(result.rows[0]);
+          console.log('should be new song id', result.rows[0]);
+          var returningSongId = result.rows[0].id;
+
+          if(songObject.teachableElementsModel.length > 0) {
+            var sqlCounter = 2;
+            var valueString = '';
+            var insertArray = [returningSongId];
+
+            for (var i = 0; i < songObject.teachableElementsModel.length; i++) {
+              valueString += ('($1,$' + sqlCounter +')');
+              if (i < songObject.teachableElementsModel.length-1) {
+                valueString+= ', ';
+              }
+              insertArray.push(songObject.teachableElementsModel[i].id);
+              console.log('valueString concat', valueString);
+              sqlCounter++;
+            }
+            console.log('value string after loop', valueString);
+
+            console.log('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES ' + valueString + ';', insertArray);
+            client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + valueString + ';', insertArray, function(err,result) {
+              done();
+              if(err) {
+                console.log('error making database query: ', err);
+                res.sendStatus(500);
+              } else {
+                console.log('success woooooooooo');
+                res.sendStatus(200);
+              }
+            }); // end client.query
+          }
         }
       }); // end client.query
     }

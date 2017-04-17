@@ -11,7 +11,7 @@ app.controller('NewSongController', ['SongFactory', function(SongFactory) {
 
   self.saveNewSong = SongFactory.saveNewSong;
 
-  self.teachableElementsModel = [];
+  self.newSongObject.teachableElementsModel = [];
   self.teachableElementsSettings = {
     displayProp: 'teachable_elements',
     closeOnBlur: true,
