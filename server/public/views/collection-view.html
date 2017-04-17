@@ -15,26 +15,6 @@
 
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
-<div  ng-if="cc.songClicked" class="col-sm-12 panel text-right" id="toolbar">
-  <!-- <div class="col-sm-3">
-
-  </div> -->
-  <div class="col-sm-6 half-gutter text-left">
-    <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
-  </div>
-<button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
- <button type="button" class="btn btn-primary">Save</button>
- <button type="button" class="btn btn-primary">Share</button>
- <button type="button" class="btn btn-primary">Delete</button>
-
- <a href="#!print" type="button" class="btn btn-primary" name="button">
-   <span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
- </button>
-</div>
-  <!-- This number needs to be determined by db query -->
-  <p>
-    <!-- Songs in Collection : 415 -->
-  </p>
 
   <!-- dynamic-width div for song cards -->
   <div ng-class="['container-fluid', 'card-holder', cc.songClicked ? 'col-sm-3':'col-md-12']">
@@ -76,9 +56,9 @@
       <!-- start toolbar section -->
       <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
       <button type="button" class="btn btn-primary">Save</button>
-      <button popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" type="button" class="btn btn-default">Share</button>
+      <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" class="btn btn-default">Share</button>
       <button type="button" class="btn btn-primary" ng-click="cc.deleteFunction(cc.oneSong.details.id)">Delete</button>
-      <button type="button" class="btn btn-primary" name="button" id="printButton" value="Print" onclick="window.print()">Print</button>
+      <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
       <!-- end toolbar section -->
 
       <!-- start Share popover template -->
@@ -113,8 +93,8 @@
         <div class="form-group">
           <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
           <div class="col-sm-8 half-gutter">
-            <!-- <div contenteditable class="form-control" id="toneSet"> -->
-            <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="cc.oneSong.details.tone_set_note" placeholder="override default placeholder">
+            <!-- <div class="form-control" id="toneSet"> -->
+            <ng-quill-editor class="form-control" theme="bubble" ng-model="cc.oneSong.details.tone_set_note" placeholder="override default placeholder">
               <ng-quill-toolbar>
                 <div id="ng-quill-toolbar">
                   <span class="ql-formats">
@@ -142,9 +122,9 @@
         </div>
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-          <div class="col-sm-8 half-gutter" ng-switch on="cc.editingRhythm">
-            <input id="rhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" ng-switch-when="true" ng-blur="cc.loseFocus('rhythm')" autofocus>
-            <div class="display" ng-switch-when="false" ng-click="cc.findFocus('rhythm')">
+          <div class="col-sm-8 half-gutter">
+            <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm_note)" ng-blur="cc.loseFocus('rhythm')" focusing>
+            <div class="display" ng-click="cc.findFocus('rhythm')">
               <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
                 <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
               </span>
@@ -153,9 +133,9 @@
         </div>
         <div class="form-group">
           <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-          <div class="col-sm-8 half-gutter" ng-switch on="cc.editingExtractableRhythm">
-            <input id="extractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" ng-switch-when="true" ng-blur="cc.loseFocus('extractableRhythm')" autofocus>
-            <div class="display" ng-switch-when="false" ng-click="cc.findFocus('extractableRhythm')">
+          <div class="col-sm-8 half-gutter">
+            <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms_note)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
+            <div class="display" ng-click="cc.findFocus('extractableRhythm')">
               <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
                 <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
               </span>

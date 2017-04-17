@@ -241,6 +241,9 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     // }
 
     function prepareRhythmForFont(rhythmString) {
+      if(rhythmString.length===0) {
+        return [];
+      } else {
         var textString = '';
         var newString = rhythmString;
         if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
@@ -262,9 +265,13 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           textString += 'all syncopated ';
         }
         return [newString, textString];
+      }
     }
 
     function prepareExtractableRhythmForFont(extractableRhythmString) {
+      if(extractableRhythmString.length===0) {
+        return [];
+      } else {
         var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
 
         for (var i = 0; i < resultArray.length; i++) {
@@ -274,6 +281,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         }
 
         return resultArray;
+      }
+
     }
 
     return {
@@ -288,7 +297,9 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       attachments: attachments,
       dropdowns: dropdowns,
       saveNewSong: saveNewSong,
-      deleteSong: deleteSong
+      deleteSong: deleteSong,
+      prepareRhythmForFont: prepareRhythmForFont,
+      prepareExtractableRhythmForFont: prepareExtractableRhythmForFont
       // removeImage: removeImage
     };
   }]);
