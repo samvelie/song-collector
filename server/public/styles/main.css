@@ -303,6 +303,19 @@ span.glyphicon {
   margin-top: -100px;
 }
 
+.profileThumb {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  background-size: cover !important;
+  margin-left: 10px;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover {
   border: 1px solid lightblue;
   transition: none;
