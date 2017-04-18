@@ -280,6 +280,29 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       }
     }
 
+    function updateSong(changedSong) {
+      console.log('existing song with changes', changedSong);
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'PUT',
+              url: '/songs/editSong/' + changedSong.id,
+              data: changedSong,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              console.log('updated song');
+              getOneSong(changedSong.id);
+
+            });
+        });
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
     function deleteSong(songId) {
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
@@ -367,6 +390,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       attachments: attachments,
       dropdowns: dropdowns,
       saveNewSong: saveNewSong,
+      updateSong: updateSong,
       deleteSong: deleteSong,
       prepareRhythmForFont: prepareRhythmForFont,
       prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
