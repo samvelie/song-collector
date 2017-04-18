@@ -40,14 +40,20 @@
         </td>
         <td class="col-xs-6">
           <label for="rhythm">Rhythm</label>
-          <div>{{pc.oneSong.details.rhythm}}</div>
+          <!-- <div>{{pc.oneSong.details.rhythm}}</div> -->
+          <div><span ng-repeat="component in pc.oneSong.details.rhythmArray track by $index">
+            <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
+          </span></div>
         </td>
       </tr>
 
       <tr>
         <td class="col-xs-6">
           <label for="extractableRhythms">Extractable Rhythms</label>
-          <div>{{pc.oneSong.details.extractable_rhythms}}</div>
+          <!-- <div>{{pc.oneSong.details.extractable_rhythms}}</div> -->
+          <div><span ng-repeat="extract in pc.oneSong.details.extractableRhythmArray track by $index">
+            <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
+          </span></div>
         </td>
         <td class="col-xs-6">
           <label for="extractableMelodies">Extractable Melodies</label>
