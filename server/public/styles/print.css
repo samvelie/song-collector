@@ -17,6 +17,7 @@
   img {
     max-height: 350px;
     margin: auto;
+    display: inline-block;
   }
 
 }
