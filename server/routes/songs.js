@@ -49,21 +49,21 @@ router.get('/', function(req, res) {
 
               for (var i = 0; i < result.rows.length; i++) {
                 // console.log((result.rows[i].id));
-                  if(result.rows[i].id == allSongs[j].id) {
-                    allSongs[j].teachableElements.push({teachable_elements: (result.rows[i].teachable_elements), id: (result.rows[i].teid)});
-                  }
+                if(result.rows[i].id == allSongs[j].id) {
+                  allSongs[j].teachableElements.push({teachable_elements: (result.rows[i].teachable_elements), id: (result.rows[i].teid)});
                 }
+              }
             }
             // console.log('new array', allSongs);
 
-          if (err) {
-            console.log('error making database query: ', err);
-            res.sendStatus(500);
-          } else {
-            res.send(allSongs);
-          }
-        }); // end client.query
-      }
+            if (err) {
+              console.log('error making database query: ', err);
+              res.sendStatus(500);
+            } else {
+              res.send(allSongs);
+            }
+          }); // end client.query
+        }
       }); // end client.query
     }
   }); // end pool.connect
@@ -165,14 +165,37 @@ router.get('/singleSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT songs.id, song_collection_teachable_elements.teachable_elements_id, teachable_elements_options.teachable_elements, song_title, tone_set, scale_mode, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type, form_type_id, song_type, song_type_id, culture_origin, language, language_id, csp, other_note, source_note, user_id FROM songs LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.song_id=songs.id LEFT JOIN teachable_elements_options ON song_collection_teachable_elements.teachable_elements_id=teachable_elements_options.id LEFT JOIN form_type_options ON songs.form_type_id=form_type_options.id LEFT JOIN meter_options ON songs.meter_id=meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id=scale_mode_options.id LEFT JOIN song_type_options ON songs.song_type_id=song_type_options.id LEFT JOIN language_options ON songs.language_id=language_options.id WHERE songs.id = $1;', [songId], function(err, result) {
-        // works even though my linter is freaking out
+      client.query('SELECT songs.id, song_title, tone_set, scale_mode, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type, form_type_id, song_type, song_type_id, culture_origin, language, language_id, csp, other_note, source_note, user_id FROM songs LEFT JOIN form_type_options ON songs.form_type_id = form_type_options.id LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id LEFT JOIN song_type_options ON songs.song_type_id = song_type_options.id LEFT JOIN language_options ON songs.language_id = language_options.id WHERE songs.id = $1 AND songs.user_id=$2;', [songId, userId], function(err, result) {
+        // works even though my linter is happy
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          res.send(result.rows[0]);
+          var songObject = result.rows[0];
+          client.query('SELECT songs.id, array_agg(teachable_elements_options.id) AS te_id_array, array_agg(teachable_elements_options.teachable_elements) AS te_name_array FROM songs LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.song_id=songs.id LEFT JOIN teachable_elements_options ON song_collection_teachable_elements.teachable_elements_id=teachable_elements_options.id WHERE songs.id=$1 AND songs.user_id=$2 GROUP BY songs.id;', [songId, userId], function(err, result) {
+            if (err) {
+              console.log('error making database query: ', err);
+              res.sendStatus(500);
+            } else {
+              // console.log('songObject right here', songObject);
+              console.log('te query result', result.rows[0]);
+              var teIdArray = result.rows[0].te_id_array;
+              var teNameArray = result.rows[0].te_name_array;
+              var oneSongTeachableElementsArray = [];
+              for (var i = 0; i < teIdArray.length; i++) {
+                oneSongTeachableElementsArray.push(
+                  {
+                    id: teIdArray[i],
+                    teachable_elements: teNameArray[i]
+                  }
+                );
+              }
+
+              songObject.teachable_elements = oneSongTeachableElementsArray;
+              res.send(songObject);
+            }
+          });
         }
       }); // end client.query
     }

@@ -55,7 +55,7 @@
 
       <!-- start toolbar section -->
       <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
-      <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+      <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
       <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
       <button type="button" popover-placement="bottom" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <button type="button" class="btn btn-primary" onclick="window.print()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></button>
