@@ -3,7 +3,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var songCollection = {list: []};
   var oneSong = {details: {}};
   var filesUploaded = {list:[]};
-  var attachments = {list: []};
+  var notationUploaded = {list:[]};
+  var attachments = {attachments: [], notation: []};
   var dropdowns = {formType: [], songType: [], language: [], meter: [], scaleMode: [], teachableElements: []};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
@@ -25,6 +26,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   function showSong(id) {
     // $location.url('/edit/' + id); //removed for dynamic main page
     getAttachments(id);
+    getNotation(id);
     getOneSong(id);
   }
 
@@ -88,6 +90,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         // }
       }).then(function(result) {
         console.log('file uploaded, now sending to database... ', result.filesUploaded);
+        result.filesUploaded.isNotation = false;
         filesUploaded.list = result.filesUploaded;
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
@@ -110,6 +113,42 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       });
     }
 
+    function notationUpload(songId) {
+      console.log('file sending to FileStack...');
+      client.pick(
+        {
+          accept: 'image/*',
+          fromSources: ['local_file_system', 'googledrive', 'imagesearch', 'dropbox'],
+          maxFiles: 1,
+          // storeTo: {
+          // location: 's3'
+          // }
+        }).then(function(result) {
+          console.log('file uploaded, now sending to database... ', result.notationUploaded);
+          result.isNotation = true;
+          notationUploaded.list = result.notationUploaded;
+          console.log(result);
+          var firebaseUser = auth.$getAuth();
+          if(firebaseUser) {
+            firebaseUser.getToken().then(function (idToken) {
+              console.log('firebase user authenticated');
+              $http({
+                method: 'POST',
+                url: '/songs/addImage/' + songId,
+                data: result,
+                headers: {
+                  id_token: idToken
+                }
+              }).then(function() {
+                console.log('file posted to database!');
+              });
+            });
+          } else {
+            console.log('not logged in!');
+          }
+        });
+      }
+
     function getAttachments(songId) {
       console.log('hitting get attachments function');
       var firebaseUser = auth.$getAuth();
@@ -118,13 +157,35 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           console.log('firebase user authenticated');
           $http({
             method: 'GET',
-            url: '/songs/getAttachments/' + (typeof(songId) == "number" ? songId : $routeParams.id),
+            url: '/songs/getAttachments/' + songId,
             headers: {
               id_token: idToken
             }
           }).then(function(response) {
-            attachments.list = response.data;
-            console.log('getting attachments!', attachments.list);
+            attachments.attachments = response.data;
+            console.log('getting attachments!', attachments.attachments);
+          });
+        });
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
+    function getNotation(songId) {
+      console.log('hitting get notation function');
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+          console.log('firebase user authenticated');
+          $http({
+            method: 'GET',
+            url: '/songs/getNotation/' + songId,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            attachments.notation = response.data;
+            console.log('getting notation!', attachments.notation);
           });
         });
       } else {
@@ -301,7 +362,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       oneSong: oneSong,
       fileUpload: fileUpload,
       filesUploaded: filesUploaded,
-      getAttachments: getAttachments,
+      notationUpload: notationUpload,
+      notationUploaded: notationUploaded,
       attachments: attachments,
       dropdowns: dropdowns,
       saveNewSong: saveNewSong,
