@@ -1,4 +1,4 @@
-app.controller('NewSongController', ['SongFactory', function(SongFactory) {
+app.controller('NewSongController', ['SongFactory','$location', function(SongFactory,$location) {
 
   var self = this;
 
@@ -8,6 +8,14 @@ app.controller('NewSongController', ['SongFactory', function(SongFactory) {
 
   self.dropdowns = SongFactory.dropdowns;
   self.newSongObject = {};
+  self.redirectToCollection = function() {
+    $location.path('/collection');
+  };
+  self.cancelPopover = {
+    content: 'Are you sure you want to cancel this song?',
+    templateUrl: 'cancelPopover.html',// getting from collection-view.html
+    title: 'Cancel this song?'
+  };
 
   self.saveNewSong = SongFactory.saveNewSong;
 

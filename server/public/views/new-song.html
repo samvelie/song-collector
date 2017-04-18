@@ -7,10 +7,21 @@
         <input class="form-control" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="Title" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" ng-click="nsc.saveNewSong(nsc.newSongObject)">Save New Song</button>
-    <button type="button" class="btn btn-primary">Cancel</button>
+    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" popover-placement="bottom" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
+  <!-- start Delete popover template -->
+  <script type="text/ng-template" id="cancelPopover.html">
+    <div>{{nsc.cancelPopover.content}}</div>
+    <form>
+      <div class="input-group">
+          <button class="btn btn-danger" ng-click="nsc.redirectToCollection()"
+ type="submit"><strong>Cancel!</strong></button>
+      </div>
+    </form>
+  </script>
+  <!-- end Delete popover template -->
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
 
