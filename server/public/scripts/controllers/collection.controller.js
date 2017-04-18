@@ -141,8 +141,12 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   };
 
   self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
-    self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(rhythmString);
+    self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(extractableRhythmString);
   };
+
+  self.saveSongChanges = function (songDetails) {
+    console.log(songDetails);
+  }
 
 
   // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
