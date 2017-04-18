@@ -51,7 +51,7 @@
 
     <div class="text-right panel" id="toolbar">
       <div class="col-sm-6 half-gutter text-left">
-        <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title}}</div>
+        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title"/>
       </div>
       <!-- end song title section -->
 
@@ -162,7 +162,7 @@
     <div class="form-group">
       <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.extractable_melodies}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.extractable_melodies"/>
       </div>
     </div>
 
@@ -184,28 +184,28 @@
     <div class="form-group">
       <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.intervals_note_groups}}</div>
+        <input class="form-control" "cc.oneSong.details.intervals_note_groups"/>
       </div>
     </div>
 
     <div class="form-group">
       <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.phrases}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.phrases"/>
       </div>
     </div>
 
     <div class="form-group">
       <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.melodic_form}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.melodic_form"/>
       </div>
     </div>
 
     <div class="form-group">
       <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.rhythmic_form}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.rhythmic_form"/>
       </div>
     </div>
 
@@ -228,7 +228,7 @@
     <div class="form-group">
       <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.culture_origin}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.culture_origin"/>
       </div>
     </div>
 
@@ -244,7 +244,7 @@
       <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
       <!-- NOTE: CSP stands for: comfortable starting pitch -->
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.csp}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.csp"/>
       </div>
     </div>
 
