@@ -1,7 +1,7 @@
 <button onclick="window.print()" class="btn btn-default"  id="printButton">
   <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> Print this Page</button>
 
-  <div class="col-md-12">
+  <div class="col-md-12" id="printPage">
 
     <table class="table">
 
@@ -9,61 +9,61 @@
         <tr>
           <td>
             <!-- images not saving to db so this is a blank field -->
-            <img class="thumbnail" ng-repeat="photo in pc.attachments.list" ng-src="{{photo.image_url}}">
+            <img class="thumbnail" ng-repeat="photo in pc.attachments.notation" ng-src="{{photo.image_url}}">
           </td>
         </tr>
         <tr>
           <td>
             <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
-            <div id="songTitle">{{pc.oneSong.details.song_title_text}}</div>
+            <div id="songTitle">{{pc.oneSong.details.song_title}}</div>
           </td>
           <td>
             <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
-            <div>{{pc.oneSong.details.phrases_text}}</div>
+            <div>{{pc.oneSong.details.phrases}}</div>
           </td>
         </tr>
 
         <tr>
           <td>
             <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
-            <div id="toneSet" theme="bubble" ng-model="pc.oneSong.details.tone_set_note" placeholder="override default placeholder"></div>
+            <div id="toneSet" theme="bubble" ng-model="pc.oneSong.details.tone_set" placeholder="override default placeholder"></div>
           </td>
           <td>
             <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
-            <div>{{pc.oneSong.details.melodic_form_text}}</div>
+            <div>{{pc.oneSong.details.melodic_form}}</div>
           </td>
         </tr>
 
         <tr>
           <td>
             <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
-            <div id="scaleMode">{{pc.oneSong.details.scale_mode_text}}</div>
+            <div id="scaleMode">{{pc.oneSong.details.scale_mode}}</div>
           </td>
           <td>
             <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
-            <div>{{pc.oneSong.details.rhythmic_form_text}}</div>
+            <div>{{pc.oneSong.details.rhythmic_form}}</div>
           </td>
         </tr>
 
         <tr>
           <td>
             <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
-            <div>{{pc.oneSong.details.teachable_elements_text}}</div>
+            <div>{{pc.oneSong.details.teachable_elements}}</div>
           </td>
           <td>
             <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
-            <div>{{pc.oneSong.details.form_type_text}}</div>
+            <div>{{pc.oneSong.details.form_type}}</div>
           </td>
         </tr>
 
         <tr>
           <td>
             <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-            <div>{{pc.oneSong.details.rhythm_note}}</div>
+            <div>{{pc.oneSong.details.rhythm}}</div>
           </td>
           <td>
             <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
-            <div>{{pc.oneSong.details.culture_origin_text}}</div>
+            <div>{{pc.oneSong.details.culture_origin}}</div>
 
           </td>
         </tr>
@@ -71,29 +71,29 @@
         <tr>
           <td>
             <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-            <div>{{pc.oneSong.details.extractable_rhythms_note}}</div>
+            <div>{{pc.oneSong.details.extractable_rhythms}}</div>
           </td>
           <td>
             <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
-            <div>{{pc.oneSong.details.language_text}}</div>
+            <div>{{pc.oneSong.details.language}}</div>
           </td>
         </tr>
 
         <tr>
           <td>
             <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
-            <div>{{pc.oneSong.details.extractable_melodies_note}}</div>
+            <div>{{pc.oneSong.details.extractable_melodies}}</div>
           </td>
           <td>
             <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
-            <div>{{pc.oneSong.details.csp_text}}</div>
+            <div>{{pc.oneSong.details.csp}}</div>
           </td>
         </tr>
 
         <tr>
           <td>
             <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
-            <div>{{pc.oneSong.details.meter_text}}</div>
+            <div>{{pc.oneSong.details.meter}}</div>
           </td>
           <td>
             <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
@@ -104,7 +104,7 @@
         <tr>
           <td>
             <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
-            <div>{{pc.oneSong.details.intervals_note_groups_text}}</div>
+            <div>{{pc.oneSong.details.intervals_note_groups}}</div>
           </td>
           <td>
             <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
