@@ -41,7 +41,6 @@ router.get('/', function(req, res) {
           res.sendStatus(500);
         } else {
           var allSongs = result.rows;
-          console.log('allsong', allSongs);
           client.query('SELECT teachable_elements_options.teachable_elements,teachable_elements_options.id  AS teid, songs.id FROM teachable_elements_options LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.teachable_elements_id = teachable_elements_options.id LEFT JOIN songs ON songs.id = song_collection_teachable_elements.song_id WHERE songs.user_id = $1;', [userId], function(err, result) {
             // console.log('all these things', result.rows);
 
@@ -73,15 +72,18 @@ router.get('/', function(req, res) {
 // post uploaded file to database
 router.post('/addImage/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
-  var imageObject = req.body;
+  var imageObject = req.body.filesUploaded;
+  var isNotation = req.body.isNotation;
   var songId = req.params.id;
+  console.log('req.body: ', req.body);
   console.log('imageObject: ', imageObject);
+  console.log('isNotation: ', isNotation);
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('WITH new_image_id AS (INSERT INTO images (image_file_name, image_type, image_size, image_url, image_handle) VALUES ($1, $2, $3, $4, $5) RETURNING id) INSERT INTO images_users (image_id, user_id) VALUES ((SELECT id FROM new_image_id), $6);', [imageObject[0].filename, imageObject[0].mimetype, imageObject[0].size, imageObject[0].url, imageObject[0].handle, userId], function(err, result) {
+      client.query('WITH new_image_id AS (INSERT INTO images (image_file_name, image_type, image_size, image_url, image_handle, is_notation) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id) INSERT INTO images_users (image_id, user_id) VALUES ((SELECT id FROM new_image_id), $7);', [imageObject[0].filename, imageObject[0].mimetype, imageObject[0].size, imageObject[0].url, imageObject[0].handle, isNotation, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -119,7 +121,28 @@ router.get('/getAttachments/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1;', [songId], function(err, result) {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = FALSE;', [songId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(404);
+        } else {
+          res.send(result.rows);
+        }
+      }); // end client.query
+    }
+  }); // end pool.connect
+}); //end router.get
+
+router.get('/getNotation/:id', function(req, res) {
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
+  var songId = req.params.id;
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = TRUE;', [songId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -148,8 +171,6 @@ router.get('/singleSong/:id', function(req, res) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          console.log('result.rows', result.rows);
-
           res.send(result.rows[0]);
         }
       }); // end client.query
@@ -172,7 +193,6 @@ router.post('/newSong', function(req, res) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          console.log('should be new song id', result.rows[0]);
           var returningSongId = result.rows[0].id;
 
           if(songObject.teachableElementsModel.length > 0) {
@@ -186,19 +206,14 @@ router.post('/newSong', function(req, res) {
                 valueString+= ', ';
               }
               insertArray.push(songObject.teachableElementsModel[i].id);
-              console.log('valueString concat', valueString);
               sqlCounter++;
             }
-            console.log('value string after loop', valueString);
-
-            console.log('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES ' + valueString + ';', insertArray);
             client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + valueString + ';', insertArray, function(err,result) {
               done();
               if(err) {
                 console.log('error making database query: ', err);
                 res.sendStatus(500);
               } else {
-                console.log('success woooooooooo');
                 res.sendStatus(200);
               }
             }); // end client.query

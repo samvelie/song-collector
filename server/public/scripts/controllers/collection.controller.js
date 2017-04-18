@@ -13,8 +13,10 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.oneSong = SongFactory.oneSong; //single song information
   self.fileUpload = SongFactory.fileUpload; //function for uploading
   self.filesUploaded = SongFactory.filesUploaded; //files for single song
+  self.notationUpload = SongFactory.notationUpload; // function for uploading notation
+  self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
   self.attachments = SongFactory.attachments; //attachments for single song
-  self.dropdowns = SongFactory.dropdowns;
+  self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
 
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
