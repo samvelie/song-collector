@@ -6,7 +6,7 @@
     </button>
   </div>
 
-  <table class="col-md-12 table table-bordered table-responsive">
+  <table class="table table-bordered">
 
     <thead>
       <tr>
@@ -15,65 +15,65 @@
     </thead>
 
     <tbody>
-      
+
       <tr>
-        <td class="col-md-6" colspan="2">
+        <td class="col-xs-6" colspan="2">
           <img class="thumbnail" ng-repeat="photo in pc.attachments.notation" ng-src="{{photo.image_url}}">
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="toneSet">Tone Set</label>
           <div>{{pc.oneSong.details.tone_set}}</div>
         </td>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="scaleMode">Scale / Mode</label>
           <div>{{pc.oneSong.details.scale_mode_id}}</div>
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="teachableElements">Teachable Elements</label>
           <div>{{pc.editSongObject.teachableElementsModel}}</div>
         </td>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="rhythm">Rhythm</label>
           <div>{{pc.oneSong.details.rhythm}}</div>
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="extractableRhythms">Extractable Rhythms</label>
           <div>{{pc.oneSong.details.extractable_rhythms}}</div>
         </td>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="extractableMelodies">Extractable Melodies</label>
           <div>{{pc.oneSong.details.extractable_melodies}}</div>
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="meter">Meter</label>
           <div>{{pc.oneSong.details.meter_id}}</div>
         </td>
 
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="source">Verses</label>
           <div>{{pc.oneSong.details.verses_note}}</div>
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="intervalNoteGroup">Intervals / Note Group</label>
           <div>{{pc.oneSong.details.intervals_note_groups}}</div>
         </td>
 
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="phrases">Phrases</label>
           <div>{{pc.oneSong.details.phrases}}</div>
         </td>
@@ -85,19 +85,19 @@
           <div>{{pc.oneSong.details.melodic_form}}</div>
         </td>
 
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="rhythmicForm">Rhythmic Form</label>
           <div>{{pc.oneSong.details.rhythmic_form}}</div>
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="formType">Form Type</label>
           <div>{{pc.oneSong.details.formType}}</div>
           <!-- <select name="formType" ng-model="pc.oneSong.details.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in pc.dropdowns.formType"></select> -->
         </td>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="songType">Song Type</label>
           <div>{{pc.oneSong.details.songType}}</div>
         </td>
@@ -105,11 +105,11 @@
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="cultureOrigin">Culture / Origin</label>
           <div>{{pc.oneSong.details.culture_origin}}</div>
         </td>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="language">Language</label>
           <div>{{pc.oneSong.details.language}</div>
         </td>
@@ -117,19 +117,19 @@
       </tr>
 
       <tr>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="csp">CSP</label>
         <!-- NOTE: CSP stands for: comfortable starting pitch -->
           <div>{{pc.oneSong.details.csp}}</div>
         </td>
-        <td class="col-md-6">
+        <td class="col-xs-6">
           <label for="source">Source</label>
           <div>{{pc.oneSong.details.source_note}}</div>
         </td>
       </tr>
 
       <tr>
-        <td class="col-md-12" colspan="2">
+        <td class="col-xs-12" colspan="2">
           <label for="other">Other</label>
           <div>{{pc.oneSong.details.other_note}}</div>
         </td>
