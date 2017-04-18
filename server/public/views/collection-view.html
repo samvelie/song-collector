@@ -177,6 +177,12 @@
           </div>
         </div>
         <div class="form-group">
+          <label for="source" class="col-sm-4 control-label no-gutter">Verses</label>
+          <div class="col-sm-8 half-gutter">
+            <textarea class="form-control" rows="5">{{cc.oneSong.details.verses_note}}</textarea>
+          </div>
+        </div>
+        <div class="form-group">
           <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
           <div class="col-sm-8 half-gutter">
             <div contenteditable class="form-control">{{cc.oneSong.details.intervals_note_groups}}</div>
@@ -223,7 +229,8 @@
         <div class="form-group">
           <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.language_id}}</div>
+            <select name="formType" ng-model="cc.oneSong.details.language" class="form-control" placeholder="Language" ng-options="language.language for language in cc.dropdowns.language">
+            </select>
           </div>
         </div>
         <div class="form-group">
@@ -236,13 +243,13 @@
         <div class="form-group">
           <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.other_note}}</div>
+            <textarea class="form-control" rows="3">{{cc.oneSong.details.other_note}}</textarea>
           </div>
         </div>
         <div class="form-group">
           <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.source_note}}</div>
+            <textarea class="form-control" rows="3">{{cc.oneSong.details.source_note}}</textarea>
           </div>
         </div>
       </form>
