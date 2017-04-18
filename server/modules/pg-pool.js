@@ -17,7 +17,7 @@ if(process.env.DATABASE_URL) {
   };
 } else {
   var config = {
-    database: 'isong', // the name of the database
+    database: 'newisong', // the name of the database
     host: 'localhost', // where is your database
     port: 5432, // the port number for your database
     max: 20, // how many connections at one time

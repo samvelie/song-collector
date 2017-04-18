@@ -1,4 +1,4 @@
-app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams', function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
+app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams',function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
   var auth = $firebaseAuth();
   var songCollection = {list: []};
   var oneSong = {details: {}};
@@ -8,6 +8,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
+  var songClicked = false;
   auth.$onAuthStateChanged(getAllSongs);
   auth.$onAuthStateChanged(getDropdownValues);
 
@@ -15,6 +16,10 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   //   auth.$onAuthStateChanged(getOneSong);
   //   auth.$onAuthStateChanged(getAttachments);
   // }
+  function changeSongClickedStatus(status) {
+    songClicked = status;
+    console.log('songclicked status', status);
+  }
 
   // on click function that redirects us to the card's full view
   function showSong(id) {
@@ -36,6 +41,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           }
         }).then(function(response) {
           songCollection.list = response.data;
+          console.log('songcollection', songCollection.list);
         });
       });
     } else {
@@ -46,6 +52,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
 
   // get's one song from the database based on the song's ID grabbed from $routeParams
   function getOneSong(songId) {
+    filesUploaded.list = [];
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
@@ -56,9 +63,10 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             id_token: idToken
           }
         }).then(function(response) {
+          console.log('onesong from database', oneSong);
           oneSong.details = response.data;
-          oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm_note); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
-          oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms_note); //"" as above but for extractable rhythms
+          oneSong.details.rhythmArray = prepareRhythmForFont(oneSong.details.rhythm); //converts the rhythm string from db to an array for displaying correct portions as MusiSync font
+          oneSong.details.extractableRhythmArray = prepareExtractableRhythmForFont(oneSong.details.extractable_rhythms); //"" as above but for extractable rhythms
         });
       });
     } else {
@@ -68,7 +76,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   }
 
   // send file to FileStack and db at the same time
-  function fileUpload() {
+  function fileUpload(songId) {
     console.log('file sending to FileStack...');
     client.pick(
       {
@@ -87,7 +95,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             console.log('firebase user authenticated');
             $http({
               method: 'POST',
-              url: '/songs/addImage/' + $routeParams.id,
+              url: '/songs/addImage/' + songId,
               data: result.filesUploaded,
               headers: {
                 id_token: idToken
@@ -299,7 +307,9 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       saveNewSong: saveNewSong,
       deleteSong: deleteSong,
       prepareRhythmForFont: prepareRhythmForFont,
-      prepareExtractableRhythmForFont: prepareExtractableRhythmForFont
+      prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
+      changeSongClickedStatus: changeSongClickedStatus,
+      songClicked: songClicked
       // removeImage: removeImage
     };
   }]);

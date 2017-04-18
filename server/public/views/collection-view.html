@@ -5,8 +5,8 @@
     <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
     <div ng-show="cc.spanClicked" id="filterExpanded">
-      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title_text" />
-      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set_note" />
+      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
+      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
     </div>
   </div>
 </div>
@@ -33,10 +33,10 @@
 
       <!-- start container for all song cards -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
-        <h3 class="text-center">{{song.song_title_text}}</h3>
-        <p>Tone Set: <span  ng-bind-html="song.tone_set_note"></span></p>
-        <p>Scale / Mode: {{song.scale_mode_text}}</p>
-        <p>Teachable Element: {{song.teachable_elements_text}}</p>
+        <h3 class="text-center">{{song.song_title}}</h3>
+        <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
+        <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
+        <p><b>Teachable Element:</b> <span ng-repeat="element in song.teachableElements">{{element.teachable_elements}},</span></p>
       </div>
       <!-- end container for all song cards -->
 
@@ -49,20 +49,21 @@
 
     <div class="text-right panel" id="toolbar">
       <div class="col-sm-6 half-gutter text-left">
-        <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title_text}}</div>
+        <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title}}</div>
       </div>
       <!-- end song title section -->
 
       <!-- start toolbar section -->
-      <button ng-click="cc.songClicked=false" class="btn btn-primary">Minimize</button>
-      <button type="button" class="btn btn-primary">Save</button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" class="btn btn-default">Share</button>
-      <button type="button" class="btn btn-primary" ng-click="cc.deleteFunction(cc.oneSong.details.id)">Delete</button>
-      <a type="button" class="btn btn-primary" href="#!print">Print</a>
+      <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
+      <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <!-- ng-click="cc.deleteFunction(cc.oneSong.details.id)" -->
+      <button type="button" class="btn btn-primary" onclick="window.print()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></button>
       <!-- end toolbar section -->
 
       <!-- start Share popover template -->
-      <script type="text/ng-template" id="myPopoverTemplate.html">
+      <script type="text/ng-template" id="sharePopover.html">
         <div>{{cc.dynamicPopover.content}}</div>
         <form>
           <div class="input-group">
@@ -75,6 +76,16 @@
       </script>
       <!-- end Share popover template -->
 
+      <!-- start Delete popover template -->
+      <script type="text/ng-template" id="deletePopover.html">
+        <div>{{cc.deletePopover.content}}</div>
+        <form>
+          <div class="input-group">
+              <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete!</strong></button>
+          </div>
+        </form>
+      </script>
+      <!-- end Delete popover template -->
     </div>
 
     <!-- start div for right column -->
@@ -94,7 +105,7 @@
           <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
           <div class="col-sm-8 half-gutter">
             <!-- <div class="form-control" id="toneSet"> -->
-            <ng-quill-editor class="form-control" theme="bubble" ng-model="cc.oneSong.details.tone_set_note" placeholder="override default placeholder">
+            <ng-quill-editor class="form-control" theme="bubble" ng-model="cc.oneSong.details.tone_set" placeholder="override default placeholder">
               <ng-quill-toolbar>
                 <div id="ng-quill-toolbar">
                   <span class="ql-formats">
@@ -111,19 +122,29 @@
         <div class="form-group">
           <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control" id="scaleMode">{{cc.oneSong.details.scale_mode_text}}</div>
+            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by cc.oneSong.details.scale_mode_id">
+            </select>
           </div>
         </div>
         <div class="form-group">
           <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.teachable_elements_text}}</div>
-          </div>
+            <!-- <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div> -->
+          <!-- {{cc.editSongObject.teachableElementsModel.teachable_elements}} -->
+          <!-- cc.oneSong.details.teachable_elements_id: {{cc.oneSong.details.teachable_elements_id}} <br> -->
+          <!-- cc.oneSong.details.teachable_elements: {{cc.oneSong.details.teachable_elements}} <br> -->
+          <!-- cc.te_id: {{cc.te_id}} <br>
+          cc.te_value: {{cc.te_value}} <br> -->
+          <!-- cc.editSongObject.teachableElementsModel: {{cc.editSongObject.teachableElementsModel}} -->
+          cc.testmodel is {{cc.testmodel}} <br>
+          <div ng-dropdown-multiselect options="cc.testdata" selected-model="cc.testmodel" extra-settings="cc.testsettings" events="cc.testevents"></div>
+        </div>
+          {{cc.editSongObject.teachableElementsModel}}
         </div>
         <div class="form-group">
           <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
           <div class="col-sm-8 half-gutter">
-            <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm_note" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm_note)" ng-blur="cc.loseFocus('rhythm')" focusing>
+            <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm)" ng-blur="cc.loseFocus('rhythm')" focusing>
             <div class="display" ng-click="cc.findFocus('rhythm')">
               <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
                 <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
@@ -134,7 +155,7 @@
         <div class="form-group">
           <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
           <div class="col-sm-8 half-gutter">
-            <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms_note" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms_note)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
+            <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
             <div class="display" ng-click="cc.findFocus('extractableRhythm')">
               <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
                 <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
@@ -145,62 +166,71 @@
         <div class="form-group">
           <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.extractable_melodies_note}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.extractable_melodies}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.meter_text}}</div>
+            <select name="formType" ng-model="cc.oneSong.details.meter_id" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in cc.dropdowns.meter">
+            </select>
           </div>
         </div>
         <div class="form-group">
           <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.intervals_note_groups_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.intervals_note_groups}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.phrases_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.phrases}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.melodic_form_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.melodic_form}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.rhythmic_form_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.rhythmic_form}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.form_type_text}}</div>
+            <select name="formType" ng-model="cc.oneSong.details.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in cc.dropdowns.formType">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
+          <div class="col-sm-8 half-gutter">
+            <select name="formType" ng-model="cc.oneSong.details.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in cc.dropdowns.songType">
+            </select>
           </div>
         </div>
         <div class="form-group">
           <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.culture_origin_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.culture_origin}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.language_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.language_id}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
           <!-- NOTE: CSP stands for: comfortable starting pitch -->
           <div class="col-sm-8 half-gutter">
-            <div contenteditable class="form-control">{{cc.oneSong.details.csp_text}}</div>
+            <div contenteditable class="form-control">{{cc.oneSong.details.csp}}</div>
           </div>
         </div>
         <div class="form-group">
@@ -226,12 +256,12 @@
           <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in cc.attachments.list" ng-src="{{photo.image_url}}"/>
         </div>
         <div class="col-sm-12 half-gutter">
-          <button class="btn btn-primary" ng-click="cc.fileUpload()">Upload</button>
+          <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)">Upload</button>
           <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
             <!-- <a href="{{cc.filesUploaded.list[0].url}}" class="thumbnail"> -->
             <!-- the picture is rendered with width: 500 and sharpened -->
-            <img class="thumbnail" ng-src="{{cc.filesUploaded.list[0].url}}">
+            <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}">
             <!-- </a> -->
             <!-- <button ng-click="cc.removeImage()">Delete</button> -->
             <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->

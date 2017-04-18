@@ -7,10 +7,21 @@
         <input class="form-control" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="Title" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" ng-click="nsc.saveNewSong(nsc.newSongObject)">Save New Song</button>
-    <button type="button" class="btn btn-primary">Cancel</button>
+    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" popover-placement="bottom" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
+  <!-- start Delete popover template -->
+  <script type="text/ng-template" id="cancelPopover.html">
+    <div>{{nsc.cancelPopover.content}}</div>
+    <form>
+      <div class="input-group">
+          <button class="btn btn-danger" ng-click="nsc.redirectToCollection()"
+ type="submit"><strong>Cancel!</strong></button>
+      </div>
+    </form>
+  </script>
+  <!-- end Delete popover template -->
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
 
@@ -45,8 +56,9 @@
       <div class="form-group">
         <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
         <div class="col-sm-8 half-gutter">
-          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
+          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
         </div>
+        {{nsc.newSongObject.teachableElementsModel}}
       </div>
       <div class="form-group">
         <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
@@ -105,7 +117,7 @@
       <div class="form-group">
         <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroup" placeholder="Intervals / Note Group" />
+          <input class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroups" placeholder="Intervals / Note Group" />
         </div>
       </div>
       <div class="form-group">
