@@ -8,6 +8,12 @@
   font-family: 'MusiSync';
   src: url('../styles/fonts/MusiSync.ttf') format('truetype');
 }
+
+@keyframes errorJiggle {
+    0% {margin-left: 0;}
+    50% {margin-left: 20px;}
+    100% {margin-left: 0;}
+}
 /* end imports */
 
 /* body styles */
@@ -246,6 +252,12 @@ label:after {
 /* end footer styles */
 
 /* misc */
+.songErrorHighlight {
+  border: 1px solid red !important;
+  animation-name: errorJiggle;
+  animation-duration: .5s;
+}
+
 span.glyphicon {
   color: #333;
 }
