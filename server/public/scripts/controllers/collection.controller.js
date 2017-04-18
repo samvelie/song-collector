@@ -19,6 +19,7 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', function(Son
   self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
   self.lightboxImage = '';
   self.viewMore = false;
+  self.addSongNote = false;
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
 
@@ -30,6 +31,13 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', function(Son
       "teachable_elements": "Two eigth note anacrusis"
     }
   ];
+
+  if(SongFactory.songCollection.list.length < 1) {
+    console.log('noooooone ', SongFactory.songCollection.list.length);
+    self.addSongNote = true;
+  } else {
+    self.addSongNote = false;
+  }
 
   console.log('taco[0]', taco[0]);
   console.log('self.testmodel is', self.testmodel);

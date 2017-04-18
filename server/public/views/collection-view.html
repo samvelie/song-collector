@@ -33,6 +33,11 @@
       </div>
       <!-- end container for first "add song" card -->
 
+      <!-- for users who have just logged in and don't yet have songs in the db -->
+      <div class="userIntro">
+        <h1><span class="addSongAlert"><br />Add a song!<br /> <----</span></h1>
+      </div>
+
       <!-- start container for all song cards -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3 class="text-center">{{song.song_title}}</h3>
