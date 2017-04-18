@@ -12,6 +12,9 @@
 </div>
 <!-- end Search Bar area -->
 
+<div ng-if="cc.viewMore" class="backgroundDark">
+
+</div>
 
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
@@ -270,7 +273,7 @@
   <div class="form-group">
     <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
     <div> <!-- existing attachments -->
-      <img class="small" ng-click="cc.viewMoreOnClick(true)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
       <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)">Upload</button>
@@ -290,15 +293,8 @@
   <div class="form-group">
     <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
     <div> <!-- existing attachments -->
-      <img class="small" ng-click="cc.viewMoreOnClick(true)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
     </div>
-    <ul class="gallery gallery1">
-      <li ng-repeat="photo in cc.attachments.attachments">
-        <a ng-click="cc.openLightboxModal($index)">
-          <img ng-src="{{photo.image_url}}" class="img-thumbnail">
-        </a>
-      </li>
-    </ul>
     <div class="col-sm-12 half-gutter">
       <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.filesUploaded.attachments.length > 0">
@@ -313,7 +309,7 @@
 <!-- end attachments div -->
 </div>
 
-<div ng-if="cc.viewMore" class="imageModule" ng-click="cc.viewMoreOnClick(false)">
-  <img src="https://cdn.filestackcontent.com/rp8PiGZKRiaBpT0vr3cG" />
+<div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
+  <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
 </div>
 </div>

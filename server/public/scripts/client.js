@@ -1,4 +1,4 @@
-var app = angular.module('SongCollect', ['ngRoute', 'firebase', 'ngQuill', 'ngSanitize', 'angularjs-dropdown-multiselect', 'ui.bootstrap', 'bootstrapLightbox']);
+var app = angular.module('SongCollect', ['ngRoute', 'firebase', 'ngQuill', 'ngSanitize', 'angularjs-dropdown-multiselect', 'ui.bootstrap']);
 
 // angular.module('angularFilepicker', [])
 app.service('angularFilepicker', function($window){
