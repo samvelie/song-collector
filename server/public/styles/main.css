@@ -301,20 +301,7 @@ div.ql-editor {
 #printButton {
   float: right;
   background-color: white;
-}
-
-@media print {
-  header navbar, footer, div .search-bar, .col-sm-2, .card col-sm-11, #printButton {
-      display: none;
-  }
-  #printPage {
-    font-family: serif;
-    font-size: 13px;
-  }
-  /*#songTitle {
-    font-family: serif;
-    font-size: 13px;
-  }*/ 
+  padding: 10px;
 }
 
 #newSongDiv {

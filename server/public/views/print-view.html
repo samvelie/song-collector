@@ -1,134 +1,158 @@
-<button onclick="window.print()" class="btn btn-default"  id="printButton">
-  <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> Print this Page</button>
 
-  <div class="col-md-12" id="printPage">
-
-    <table class="table">
-
-      <tbody>
-        <tr>
-          <td>
-            <!-- images not saving to db so this is a blank field -->
-            <img class="thumbnail" ng-repeat="photo in pc.attachments.notation" ng-src="{{photo.image_url}}">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="songTitle" class="col-sm-4 control-label no-gutter">Song Title</label>
-            <div id="songTitle">{{pc.oneSong.details.song_title}}</div>
-          </td>
-          <td>
-            <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
-            <div>{{pc.oneSong.details.phrases}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
-            <div id="toneSet" theme="bubble" ng-model="pc.oneSong.details.tone_set" placeholder="override default placeholder"></div>
-          </td>
-          <td>
-            <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
-            <div>{{pc.oneSong.details.melodic_form}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
-            <div id="scaleMode">{{pc.oneSong.details.scale_mode}}</div>
-          </td>
-          <td>
-            <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
-            <div>{{pc.oneSong.details.rhythmic_form}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
-            <div>{{pc.oneSong.details.teachable_elements}}</div>
-          </td>
-          <td>
-            <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
-            <div>{{pc.oneSong.details.form_type}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-            <div>{{pc.oneSong.details.rhythm}}</div>
-          </td>
-          <td>
-            <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
-            <div>{{pc.oneSong.details.culture_origin}}</div>
-
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-            <div>{{pc.oneSong.details.extractable_rhythms}}</div>
-          </td>
-          <td>
-            <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
-            <div>{{pc.oneSong.details.language}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
-            <div>{{pc.oneSong.details.extractable_melodies}}</div>
-          </td>
-          <td>
-            <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
-            <div>{{pc.oneSong.details.csp}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
-            <div>{{pc.oneSong.details.meter}}</div>
-          </td>
-          <td>
-            <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
-            <div>{{pc.oneSong.details.other_note}}</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
-            <div>{{pc.oneSong.details.intervals_note_groups}}</div>
-          </td>
-          <td>
-            <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
-            <div>{{pc.oneSong.details.source_note}}</div>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="printPage">
+  <div id="printButton">
+    <button onclick="window.print()" class="btn btn-default">
+      <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> Print this Page
+    </button>
 
   </div>
+
+  <table class="col-md-12 table table-bordered table-responsive">
+
+    <thead>
+      <tr>
+        <th colspan="2" id="songTitle">{{pc.oneSong.details.song_title}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr>
+        <td class="col-md-6" colspan="2">
+          <img class="thumbnail" ng-repeat="photo in pc.attachments.notation" ng-src="{{photo.image_url}}">
+        </td>
+      </tr>
+
+        <td class="col-md-6">
+          <label for="toneSet">Tone Set</label>
+          <div>{{pc.oneSong.details.tone_set}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="scaleMode">Scale / Mode</label>
+          <div>{{pc.oneSong.details.scale_mode_id}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="col-md-6">
+          <label for="teachableElements">Teachable Elements</label>
+          <div>{{pc.editSongObject.teachableElementsModel}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="rhythm">Rhythm</label>
+          <div>{{pc.oneSong.details.rhythm}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="col-md-6">
+          <label for="extractableRhythms">Extractable Rhythms</label>
+          <div>{{pc.oneSong.details.extractable_rhythms}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="extractableMelodies">Extractable Melodies</label>
+          <div>{{pc.oneSong.details.extractable_melodies}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="col-md-6">
+          <label for="meter">Meter</label>
+          <div>{{pc.oneSong.details.meter_id}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="source">Verses</label>
+          <div>{{pc.oneSong.details.verses_note}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="col-md-6">
+          <label for="intervalNoteGroup">Intervals / Note Group</label>
+          <div>{{pc.oneSong.details.intervals_note_groups}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="phrases">Phrases</label>
+          <div>{{pc.oneSong.details.phrases}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>
+          <label for="melodicForm">Melodic Form</label>
+          <div>{{pc.oneSong.details.melodic_form}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="rhythmicForm">Rhythmic Form</label>
+          <div>{{pc.oneSong.details.rhythmic_form}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="col-md-6">
+        <label for="formType">Form Type</label>
+        <div>{{pc.oneSong.details.formType}}</div>
+          <!-- <select name="formType" ng-model="pc.oneSong.details.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in pc.dropdowns.formType"></select> -->
+        </td>
+
+        <td class="col-md-6">
+          <label for="songType">Song Type</label>
+          <div>{{pc.oneSong.details.songType}}</div>
+        </td>
+          <!-- <select name="formType" ng-model="pc.oneSong.details.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in pc.dropdowns.songType"> </select> -->
+        </tr>
+
+
+        <tr>
+        <td class="col-md-6">
+          <label for="cultureOrigin">Culture / Origin</label>
+          <div>{{pc.oneSong.details.culture_origin}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="language">Language</label>
+          <div>{{pc.oneSong.details.language}</div>
+        </td>
+          <!-- <select name="formType" ng-model="pc.oneSong.details.language" class="form-control" placeholder="Language" ng-options="language.language for language in pc.dropdowns.language"></select> -->
+        </tr>
+
+
+        <tr>
+        <td class="col-md-6">
+          <label for="csp">CSP</label>
+        <!-- NOTE: CSP stands for: comfortable starting pitch -->
+          <div>{{pc.oneSong.details.csp}}</div>
+        </td>
+
+        <td class="col-md-6">
+          <label for="source">Source</label>
+          <div>{{pc.oneSong.details.source_note}}</div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="col-md-12" colspan="2">
+          <label for="other">Other</label>
+          <div>{{pc.oneSong.details.other_note}}</div>
+        </td>
+      </tr>
+
+
+
+    </tbody>
+  </table>
+
+</div>
