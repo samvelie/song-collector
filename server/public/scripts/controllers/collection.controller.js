@@ -1,4 +1,4 @@
-app.controller('CollectionController', ['SongFactory', function(SongFactory) {
+app.controller('CollectionController', ['SongFactory', 'Lightbox', function(SongFactory, Lightbox) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
@@ -35,6 +35,11 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.viewMoreOnClick = function(bool) {
     self.viewMore = bool;
   };
+
+  self.openLightboxModal = function (index) {
+    console.log('index',index);
+  Lightbox.openModal(self.attachments.attachments, index);
+};
 
   // self.testmodel = [ taco[0] ];
 
@@ -150,7 +155,7 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
 
   self.saveSongChanges = function (songDetails) {
     console.log(songDetails);
-  }
+  };
 
 
   // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';

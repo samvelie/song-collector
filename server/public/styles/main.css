@@ -279,7 +279,7 @@ span.glyphicon {
   transition: all 0.1s ease-in-out;
 }
 
-.imageModule {
+/*.imageModule {
   border: 1px solid lightblue;
   background: white;
   padding: 10px;
@@ -288,7 +288,8 @@ span.glyphicon {
   height: 300px;
   top: 27%;
   left: 27%;
-}
+  overflow: scroll;
+}*/
 
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover {
   border: 1px solid lightblue;
