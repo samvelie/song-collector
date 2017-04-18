@@ -301,13 +301,10 @@ div.ql-editor {
 #printButton {
   float: right;
   background-color: white;
+  padding: 10px;
 }
 
-@media print {
-  header navbar, footer, div .search-bar, .col-sm-2, .card col-sm-11, #printButton {
-      display: none;
-  }
-}
+
 
 #newSongDiv {
   padding: 5px;
