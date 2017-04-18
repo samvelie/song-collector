@@ -20,6 +20,8 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
 
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
+
+  self.saveSongChanges = SongFactory.updateSong;
   // self.testmodel = [{id: 1 }];
   var taco = [
     {
@@ -143,11 +145,6 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
     self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(extractableRhythmString);
   };
-
-  self.saveSongChanges = function (songDetails) {
-    console.log(songDetails);
-  }
-
 
   // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
   self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';

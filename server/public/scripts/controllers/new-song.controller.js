@@ -19,7 +19,7 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   };
 
   self.saveCatches = function(newSongObject) {
-    if(newSongObject.song_title !== '') {
+    if(newSongObject.song_title === '') {
       console.log('you need a title!');
       self.songError = true;
     } else {
