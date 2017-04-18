@@ -34,16 +34,35 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE user_id=$1;', [userId], function(err, result) {
-      done();
-      if(err) {
-        console.log('error making database query: ', err);
-        res.sendStatus(500);
-      } else {
-        // if(result.rows > 0) {
-        //   //
-        // }
-        res.send(result.rows);
+      client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id WHERE user_id = $1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          var allSongs = result.rows;
+          client.query('SELECT teachable_elements_options.teachable_elements,teachable_elements_options.id  AS teid, songs.id FROM teachable_elements_options LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.teachable_elements_id = teachable_elements_options.id LEFT JOIN songs ON songs.id = song_collection_teachable_elements.song_id WHERE songs.user_id = $1;', [userId], function(err, result) {
+            // console.log('all these things', result.rows);
+
+            for(var j = 0; j < allSongs.length; j++) {
+              allSongs[j].teachableElements = [];
+
+              for (var i = 0; i < result.rows.length; i++) {
+                // console.log((result.rows[i].id));
+                  if(result.rows[i].id == allSongs[j].id) {
+                    allSongs[j].teachableElements.push({teachable_elements: (result.rows[i].teachable_elements), id: (result.rows[i].teid)});
+                  }
+                }
+            }
+            // console.log('new array', allSongs);
+
+          if (err) {
+            console.log('error making database query: ', err);
+            res.sendStatus(500);
+          } else {
+            res.send(allSongs);
+          }
+        }); // end client.query
       }
       }); // end client.query
     }
@@ -53,15 +72,18 @@ router.get('/', function(req, res) {
 // post uploaded file to database
 router.post('/addImage/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
-  var imageObject = req.body;
+  var imageObject = req.body.filesUploaded;
+  var isNotation = req.body.isNotation;
   var songId = req.params.id;
+  console.log('req.body: ', req.body);
   console.log('imageObject: ', imageObject);
+  console.log('isNotation: ', isNotation);
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('WITH new_image_id AS (INSERT INTO images (image_file_name, image_type, image_size, image_url, image_handle) VALUES ($1, $2, $3, $4, $5) RETURNING id) INSERT INTO images_users (image_id, user_id) VALUES ((SELECT id FROM new_image_id), $6);', [imageObject[0].filename, imageObject[0].mimetype, imageObject[0].size, imageObject[0].url, imageObject[0].handle, userId], function(err, result) {
+      client.query('WITH new_image_id AS (INSERT INTO images (image_file_name, image_type, image_size, image_url, image_handle, is_notation) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id) INSERT INTO images_users (image_id, user_id) VALUES ((SELECT id FROM new_image_id), $7);', [imageObject[0].filename, imageObject[0].mimetype, imageObject[0].size, imageObject[0].url, imageObject[0].handle, isNotation, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -99,7 +121,28 @@ router.get('/getAttachments/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1;', [songId], function(err, result) {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = FALSE;', [songId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(404);
+        } else {
+          res.send(result.rows);
+        }
+      }); // end client.query
+    }
+  }); // end pool.connect
+}); //end router.get
+
+router.get('/getNotation/:id', function(req, res) {
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
+  var songId = req.params.id;
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = TRUE;', [songId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -122,13 +165,12 @@ router.get('/singleSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT id, song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id FROM song_collection WHERE id = $1;', [songId], function(err, result) {
+      client.query('SELECT songs.id, song_collection_teachable_elements.teachable_elements_id, teachable_elements_options.teachable_elements, song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id FROM songs LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.song_id=songs.id LEFT JOIN teachable_elements_options ON song_collection_teachable_elements.teachable_elements_id = teachable_elements_options.id WHERE songs.id = $1;', [songId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          console.log('result.rows', result.rows[0]);
           res.send(result.rows[0]);
         }
       }); // end client.query
@@ -139,19 +181,43 @@ router.get('/singleSong/:id', function(req, res) {
 router.post('/newSong', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songObject = req.body;
+  console.log('songObject', songObject);
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('INSERT INTO song_collection (song_title_text, tone_set_note, scale_mode_text, teachable_elements_text, rhythm_note, extractable_rhythms_note, extractable_melodies_note, meter_text, verses_note, formation_note, action_note, intervals_note_groups_text, phrases_text, melodic_form_text, rhythmic_form_text, form_type_text, song_type_text, culture_origin_text, language_text, csp_text, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23);', [songObject.title, songObject.toneSet, songObject.scaleMode.scale_mode, songObject.teachableElements.teachable_elements, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter.meter, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType.form_type, songObject.songType.song_type, songObject.cultureOrigin, songObject.language.language, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
+      client.query('INSERT INTO songs (song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) returning id;', [songObject.title, songObject.toneSet, songObject.scaleMode.id, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter.id, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType.id, songObject.songType.id, songObject.cultureOrigin, songObject.language.id, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          console.log('result.rows', result.rows[0]);
-          res.send(result.rows[0]);
+          var returningSongId = result.rows[0].id;
+
+          if(songObject.teachableElementsModel.length > 0) {
+            var sqlCounter = 2;
+            var valueString = '';
+            var insertArray = [returningSongId];
+
+            for (var i = 0; i < songObject.teachableElementsModel.length; i++) {
+              valueString += ('($1,$' + sqlCounter +')');
+              if (i < songObject.teachableElementsModel.length-1) {
+                valueString+= ', ';
+              }
+              insertArray.push(songObject.teachableElementsModel[i].id);
+              sqlCounter++;
+            }
+            client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + valueString + ';', insertArray, function(err,result) {
+              done();
+              if(err) {
+                console.log('error making database query: ', err);
+                res.sendStatus(500);
+              } else {
+                res.sendStatus(200);
+              }
+            }); // end client.query
+          }
         }
       }); // end client.query
     }
@@ -166,7 +232,7 @@ router.delete('/removeSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('DELETE FROM song_collection WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+      client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);

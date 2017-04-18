@@ -1,17 +1,37 @@
-app.controller('NewSongController', ['SongFactory', function(SongFactory) {
+app.controller('NewSongController', ['SongFactory','$location', function(SongFactory,$location) {
 
   var self = this;
 
+  self.songError = false;
   self.fileUpload = SongFactory.fileUpload;
   self.attachments = SongFactory.attachments;
   // self.showPicker = SongFactory.showPicker;
 
   self.dropdowns = SongFactory.dropdowns;
   self.newSongObject = {};
+  self.redirectToCollection = function() {
+    $location.path('/collection');
+  };
+  self.cancelPopover = {
+    content: 'Are you sure you want to cancel this song?',
+    templateUrl: 'cancelPopover.html',// getting from collection-view.html
+    title: 'Cancel this song?'
+  };
+
+  self.saveCatches = function(newSongObject) {
+    if(newSongObject.song_title !== '') {
+      console.log('you need a title!');
+      self.songError = true;
+    } else {
+      SongFactory.saveNewSong(newSongObject);
+      console.log('saved!');
+      self.songError = false;
+    }
+  };
 
   self.saveNewSong = SongFactory.saveNewSong;
 
-  self.teachableElementsModel = [];
+  self.newSongObject.teachableElementsModel = [];
   self.teachableElementsSettings = {
     displayProp: 'teachable_elements',
     closeOnBlur: true,
