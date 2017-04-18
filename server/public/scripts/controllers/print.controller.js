@@ -1,4 +1,5 @@
-app.controller('PrintController', ['SongFactory', '$routeParams', 'angularFilepicker', function (SongFactory, $routeParams, angularFilepicker) {
+app.controller('PrintController', ['SongFactory', 'AuthFactory', '$routeParams', 'angularFilepicker',
+function (SongFactory, AuthFactory, $routeParams, angularFilepicker) {
 
   var self = this;
 
@@ -13,5 +14,6 @@ app.controller('PrintController', ['SongFactory', '$routeParams', 'angularFilepi
   self.oneSong = SongFactory.oneSong;
   self.showSong = SongFactory.showSong;
   self.attachments = SongFactory.attachments;
+  self.userInfo = AuthFactory.userInfo;
 
 }]);

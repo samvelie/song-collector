@@ -1,26 +1,30 @@
 <div id="printPage">
 
+<h1>{{pc.oneSong.details.song_title}}</h1>
+
   <div id="printButton">
     <button onclick="window.print()" class="btn btn-default">
       <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> Print this Page
     </button>
   </div>
 
+  <img class="thumbnail" ng-repeat="photo in pc.attachments.notation" ng-src="{{photo.image_url}}">
+
   <table class="table table-bordered">
 
-    <thead>
+    <!-- <thead>
       <tr>
         <th colspan="2" id="songTitle">{{pc.oneSong.details.song_title}}</th>
       </tr>
-    </thead>
+    </thead> -->
 
     <tbody>
 
-      <tr>
+      <!-- <tr>
         <td class="col-xs-6" colspan="2">
           <img class="thumbnail" ng-repeat="photo in pc.attachments.notation" ng-src="{{photo.image_url}}">
         </td>
-      </tr>
+      </tr> -->
 
       <tr>
         <td class="col-xs-6">
@@ -143,5 +147,8 @@
 
     </tbody>
   </table>
+
+  <p>From the Collection of {{pc.userInfo.info.user_name}}</p>
+
 
 </div>
