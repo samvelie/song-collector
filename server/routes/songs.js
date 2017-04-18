@@ -166,7 +166,7 @@ router.get('/singleSong/:id', function(req, res) {
       res.sendStatus(500);
     } else {
       client.query('SELECT songs.id, song_collection_teachable_elements.teachable_elements_id, teachable_elements_options.teachable_elements, song_title, tone_set, scale_mode, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type, form_type_id, song_type, song_type_id, culture_origin, language, language_id, csp, other_note, source_note, user_id FROM songs LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.song_id=songs.id LEFT JOIN teachable_elements_options ON song_collection_teachable_elements.teachable_elements_id=teachable_elements_options.id LEFT JOIN form_type_options ON songs.form_type_id=form_type_options.id LEFT JOIN meter_options ON songs.meter_id=meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id=scale_mode_options.id LEFT JOIN song_type_options ON songs.song_type_id=song_type_options.id LEFT JOIN language_options ON songs.language_id=language_options.id WHERE songs.id = $1;', [songId], function(err, result) {
-        // works even though my linter is freaking out
+        // works even though my linter is freaking out -- Paige
         done();
         if(err) {
           console.log('error making database query: ', err);

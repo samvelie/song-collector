@@ -18,6 +18,7 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.attachments = SongFactory.attachments; //attachments for single song
   self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
 
+  self.viewMore = false;
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
   // self.testmodel = [{id: 1 }];
@@ -31,6 +32,9 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   console.log('taco[0]', taco[0]);
   console.log('self.testmodel is', self.testmodel);
 
+  self.viewMoreOnClick = function(bool) {
+    self.viewMore = bool;
+  };
 
   // self.testmodel = [ taco[0] ];
 

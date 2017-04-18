@@ -279,6 +279,22 @@ span.glyphicon {
   transition: all 0.1s ease-in-out;
 }
 
+.imageModule {
+  border: 1px solid lightblue;
+  background: white;
+  padding: 10px;
+  position: absolute;
+  width: 50%;
+  height: 300px;
+  top: 27%;
+  left: 27%;
+}
+
+input.form-control:hover, textarea.form-control:hover, select.form-control:hover {
+  border: 1px solid lightblue;
+  transition: none;
+}
+
 div.ql-editor {
   padding: 0;
 }
