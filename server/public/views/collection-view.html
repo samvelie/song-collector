@@ -47,7 +47,7 @@
       <!-- start container for all song cards -->
 
       <!-- ng-repeat="song in cc.filteredResults.list"  -->
-      <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
+      <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id, [songInfoForm.$dirty])">
         <h3 class="text-center">{{song.song_title}}</h3>
         <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
         <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
@@ -59,21 +59,20 @@
   </div>
 
 
-
   <div ng-if="cc.songClicked" class="col-sm-9 card-holder no-gutter">
-
     <div class="text-right panel" id="toolbar">
       <div class="col-sm-6 half-gutter text-left">
-        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title"/>
+        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title" ng-change= "cc.makeDirty()"/>
       </div>
       <!-- end song title section -->
 
       <!-- start toolbar section -->
-      <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true" title="Collection view"></span></button>
-      <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)" title="Save changes"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default" title="Share song"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default" title="Delete song"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-      <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true" title="Print song"></span></a>
+      <button ng-click="cc.showFullCardView()" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
+      <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+
       <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
 
@@ -107,7 +106,7 @@
     <!-- start div for song info column -->
 <div class="col-sm-8 card-holder">
 
-  <form class="form-horizontal">
+  <form name="cc.songInfoForm" class="form-horizontal" confirm-on-exit>
 
     <div class="form-group">
       <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
@@ -137,7 +136,7 @@
     <div class="form-group">
       <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
       <div class="col-sm-8 half-gutter">
-        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts"></div>
+        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts" events="cc.multiSelectChange"></div>
       </div>
       <!-- {{cc.oneSong.details.teachable_elements_id_group}} -->
     </div>
@@ -184,7 +183,7 @@
     <div class="form-group">
       <label for="source" class="col-sm-4 control-label no-gutter">Verses</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="5">{{cc.oneSong.details.verses_note}}</textarea>
+        <textarea class="form-control" rows="5" ng-model="cc.oneSong.details.verses_note"></textarea>
       </div>
     </div>
 
@@ -258,14 +257,14 @@
     <div class="form-group">
       <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.other_note}}</textarea>
+        <textarea class="form-control" rows="3" ng-model="cc.oneSong.details.other_note"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.source_note}}</textarea>
+        <textarea class="form-control" rows="3" ng-model="cc.oneSong.details.source_note"></textarea>
       </div>
     </div>
 
