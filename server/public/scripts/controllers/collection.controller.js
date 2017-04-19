@@ -1,4 +1,4 @@
-app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', '$timeout', function(SongFactory, $uibModal, $filter, $timeout) {
+app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', function(SongFactory, $uibModal, $filter) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
@@ -79,23 +79,57 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', '
   };
 
   self.showSong = function(songId) {
+    if(self.songClicked) {
+      if(self.songInfoForm.$dirty) {
+        var moveOn = confirm('You have unsaved changes, are you sure you want to go to another song?');
+          if(moveOn) {
+            whenSongShouldShowOnClick(songId);
+          }
+      } else {
+        whenSongShouldShowOnClick(songId);
+      }
+    } else {
+      whenSongShouldShowOnClick(songId);
+    }
+  };
+
+  function whenSongShouldShowOnClick(songId) {
     console.log('show song of id ' + songId);
     SongFactory.showSong(songId);
     self.songClicked = true;
     self.editingRhythm = false;
     self.editingExtractableRhythm = false;
     self.editSongObject.teachableElementsModel = SongFactory.oneSong.details.teachable_elements_id_group;
+    if(self.songInfoForm) {
+      self.songInfoForm.$dirty = false;
+    }
     console.log(SongFactory.oneSong.details);
+  }
+
+  self.showFullCardView = function () {
+    if (self.songInfoForm.$dirty) {
+      var showAll = confirm('You have unsaved changes, are you sure you want to view all songs?');
+        if(showAll) {
+          self.songClicked=false;
+        }
+    } else {
+      self.songClicked=false;
+    }
   };
 
   self.multiSelectChange = {
     onItemSelect: function(item) {
-      console.log(item);
+      self.makeDirty();
     },
     onItemDeselect: function(item) {
-      console.log(item);
+      self.makeDirty();
     }
   };
+
+  self.makeDirty = function() {
+    self.songInfoForm.$setDirty();
+  }
+
 
   self.expandFilter = function() {
     if(self.spanClicked) {
