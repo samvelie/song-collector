@@ -5,16 +5,16 @@
     <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
     <div ng-show="cc.spanClicked" id="filterExpanded">
-      <!-- <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
-      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" /> -->
-      <input type="text" ng-model="searchForm" ng-change="cc.searchPage(searchForm)">
+      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
+      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
+      <!-- <input type="text" ng-model="searchForm" ng-change="cc.searchPage(searchForm)">
       <select class="form-control" ng-model="searchForm.searchFilter">
         <option value="song_title">Song Title</option>
         <option value="tone_set">Tone Set</option>
         <option value="scale_mode">Scale / Mode</option>
         <option value="teachable_elements">Teachable Elements</option>
       </select>
-      <button class="btn" ng-click="cc.searchPage(searchForm)">Search</button>
+      <button class="btn" ng-click="cc.searchPage(searchForm)">Search</button> -->
     </div>
   </div>
 </div>
@@ -44,8 +44,9 @@
       <!-- for users who have just logged in and don't yet have songs in the db -->
 
       <!-- start container for all song cards -->
-      <!-- ng-repeat="song in cc.songs.list | filter:search" -->
-      <div class="card" ng-repeat="song in cc.filteredResults.list" ng-click="cc.showSong(song.id)">
+
+      <!-- ng-repeat="song in cc.filteredResults.list"  -->
+      <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3 class="text-center">{{song.song_title}}</h3>
         <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
         <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
