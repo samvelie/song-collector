@@ -202,7 +202,7 @@
         <div style="margin-top:10px;" ng-if="nsc.notationUploaded.list.length > 0">
           <!-- Show the thumbnail only when the picture is uploaded -->
           <!-- the picture is rendered with width: 500 and sharpened -->
-          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'notation', $index)" ng-src="{{nsc.notationUploaded.list[0].url}}">
+          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'notation', $index, true)" ng-src="{{nsc.notationUploaded.list[0].url}}">
           <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
         </div>
       </div>
@@ -217,7 +217,7 @@
         <div style="margin-top:10px;" ng-if="nsc.filesUploaded.list.length > 0">
           <!-- Show the thumbnail only when the picture is uploaded -->
           <!-- the picture is rendered with width: 500 and sharpened -->
-          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'attachments', $index)" ng-src="{{nsc.filesUploaded.list[0].url}}">
+          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'attachments', $index, true)" ng-src="{{nsc.filesUploaded.list[0].url}}">
           <!-- ^^^ will need to be an ng-repeat if we use multiple files ^^^ -->
         </div>
       </div>

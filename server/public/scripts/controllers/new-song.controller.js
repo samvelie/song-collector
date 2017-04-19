@@ -81,13 +81,18 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   };
 
   // view image preview modal
-  self.viewMoreOnClick = function(bool, type, index) {
+  self.viewMoreOnClick = function(bool, type, index, preview) {
     self.viewMore = bool; // used in ng-if on the front end
     console.log('type', type);
-    if(bool === true && type == 'attachments') {
+    if(bool === true && type == 'attachments' && preview === false) {
       self.lightboxImage = SongFactory.filesUploaded[index].image_url;
-    } else if (bool === true && type == 'notation') {
+    } else if (bool === true && type == 'notation' && preview === false) {
       self.lightboxImage = SongFactory.notationUploaded[index].image_url;
+    }
+    if(type == 'attachments' && preview === true) {
+      self.lightboxImage = SongFactory.filesUploaded.list[0].url;
+    } else if (type == 'notation' && preview === true) {
+      self.lightboxImage = SongFactory.notationUploaded.list[0].url;
     }
     console.log(self.lightboxImage);
 
