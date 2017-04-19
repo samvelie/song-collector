@@ -268,31 +268,48 @@ router.delete('/removeSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
+      client.query('DELETE FROM song_collection_teachable_elements WHERE song_id = $1;', [songId], function(err,result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+        } 
+      }); // end client.query
       client.query('DELETE FROM images_songs WHERE song_id = $1 AND user_id = $2 RETURNING images_songs.image_id;', [songId, userId], function(err,result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
         } else {
-          var deletedImageId = result.rows[0].image_id;
-          client.query('DELETE FROM images WHERE image.id = $1;', [deletedImageId], function(err, result) {
-            if(err) {
-              console.log('error making database query: ', err);
-            } else {
-              client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
-                done();
-                if(err) {
-                  console.log('error making database query: ', err);
-                  res.sendStatus(500);
-                } else {
-                  res.sendStatus(200);
-                }
-              }); // end client.query
-            }
-          });
+          if(result.rows > 0) {
+            var deletedImageId = result.rows[0].image_id;
+            client.query('DELETE FROM images WHERE image.id = $1;', [deletedImageId], function(err, result) {
+              if(err) {
+                console.log('error making database query: ', err);
+              } else {
+                client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+                  done();
+                  if(err) {
+                    console.log('error making database query: ', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.sendStatus(200);
+                  }
+                }); // end client.query
+              }
+            });
+          } else {
+            client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+              done();
+              if(err) {
+                console.log('error making database query: ', err);
+                res.sendStatus(500);
+              } else {
+                res.sendStatus(200);
+              }
+            }); // end client.query
+          }
         }
-      });
+      }); // end client.query
     }
-
   }); // end pool.connect
 }); // end router.delete
 

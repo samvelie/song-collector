@@ -258,7 +258,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             $http({
               method: 'POST',
               url: '/songs/addImage/' + response.data.id,
-              data: notationUploaded.list,
+              data: notationUploaded,
               headers: {
                 id_token: idToken
               }
