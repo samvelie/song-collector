@@ -1,9 +1,10 @@
 <!-- start Search Bar Area -->
 <div class="col-md-12">
   <div class="search-bar text-center">
-    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()"></span>
-    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
+
     <div ng-show="cc.spanClicked" id="filterExpanded">
       <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
       <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
@@ -37,7 +38,7 @@
       </div>
       <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-        <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
+        <a href="#!new" title="Add a new song"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
       <!-- end container for first "add song" card -->
 
@@ -70,8 +71,8 @@
       <!-- start toolbar section -->
       <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
       <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
       <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
@@ -81,23 +82,24 @@
         <div>{{cc.dynamicPopover.content}}</div>
         <form>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+            <input type="email" class="form-control share" ng-model="home.newEvent" placeholder="Email Address">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+              <button class="btn btn-default btn-share" ng-click="home.nameEvent()" type="submit" title="Send email"><strong>Send!</strong></button>
             </span>
           </div>
-        </form>
-      </script>
+          </form>
+        </script>
       <!-- end Share popover template -->
 
       <!-- start Delete popover template -->
       <script type="text/ng-template" id="deletePopover.html">
-        <div>{{cc.deletePopover.content}}</div>
+        <center>
+        <p class="text-center">{{cc.deletePopover.content}}</p>
         <form>
-          <div class="input-group">
-            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete!</strong></button>
-          </div>
+            <button class="btn btn-default" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
+            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete</strong></button>
         </form>
+        </center>
       </script>
       <!-- end Delete popover template -->
     </div>
@@ -135,17 +137,9 @@
     <div class="form-group">
       <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
       <div class="col-sm-8 half-gutter">
-        <!-- <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div> -->
-        <!-- {{cc.editSongObject.teachableElementsModel.teachable_elements}} -->
-        <!-- cc.oneSong.details.teachable_elements_id: {{cc.oneSong.details.teachable_elements_id}} <br> -->
-        <!-- cc.oneSong.details.teachable_elements: {{cc.oneSong.details.teachable_elements}} <br> -->
-        <!-- cc.te_id: {{cc.te_id}} <br>
-        cc.te_value: {{cc.te_value}} <br> -->
-        <!-- cc.editSongObject.teachableElementsModel: {{cc.editSongObject.teachableElementsModel}} -->
-        cc.testmodel is {{cc.testmodel}} <br>
-        <div ng-dropdown-multiselect options="cc.testdata" selected-model="cc.testmodel" extra-settings="cc.testsettings" events="cc.testevents"></div>
+        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts"></div>
       </div>
-      {{cc.editSongObject.teachableElementsModel}}
+      <!-- {{cc.oneSong.details.teachable_elements_id_group}} -->
     </div>
 
     <div class="form-group" ng-click="cc.findFocus('rhythm')">

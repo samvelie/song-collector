@@ -10,21 +10,21 @@
         <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
-    <button type="button" class="btn btn-primary" popover-placement="bottom" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
+    <button type="button" class="btn btn-primary" popover-placement="bottom-right" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
   <!-- start Delete popover template -->
   <script type="text/ng-template" id="cancelPopover.html">
-    <div>{{nsc.cancelPopover.content}}</div>
+    <center>
+    <p class="text-center">{{nsc.cancelPopover.content}}</p>
     <form>
-      <div class="input-group">
-          <button class="btn btn-danger" ng-click="nsc.redirectToCollection()"
- type="submit"><strong>Cancel!</strong></button>
-      </div>
+      <button class="btn btn-danger" ng-click="nsc.redirectToCollection()" type="submit"><strong>Cancel!</strong></button>
     </form>
+    </center>
   </script>
   <!-- end Delete popover template -->
+
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
 
@@ -59,9 +59,9 @@
       <div class="form-group">
         <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
         <div class="col-sm-8 half-gutter">
-          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
+          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" translation-texts="nsc.teachableElementsCustomTexts"></div>
         </div>
-        {{nsc.newSongObject}}
+        <!-- {{nsc.newSongObject}} -->
       </div>
       <div class="form-group">
         <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
@@ -198,7 +198,7 @@
         <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in nsc.attachments.list" ng-src="{{photo.image_url}}"/>
       </div>
       <div class="col-sm-12 half-gutter">
-        <button class="btn btn-primary" ng-click="nsc.fileUpload()">Upload</button>
+        <button class="btn btn-primary" ng-click="nsc.fileUpload()" title="Upload image">Upload</button>
 
         <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
       </div>

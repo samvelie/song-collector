@@ -20,8 +20,6 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
   self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
   self.lightboxImage = '';
   self.viewMore = false;
-  self.te_id = SongFactory.oneSong.details.teachable_elements_id;
-  self.te_value = SongFactory.oneSong.details.teachable_elements;
 
   self.saveSongChanges = SongFactory.updateSong;//function for saving changes made on a song
 
@@ -33,23 +31,12 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
 
     console.log('searching by', input);
     self.filteredResults.list = $filter('filter')(self.songs.list, input);
-    
+
     console.log('self.songs', self.songs.list);
 
 
     console.log(self.filteredResults);
   };
-
-  // self.testmodel = [{id: 1 }];
-  var taco = [
-    {
-      "id": 1,
-      "teachable_elements": "Two eigth note anacrusis"
-    }
-  ];
-
-  console.log('taco[0]', taco[0]);
-  console.log('self.testmodel is', self.testmodel);
 
   self.viewMoreOnClick = function(bool, type, index) {
     self.viewMore = bool;
@@ -63,63 +50,24 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
 
   };
 
-  // self.testmodel = [ taco[0] ];
-
-  // self.testing = true;
-  // self.testmodel = [{ id: 1 }, { id: 2 }];
-  // self.testdata = [
-  // 		{ id: 1, label: 'David' },
-  // 		{ id: 2, label: 'Jhon' },
-  // 		{ id: 3, label: 'Danny' },
-  // 	];
-  // self.testsettings = {
-  // 		selectionLimit: 1,
-  // 		selectedToTop: true,
-  // 		idProperty: 'id',
-  //     smartButtonMaxItems: 3,
-  // 	};
-
-
-  self.testing = true;
-  self.testmodel = [{ id: 1 }, { id: 3 }, { id: 5 }];
-  self.testdata = [
-    { id: 1, teachable_elements: 'eighth note anacrusis' },
-    { id: 2, teachable_elements: 'dotted quarter eighth' },
-    { id: 3, teachable_elements: 'Aeolian' },
-    { id: 4, teachable_elements: 'Asymmetrical meter' },
-    { id: 5, teachable_elements: 'Binary (AB)' },
-  ];
-  self.testsettings = {
-    displayProp: 'teachable_elements',
-    selectedToTop: true,
-    idProperty: 'id',
-    smartButtonMaxItems: 3,
-  };
-
-  // self.testevents = {
-  // 		onSelectionChanged() { // This event is not firing on selection of max limit
-  // 			$log.debug('you changed selection');
-  // 		},
-  // 	};
-
-
-  // self.editSongObject.teachableElementsModel = [
-  //   { 'id' : 1, 'teachable_elements' : 'Two eighth note anacrusis' },
-  // ];
-
-  self.editSongObject.teachableElementsModel = [];
-
   self.teachableElementsSettings = {
     displayProp: 'teachable_elements',
     closeOnBlur: true,
     clearSearchOnClose: true,
     showCheckAll: false,
     enableSearch: true,
-    smartButtonMaxItems: 10,
+    smartButtonMaxItems: 5,
     scrollableHeight: '300px',
     scrollable: true,
-    selectedToTop: true
+    selectedToTop: true,
+    keyboardControls: true,
+    idProperty: 'id',
   };
+
+  self.teachableElementsCustomTexts = {
+    buttonDefaultText: 'Select the teachable elements'
+  };
+  
   // have a promise so that after a song is deleted, user gets redirected back to the main card view
   // need to create a confirmation popup and an alert of deletion popup
   self.deleteFunction = function(songId) {
@@ -137,6 +85,8 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     self.songClicked = true;
     self.editingRhythm = false;
     self.editingExtractableRhythm = false;
+    self.editSongObject.teachableElementsModel = SongFactory.oneSong.details.teachable_elements_id_group;
+    console.log(SongFactory.oneSong.details);
   };
 
   self.expandFilter = function() {
@@ -179,15 +129,15 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
   self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';
 
   self.dynamicPopover = {
-    content: 'Hello, World!',
+    content: 'Email the notation images to:',
     templateUrl: 'sharePopover.html', // getting from collection-view.html
-    title: 'Share this song:',
+    // title: 'Share this song:',
   };
 
   self.deletePopover = {
-    content: 'Are you sure you want to delete this song?',
+    content: 'Delete this song?',
     templateUrl: 'deletePopover.html',// getting from collection-view.html
-    title: 'Delete this song?'
+    // title: 'Delete this song?'
   };
 
 }]);
