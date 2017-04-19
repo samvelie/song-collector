@@ -7,11 +7,11 @@
   <div class="col-sm-12 panel text-right" id="toolbar">
     <div class="form-group">
       <div class="col-sm-8 half-gutter text-center">
-        <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="Title" />
+        <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
       </div>
     </div>
     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
-    <button type="button" class="btn btn-primary" popover-placement="bottom" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" popover-placement="bottom" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
   <!-- start Cancel popover template -->

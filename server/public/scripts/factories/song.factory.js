@@ -327,7 +327,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     // }
 
     function prepareRhythmForFont(rhythmString) {
-      if(rhythmString.length===0) {
+      if(rhythmString===null || rhythmString ==='') {
         return [];
       } else {
         var textString = '';
@@ -355,7 +355,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     }
 
     function prepareExtractableRhythmForFont(extractableRhythmString) {
-      if(extractableRhythmString.length===0) {
+      if(extractableRhythmString===null || extractableRhythmString==='') {
         return [];
       } else {
         var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values

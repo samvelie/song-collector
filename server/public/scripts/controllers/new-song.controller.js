@@ -7,6 +7,7 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   self.filesUploaded = SongFactory.filesUploaded; //files for single song
   self.notationUpload = SongFactory.notationUpload; // function for uploading notation
   self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
+  self.titlePlaceholder = "Title";
   self.dropdowns = SongFactory.dropdowns;
   self.lightboxImage = '';
   self.viewMore = false;
@@ -19,8 +20,9 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   };
 
   self.saveCatches = function(newSongObject) {
-    if(newSongObject.song_title === '') {
+    if(newSongObject.title === '' || newSongObject.title === undefined) {
       console.log('you need a title!');
+      self.titlePlaceholder = "Title is required!";
       self.songError = true;
     } else {
       SongFactory.saveNewSong(newSongObject);
