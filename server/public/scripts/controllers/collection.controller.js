@@ -25,9 +25,14 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
   self.saveSongChanges = SongFactory.updateSong;//function for saving changes made on a song
 
   self.searchPage = function (input) {
-    self.filteredResults = $filter('filter')(self.songs.list, input.inputString, false, input.searchFilter);
+    var searchObject = {};
+    var key = input.searchFilter;
+    searchObject[key] = input.inputString;
+
+    console.log('searching by ' + key + ' for ' + input.inputString);
+    self.filteredResults = $filter('filter')(self.songs.list, searchObject);
     console.log(self.filteredResults);
-  }
+  };
 
   // self.testmodel = [{id: 1 }];
   var taco = [
