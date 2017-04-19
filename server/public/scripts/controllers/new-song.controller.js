@@ -94,7 +94,6 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
     } else if (type == 'notation' && preview === true) {
       self.lightboxImage = SongFactory.notationUploaded.list[0].url;
     }
-    console.log(self.lightboxImage);
 
   };
 
