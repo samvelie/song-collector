@@ -279,6 +279,48 @@ span.glyphicon {
   transition: all 0.1s ease-in-out;
 }
 
+.imageModule {
+  border: 1px solid lightblue;
+  background: white;
+  padding: 10px;
+  position: absolute;
+  width: 60%;
+  height: 600px;
+  /*top: 27%;*/
+  left: 20%;
+  overflow: scroll;
+  z-index:1000;
+  padding-top:25px;
+}
+
+.backgroundDark {
+  background: rgba(0,0,0,0.5);
+  content: '';
+  height: 2500px;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+  margin-top: -100px;
+}
+
+.profileThumb {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  background-size: cover !important;
+  margin-left: 10px;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+input.form-control:hover, textarea.form-control:hover, select.form-control:hover {
+  border: 1px solid lightblue;
+  transition: none;
+}
+
 div.ql-editor {
   padding: 0;
 }

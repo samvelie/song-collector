@@ -7,10 +7,8 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
   auth.$onAuthStateChanged(function(firebaseUser) {
     // Check directly if firebaseUser is null
     newLoggedIn.loginStatus = !!firebaseUser;
-    console.log('newLoggedIn is', newLoggedIn);
     loggedIn.value = firebaseUser !== null;
     if (loggedIn.value) {
-      console.log('user is logged in');
       getUserData(firebaseUser);
       //  $location.path('/collection');
     } else {
@@ -38,9 +36,6 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
         }).then(function(response) {
           console.log('from user get', response.data);
           userInfo.info = response.data;
-          console.log('userInfo is', userInfo);
-          console.log('userInfo.info is', userInfo.info);
-          console.log('user is logged in as', userInfo.info.user_email);
         });
       });
     }

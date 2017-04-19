@@ -1,8 +1,9 @@
-app.controller('CollectionController', ['SongFactory', function(SongFactory) {
+app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', function(SongFactory, $uibModal, $filter) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
   self.songs = SongFactory.songCollection;
+  self.filteredResults = SongFactory.songCollection;
   self.editSongObject = {};
   //boolean to hide/show single song
   self.songClicked = SongFactory.songClicked;
@@ -17,9 +18,28 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
   self.attachments = SongFactory.attachments; //attachments for single song
   self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
-
+  self.lightboxImage = '';
+  self.viewMore = false;
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
+
+  self.saveSongChanges = SongFactory.updateSong;//function for saving changes made on a song
+
+  self.searchPage = function (input) {
+    var searchObject = {};
+    var key = input.searchFilter;
+    var value = input.inputString;
+    searchObject[key] = value;
+
+    console.log('searching by', input);
+    self.filteredResults.list = $filter('filter')(self.songs.list, input);
+    
+    console.log('self.songs', self.songs.list);
+
+
+    console.log(self.filteredResults);
+  };
+
   // self.testmodel = [{id: 1 }];
   var taco = [
     {
@@ -31,45 +51,56 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   console.log('taco[0]', taco[0]);
   console.log('self.testmodel is', self.testmodel);
 
+  self.viewMoreOnClick = function(bool, type, index) {
+    self.viewMore = bool;
+    console.log('type', type);
+    if(bool === true && type == 'attachments') {
+      self.lightboxImage = SongFactory.attachments.attachments[index].image_url;
+    } else if (bool === true && type == 'notation') {
+      self.lightboxImage = SongFactory.attachments.notation[index].image_url;
+    }
+    console.log(self.lightboxImage);
+
+  };
 
   // self.testmodel = [ taco[0] ];
 
   // self.testing = true;
-	// self.testmodel = [{ id: 1 }, { id: 2 }];
-	// self.testdata = [
-	// 		{ id: 1, label: 'David' },
-	// 		{ id: 2, label: 'Jhon' },
-	// 		{ id: 3, label: 'Danny' },
-	// 	];
-	// self.testsettings = {
-	// 		selectionLimit: 1,
-	// 		selectedToTop: true,
-	// 		idProperty: 'id',
+  // self.testmodel = [{ id: 1 }, { id: 2 }];
+  // self.testdata = [
+  // 		{ id: 1, label: 'David' },
+  // 		{ id: 2, label: 'Jhon' },
+  // 		{ id: 3, label: 'Danny' },
+  // 	];
+  // self.testsettings = {
+  // 		selectionLimit: 1,
+  // 		selectedToTop: true,
+  // 		idProperty: 'id',
   //     smartButtonMaxItems: 3,
-	// 	};
+  // 	};
 
 
   self.testing = true;
   self.testmodel = [{ id: 1 }, { id: 3 }, { id: 5 }];
   self.testdata = [
-      { id: 1, teachable_elements: 'eighth note anacrusis' },
-      { id: 2, teachable_elements: 'dotted quarter eighth' },
-      { id: 3, teachable_elements: 'Aeolian' },
-      { id: 4, teachable_elements: 'Asymmetrical meter' },
-      { id: 5, teachable_elements: 'Binary (AB)' },
-    ];
+    { id: 1, teachable_elements: 'eighth note anacrusis' },
+    { id: 2, teachable_elements: 'dotted quarter eighth' },
+    { id: 3, teachable_elements: 'Aeolian' },
+    { id: 4, teachable_elements: 'Asymmetrical meter' },
+    { id: 5, teachable_elements: 'Binary (AB)' },
+  ];
   self.testsettings = {
-      displayProp: 'teachable_elements',
-      selectedToTop: true,
-      idProperty: 'id',
-      smartButtonMaxItems: 3,
-    };
+    displayProp: 'teachable_elements',
+    selectedToTop: true,
+    idProperty: 'id',
+    smartButtonMaxItems: 3,
+  };
 
-	// self.testevents = {
-	// 		onSelectionChanged() { // This event is not firing on selection of max limit
-	// 			$log.debug('you changed selection');
-	// 		},
-	// 	};
+  // self.testevents = {
+  // 		onSelectionChanged() { // This event is not firing on selection of max limit
+  // 			$log.debug('you changed selection');
+  // 		},
+  // 	};
 
 
   // self.editSongObject.teachableElementsModel = [
@@ -89,8 +120,8 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
     scrollable: true,
     selectedToTop: true
   };
-// have a promise so that after a song is deleted, user gets redirected back to the main card view
-// need to create a confirmation popup and an alert of deletion popup
+  // have a promise so that after a song is deleted, user gets redirected back to the main card view
+  // need to create a confirmation popup and an alert of deletion popup
   self.deleteFunction = function(songId) {
     SongFactory.deleteSong(songId).then(function() {
       self.songClicked = false;
@@ -101,7 +132,7 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   };
 
   self.showSong = function(songId) {
-        console.log('show song of id ' + songId);
+    console.log('show song of id ' + songId);
     SongFactory.showSong(songId);
     self.songClicked = true;
     self.editingRhythm = false;
@@ -143,11 +174,6 @@ app.controller('CollectionController', ['SongFactory', function(SongFactory) {
   self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
     self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(extractableRhythmString);
   };
-
-  self.saveSongChanges = function (songDetails) {
-    console.log(songDetails);
-  }
-
 
   // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
   self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';

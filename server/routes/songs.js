@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id WHERE user_id = $1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
+      client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode, songs.rhythm, songs.extractable_rhythms, songs.extractable_melodies, meter_options.meter, songs.verses_note, songs.formation_note, songs.action_note, songs.intervals_note_groups, songs.phrases, songs.melodic_form, songs.rhythmic_form, form_type_options.form_type, song_type_options.song_type, songs.culture_origin, language_options.language, songs.csp, songs.other_note, songs.source_note FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id LEFT JOIN form_type_options ON songs.form_type_id=form_type_options.id LEFT JOIN song_type_options ON songs.song_type_id = song_type_options.id LEFT JOIN language_options ON songs.language_id = language_options.id WHERE user_id=$1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -220,19 +220,9 @@ router.post('/newSong', function(req, res) {
           var returningSongId = result.rows[0].id;
 
           if(songObject.teachableElementsModel.length > 0) {
-            var sqlCounter = 2;
-            var valueString = '';
-            var insertArray = [returningSongId];
+            var sqlStringObject = buildSqlForTeachableElements(songObject.teachableElementsModel, returningSongId);
 
-            for (var i = 0; i < songObject.teachableElementsModel.length; i++) {
-              valueString += ('($1,$' + sqlCounter +')');
-              if (i < songObject.teachableElementsModel.length-1) {
-                valueString+= ', ';
-              }
-              insertArray.push(songObject.teachableElementsModel[i].id);
-              sqlCounter++;
-            }
-            client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + valueString + ';', insertArray, function(err,result) {
+            client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + sqlStringObject.valueString + ';', sqlStringObject.insertArray, function(err,result) {
               done();
               if(err) {
                 console.log('error making database query: ', err);
@@ -241,12 +231,53 @@ router.post('/newSong', function(req, res) {
                 res.sendStatus(200);
               }
             }); // end client.query
+          } else {
+            res.sendStatus(200);
           }
         }
       }); // end client.query
     }
   }); // end pool.connect
 }); //end router.get
+
+router.put('/editSong/:id', function(req, res) {
+  var userId = req.userInfo.id;
+  var songObject = req.body;
+  var songIdToUpdate = req.params.id;
+
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('UPDATE songs SET song_title=$1, tone_set=$2, scale_mode_id=$3, rhythm=$4, extractable_rhythms=$5, extractable_melodies=$6, meter_id=$7, verses_note=$8, formation_note=$9, action_note=$10, intervals_note_groups=$11, phrases=$12, melodic_form=$13, rhythmic_form=$14, form_type_id =$15, song_type_id=$16, culture_origin=$17, language_id=$18, csp=$19, other_note=$20, source_note=$21 WHERE id=$22 AND user_id=$23;', [songObject.song_title, songObject.tone_set, songObject.scale_mode_id, songObject.rhythm, songObject.extractable_rhythms, songObject.extractable_melodies, songObject.meter_id, songObject.verses_note, songObject.formation_note, songObject.action_note, songObject.intervals_note_groups, songObject.phrases, songObject.melodic_form, songObject.rhythmic_form, songObject.form_type_id, songObject.song_type_id, songObject.culture_origin, songObject.language_id, songObject.csp, songObject.other_note, songObject.source_note, songIdToUpdate, userId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making db query', err);
+          res.sendStatus(500);
+        } else {
+          client.query('DELETE FROM song_collection_teachable_elements WHERE song_id=$1', [songIdToUpdate], function(err, result) {
+            if(err) {
+              console.log('error deleting in db prior to inserting new elements', err);
+              res.sendStatus(500);
+            } else {
+              var sqlStringObject = buildSqlForTeachableElements(songObject.teachable_elements, songIdToUpdate);
+              client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + sqlStringObject.valueString + ';', sqlStringObject.insertArray, function(err,result) {
+                done();
+                if(err) {
+                  console.log('error making database query: ', err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(200);
+                }
+              }); // end client.query for insert
+            }
+          });
+        }
+      });//end client.query for update
+    }
+  });//end pool.connect for edit song
+}); //router.put for single song
 
 router.delete('/removeSong/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
@@ -268,4 +299,26 @@ router.delete('/removeSong/:id', function(req, res) {
     }
   }); // end pool.connect
 }); // end router.delete
+
+
+function buildSqlForTeachableElements(teachableElementArray, songId) {
+  var sqlCounter = 2;
+  var valueString = '';
+  var insertArray = [songId];
+
+  for (var i = 0; i < teachableElementArray.length; i++) {
+    valueString += ('($1,$' + sqlCounter +')');
+    if (i < teachableElementArray.length-1) {
+      valueString+= ', ';
+    }
+    insertArray.push(teachableElementArray[i].id);
+    sqlCounter ++;
+  }
+
+  return {
+    valueString: valueString,
+    insertArray: insertArray
+  };
+}
+
 module.exports = router;

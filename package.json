@@ -19,6 +19,7 @@
   "homepage": "https://github.com/samvelie/song-collector#readme",
   "dependencies": {
     "angular": "^1.6.4",
+    "angular-bootstrap-lightbox": "^0.12.0",
     "angular-route": "^1.6.4",
     "angular-sanitize": "^1.6.4",
     "angular-ui-bootstrap": "^2.5.0",

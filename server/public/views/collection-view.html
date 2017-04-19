@@ -7,11 +7,22 @@
     <div ng-show="cc.spanClicked" id="filterExpanded">
       <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
       <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
+      <!-- <input type="text" ng-model="searchForm" ng-change="cc.searchPage(searchForm)">
+      <select class="form-control" ng-model="searchForm.searchFilter">
+        <option value="song_title">Song Title</option>
+        <option value="tone_set">Tone Set</option>
+        <option value="scale_mode">Scale / Mode</option>
+        <option value="teachable_elements">Teachable Elements</option>
+      </select>
+      <button class="btn" ng-click="cc.searchPage(searchForm)">Search</button> -->
     </div>
   </div>
 </div>
 <!-- end Search Bar area -->
 
+<div ng-if="cc.viewMore" class="backgroundDark">
+
+</div>
 
 <!-- Area for showing all songs or songs alongside an individual song-->
 <div class="col-sm-12" id="songInfoContainer">
@@ -22,16 +33,19 @@
 
 
       <div class="text-center panel songCount" id="toolbar">
-        Songs in collection: 415
+        Songs in collection: {{cc.songs.list.length}}
       </div>
-
       <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
         <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
       <!-- end container for first "add song" card -->
 
+      <!-- for users who have just logged in and don't yet have songs in the db -->
+
       <!-- start container for all song cards -->
+
+      <!-- ng-repeat="song in cc.filteredResults.list"  -->
       <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
         <h3 class="text-center">{{song.song_title}}</h3>
         <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
@@ -49,7 +63,7 @@
 
     <div class="text-right panel" id="toolbar">
       <div class="col-sm-6 half-gutter text-left">
-        <div contenteditable class="form-control" id="songTitle">{{cc.oneSong.details.song_title}}</div>
+        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title"/>
       </div>
       <!-- end song title section -->
 
@@ -59,6 +73,7 @@
       <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
       <button type="button" popover-placement="bottom" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+      <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
 
       <!-- start Share popover template -->
@@ -133,11 +148,11 @@
       {{cc.editSongObject.teachableElementsModel}}
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-click="cc.findFocus('rhythm')">
       <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
       <div class="col-sm-8 half-gutter">
         <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm)" ng-blur="cc.loseFocus('rhythm')" focusing>
-        <div class="display" ng-click="cc.findFocus('rhythm')">
+        <div class="display">
           <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
             <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
           </span>
@@ -145,11 +160,11 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-click="cc.findFocus('extractableRhythm')">
       <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
       <div class="col-sm-8 half-gutter">
         <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
-        <div class="display" ng-click="cc.findFocus('extractableRhythm')">
+        <div class="display">
           <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
             <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
           </span>
@@ -160,7 +175,7 @@
     <div class="form-group">
       <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.extractable_melodies}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.extractable_melodies"/>
       </div>
     </div>
 
@@ -182,28 +197,28 @@
     <div class="form-group">
       <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.intervals_note_groups}}</div>
+        <input class="form-control" "cc.oneSong.details.intervals_note_groups"/>
       </div>
     </div>
 
     <div class="form-group">
       <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.phrases}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.phrases"/>
       </div>
     </div>
 
     <div class="form-group">
       <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.melodic_form}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.melodic_form"/>
       </div>
     </div>
 
     <div class="form-group">
       <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.rhythmic_form}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.rhythmic_form"/>
       </div>
     </div>
 
@@ -226,7 +241,7 @@
     <div class="form-group">
       <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.culture_origin}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.culture_origin"/>
       </div>
     </div>
 
@@ -242,7 +257,7 @@
       <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
       <!-- NOTE: CSP stands for: comfortable starting pitch -->
       <div class="col-sm-8 half-gutter">
-        <div contenteditable class="form-control">{{cc.oneSong.details.csp}}</div>
+        <input class="form-control" ng-model="cc.oneSong.details.csp"/>
       </div>
     </div>
 
@@ -270,7 +285,7 @@
   <div class="form-group">
     <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
     <div> <!-- existing attachments -->
-      <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
       <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)">Upload</button>
@@ -290,7 +305,7 @@
   <div class="form-group">
     <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
     <div> <!-- existing attachments -->
-      <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
       <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)">Upload</button>
@@ -306,4 +321,7 @@
 <!-- end attachments div -->
 </div>
 
+<div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
+  <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
+</div>
 </div>

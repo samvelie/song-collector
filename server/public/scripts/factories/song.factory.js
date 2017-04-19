@@ -19,7 +19,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   // }
   function changeSongClickedStatus(status) {
     songClicked = status;
-    console.log('songclicked status', status);
   }
 
   // on click function that redirects us to the card's full view
@@ -43,7 +42,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           }
         }).then(function(response) {
           songCollection.list = response.data;
-          console.log('songcollection', songCollection.list);
         });
       });
     } else {
@@ -60,7 +58,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       firebaseUser.getToken().then(function (idToken) {
         $http({
           method: 'GET',
-          url: '/songs/singleSong/' + (typeof(songId) == "number" ? songId : $routeParams.id),
+          url: '/songs/singleSong/' + songId,
           headers: {
             id_token: idToken
           }
@@ -95,7 +93,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
           firebaseUser.getToken().then(function (idToken) {
-            console.log('firebase user authenticated');
             $http({
               method: 'POST',
               url: '/songs/addImage/' + songId,
@@ -131,7 +128,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           var firebaseUser = auth.$getAuth();
           if(firebaseUser) {
             firebaseUser.getToken().then(function (idToken) {
-              console.log('firebase user authenticated');
               $http({
                 method: 'POST',
                 url: '/songs/addImage/' + songId,
@@ -163,7 +159,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }
           }).then(function(response) {
             attachments.attachments = response.data;
-            console.log('getting attachments!', attachments.attachments);
           });
         });
       } else {
@@ -185,7 +180,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }
           }).then(function(response) {
             attachments.notation = response.data;
-            console.log('getting notation!', attachments.notation);
           });
         });
       } else {
@@ -194,7 +188,6 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     }
 
     function getDropdownValues() {
-      console.log('getting dropdowns?');
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
         firebaseUser.getToken().then(function (idToken) {
@@ -280,6 +273,29 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       }
     }
 
+    function updateSong(changedSong) {
+      console.log('existing song with changes', changedSong);
+      var firebaseUser = auth.$getAuth();
+      if(firebaseUser) {
+        firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'PUT',
+              url: '/songs/editSong/' + changedSong.id,
+              data: changedSong,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              console.log('updated song');
+              getOneSong(changedSong.id);
+
+            });
+        });
+      } else {
+        console.log('not logged in!');
+      }
+    }
+
     function deleteSong(songId) {
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
@@ -310,7 +326,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     // }
 
     function prepareRhythmForFont(rhythmString) {
-      if(rhythmString.length===0) {
+      if(rhythmString===null || rhythmString ==='') {
         return [];
       } else {
         var textString = '';
@@ -338,7 +354,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     }
 
     function prepareExtractableRhythmForFont(extractableRhythmString) {
-      if(extractableRhythmString.length===0) {
+      if(extractableRhythmString===null || extractableRhythmString==='') {
         return [];
       } else {
         var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
@@ -367,6 +383,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       attachments: attachments,
       dropdowns: dropdowns,
       saveNewSong: saveNewSong,
+      updateSong: updateSong,
       deleteSong: deleteSong,
       prepareRhythmForFont: prepareRhythmForFont,
       prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
