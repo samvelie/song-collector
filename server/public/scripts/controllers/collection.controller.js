@@ -88,6 +88,15 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', '
     console.log(SongFactory.oneSong.details);
   };
 
+  self.multiSelectChange = {
+    onItemSelect: function(item) {
+      console.log(item);
+    },
+    onItemDeselect: function(item) {
+      console.log(item);
+    }
+  };
+
   self.expandFilter = function() {
     if(self.spanClicked) {
       self.spanClicked = false;

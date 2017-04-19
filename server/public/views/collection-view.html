@@ -137,7 +137,7 @@
     <div class="form-group">
       <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
       <div class="col-sm-8 half-gutter">
-        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts" ng-change="songInfoForm.$dirty=true"></div>
+        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts" events="cc.multiSelectChange"></div>
       </div>
       <!-- {{cc.oneSong.details.teachable_elements_id_group}} -->
     </div>
