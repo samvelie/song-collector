@@ -3,6 +3,7 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
   console.log('in CollectionController');
   //full song collection
   self.songs = SongFactory.songCollection;
+  self.filteredResults = SongFactory.songCollection;
   self.editSongObject = {};
   //boolean to hide/show single song
   self.songClicked = SongFactory.songClicked;
@@ -27,10 +28,15 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
   self.searchPage = function (input) {
     var searchObject = {};
     var key = input.searchFilter;
-    searchObject[key] = input.inputString;
+    var value = input.inputString;
+    searchObject[key] = value;
 
-    console.log('searching by ' + key + ' for ' + input.inputString);
-    self.filteredResults = $filter('filter')(self.songs.list, searchObject);
+    console.log('searching by', input);
+    self.filteredResults.list = $filter('filter')(self.songs.list, input);
+    
+    console.log('self.songs', self.songs.list);
+
+
     console.log(self.filteredResults);
   };
 
