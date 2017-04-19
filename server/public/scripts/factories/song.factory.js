@@ -53,6 +53,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   // get's one song from the database based on the song's ID grabbed from $routeParams
   function getOneSong(songId) {
     filesUploaded.list = [];
+    notationUploaded.list = [];
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
@@ -121,9 +122,9 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           // location: 's3'
           // }
         }).then(function(result) {
-          console.log('file uploaded, now sending to database... ', result.notationUploaded);
-          result.isNotation = true;
-          notationUploaded.list = result.notationUploaded;
+          console.log('file uploaded, now sending to database... ', result);
+          result.filesUploaded.isNotation = true;
+          notationUploaded.list = result.filesUploaded;
           console.log(result);
           var firebaseUser = auth.$getAuth();
           if(firebaseUser) {
@@ -131,7 +132,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
               $http({
                 method: 'POST',
                 url: '/songs/addImage/' + songId,
-                data: result,
+                data: result.filesUploaded,
                 headers: {
                   id_token: idToken
                 }

@@ -3,18 +3,18 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   var self = this;
 
   self.songError = false;
-  self.fileUpload = SongFactory.fileUpload;
-  self.attachments = SongFactory.attachments;
-  // self.showPicker = SongFactory.showPicker;
-
+  self.fileUpload = SongFactory.fileUpload; //function for uploading
+  self.filesUploaded = SongFactory.filesUploaded; //files for single song
+  self.notationUpload = SongFactory.notationUpload; // function for uploading notation
+  self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
   self.dropdowns = SongFactory.dropdowns;
+  self.lightboxImage = '';
+  self.viewMore = false;
   self.newSongObject = {};
-  self.redirectToCollection = function() {
-    $location.path('/collection');
-  };
+
   self.cancelPopover = {
     content: 'Are you sure you want to cancel this song?',
-    templateUrl: 'cancelPopover.html',// getting from collection-view.html
+    templateUrl: 'cancelPopover.html',// getting from new-song.html
     title: 'Cancel this song?'
   };
 
@@ -80,5 +80,17 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
     self.extractableRhythms = res;
   };
 
+  // view image preview modal
+  self.viewMoreOnClick = function(bool, type, index) {
+    self.viewMore = bool; // used in ng-if on the front end
+    console.log('type', type);
+    if(bool === true && type == 'attachments') {
+      self.lightboxImage = SongFactory.filesUploaded[index].image_url;
+    } else if (bool === true && type == 'notation') {
+      self.lightboxImage = SongFactory.notationUploaded[index].image_url;
+    }
+    console.log(self.lightboxImage);
+
+  };
 
 }]);

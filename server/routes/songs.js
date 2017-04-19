@@ -72,10 +72,10 @@ router.get('/', function(req, res) {
 // post uploaded file to database
 router.post('/addImage/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
-  var imageObject = req.body.filesUploaded;
-  var isNotation = req.body.isNotation;
+  var imageObject = req.body;
+  var isNotation = req.body[0].isNotation;
   var songId = req.params.id;
-  console.log('req.body: ', req.body);
+  console.log('req.body: ', req.body[0]);
   console.log('imageObject: ', imageObject);
   console.log('isNotation: ', isNotation);
   pool.connect(function(err, client, done) {
