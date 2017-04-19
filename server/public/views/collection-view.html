@@ -1,9 +1,10 @@
 <!-- start Search Bar Area -->
 <div class="col-md-12">
   <div class="search-bar text-center">
-    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()"></span>
-    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
+
     <div ng-show="cc.spanClicked" id="filterExpanded">
       <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
       <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
@@ -37,7 +38,7 @@
       </div>
       <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-        <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
+        <a href="#!new" title="Add a new song"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
       <!-- end container for first "add song" card -->
 
@@ -83,7 +84,7 @@
           <div class="input-group">
             <input type="email" class="form-control share" ng-model="home.newEvent" placeholder="Email Address">
             <span class="input-group-btn">
-              <button class="btn btn-default btn-share" ng-click="home.nameEvent()" type="submit"><strong>Send!</strong></button>
+              <button class="btn btn-default btn-share" ng-click="home.nameEvent()" type="submit" title="Send email"><strong>Send!</strong></button>
             </span>
           </div>
           </form>
