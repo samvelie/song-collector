@@ -69,11 +69,11 @@
       <!-- end song title section -->
 
       <!-- start toolbar section -->
-      <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
-      <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-      <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+      <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true" title="Collection view"></span></button>
+      <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)" title="Save changes"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default" title="Share song"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default" title="Delete song"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true" title="Print song"></span></a>
       <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
 
@@ -282,7 +282,7 @@
       <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)">Upload</button>
+      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.notationUploaded.notation.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- <a href="{{cc.filesUploaded.list[0].url}}" class="thumbnail"> -->
@@ -302,7 +302,7 @@
       <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)">Upload</button>
+      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachments">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.filesUploaded.attachments.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- the picture is rendered with width: 500 and sharpened -->
