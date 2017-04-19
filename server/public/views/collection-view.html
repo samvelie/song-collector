@@ -70,9 +70,10 @@
       <!-- start toolbar section -->
       <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
       <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+      <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
 
       <!-- start Share popover template -->
@@ -136,17 +137,9 @@
     <div class="form-group">
       <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
       <div class="col-sm-8 half-gutter">
-        <!-- <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div> -->
-        <!-- {{cc.editSongObject.teachableElementsModel.teachable_elements}} -->
-        <!-- cc.oneSong.details.teachable_elements_id: {{cc.oneSong.details.teachable_elements_id}} <br> -->
-        <!-- cc.oneSong.details.teachable_elements: {{cc.oneSong.details.teachable_elements}} <br> -->
-        <!-- cc.te_id: {{cc.te_id}} <br>
-        cc.te_value: {{cc.te_value}} <br> -->
-        <!-- cc.editSongObject.teachableElementsModel: {{cc.editSongObject.teachableElementsModel}} -->
-        cc.testmodel is {{cc.testmodel}} <br>
-        <div ng-dropdown-multiselect options="cc.testdata" selected-model="cc.testmodel" extra-settings="cc.testsettings" events="cc.testevents"></div>
+        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts"></div>
       </div>
-      {{cc.editSongObject.teachableElementsModel}}
+      <!-- {{cc.oneSong.details.teachable_elements_id_group}} -->
     </div>
 
     <div class="form-group" ng-click="cc.findFocus('rhythm')">

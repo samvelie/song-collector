@@ -183,6 +183,7 @@ router.get('/singleSong/:id', function(req, res) {
               var teIdArray = result.rows[0].te_id_array;
               var teNameArray = result.rows[0].te_name_array;
               var oneSongTeachableElementsArray = [];
+              var teachableElementsIdGroup = [];
               for (var i = 0; i < teIdArray.length; i++) {
                 oneSongTeachableElementsArray.push(
                   {
@@ -190,9 +191,16 @@ router.get('/singleSong/:id', function(req, res) {
                     teachable_elements: teNameArray[i]
                   }
                 );
+                teachableElementsIdGroup.push(
+                  {
+                    id: teIdArray[i]
+                  }
+                );
               }
 
               songObject.teachable_elements = oneSongTeachableElementsArray;
+              songObject.teachable_elements_id_group = teachableElementsIdGroup;
+              console.log(songObject);
               res.send(songObject);
             }
           });
