@@ -67,7 +67,7 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
   self.teachableElementsCustomTexts = {
     buttonDefaultText: 'Select the teachable elements'
   };
-  
+
   // have a promise so that after a song is deleted, user gets redirected back to the main card view
   // need to create a confirmation popup and an alert of deletion popup
   self.deleteFunction = function(songId) {
@@ -104,7 +104,6 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     if(fieldId == 'extractableRhythm') {
       self.editingExtractableRhythm = false;
     }
-
   };
 
   //placeholder function that needs to focus on input field as it appears
@@ -138,6 +137,10 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     content: 'Delete this song?',
     templateUrl: 'deletePopover.html',// getting from collection-view.html
     // title: 'Delete this song?'
+  };
+
+  self.shareSong = function(imageId) {
+    SongFactory.shareSong(imageId);
   };
 
 }]);

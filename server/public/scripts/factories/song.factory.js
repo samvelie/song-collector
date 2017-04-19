@@ -315,15 +315,27 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       }
     }
 
-    // remove Image function
-    // function removeImage() {
-    //   var storedurl = filesUploaded.list[0].url;
-    //   console.log(filesUploaded.list[0].url);
-    //   var handle = storedurl.substr(storedurl.lastIndexOf("/") + 1);
-    //   console.log(handle);
-    //   client.remove(handle);
-    //   console.log('file removed successfully: ' + storedurl);
-    // }
+    // start share song
+    function shareSong(imageId) {
+      console.log('hit shareSong in song.factory');
+      console.log('someNewEvent:', someNewEvent);
+      $http({
+        method: 'POST',
+        url: '/share',
+        data: imageId
+      }).then(function(response){
+        console.log('response from shareSong', response);
+        sharesong.imageId = response.data;
+        console.log('response.data is', response.data);
+        console.log('shareSong.imageId is', shareSong.imageId);
+        if (shareSong.imageId === undefined) {
+          console.log('response to shareSong.imageId is undefined');
+        } else {
+          console.log('response to shareSong.imageId is defined');
+        }
+      });
+    }
+    // end share song
 
     function prepareRhythmForFont(rhythmString) {
       if(rhythmString===null || rhythmString ==='') {
