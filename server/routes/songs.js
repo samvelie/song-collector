@@ -72,10 +72,9 @@ router.get('/', function(req, res) {
 // post uploaded file to database
 router.post('/addImage/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
-  var imageObject = req.body;
-  var isNotation = req.body[0].isNotation;
+  var imageObject = req.body.list;
+  var isNotation = req.body.isNotation;
   var songId = req.params.id;
-  console.log('req.body: ', req.body[0]);
   console.log('imageObject: ', imageObject);
   console.log('isNotation: ', isNotation);
   pool.connect(function(err, client, done) {
@@ -83,29 +82,13 @@ router.post('/addImage/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('WITH new_image_id AS (INSERT INTO images (image_file_name, image_type, image_size, image_url, image_handle, is_notation) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id) INSERT INTO images_users (image_id, user_id) VALUES ((SELECT id FROM new_image_id), $7);', [imageObject[0].filename, imageObject[0].mimetype, imageObject[0].size, imageObject[0].url, imageObject[0].handle, isNotation, userId], function(err, result) {
+      client.query('WITH new_image_id AS (INSERT INTO images (image_file_name, image_type, image_size, image_url, image_handle, is_notation) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id) INSERT INTO images_songs (image_id, song_id, user_id) VALUES ((SELECT id FROM new_image_id), $7, $8);', [imageObject[0].filename, imageObject[0].mimetype, imageObject[0].size, imageObject[0].url, imageObject[0].handle, isNotation, songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          client.query('SELECT id FROM images WHERE image_url = $1;', [imageObject[0].url], function(err, result) {
-            if(err) {
-              console.log('error making database query: ', err);
-              res.sendStatus(500);
-            } else {
-              var imageId = result.rows[0].id;
-              console.log('image id from select', imageId);
-              client.query('INSERT INTO images_songs (image_id, song_id) VALUES ($1, $2);', [imageId, songId], function(err, result) {
-                if(err) {
-                  console.log('error making database query: ', err);
-                  res.sendStatus(500);
-                } else {
-                  res.sendStatus(200);
-                }
-              }); // end client.query
-            }
-          }); // end client.query
+          res.sendStatus(200);
         }
       }); // end client.query
     }
@@ -121,7 +104,7 @@ router.get('/getAttachments/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = FALSE;', [songId], function(err, result) {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = FALSE AND user_id = $2;', [songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -142,7 +125,7 @@ router.get('/getNotation/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = TRUE;', [songId], function(err, result) {
+      client.query('SELECT * FROM images LEFT JOIN images_songs ON images_songs.image_id = images.id WHERE song_id = $1 AND is_notation = TRUE AND user_id = $2;', [songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
@@ -211,28 +194,26 @@ router.post('/newSong', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('INSERT INTO songs (song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) returning id;', [songObject.title, songObject.toneSet, songObject.scaleMode.id, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter.id, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType.id, songObject.songType.id, songObject.cultureOrigin, songObject.language.id, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
+      client.query('INSERT INTO songs (song_title, tone_set, scale_mode_id, rhythm, extractable_rhythms, extractable_melodies, meter_id, verses_note, formation_note, action_note, intervals_note_groups, phrases, melodic_form, rhythmic_form, form_type_id, song_type_id, culture_origin, language_id, csp, other_note, source_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) returning id;', [songObject.title, songObject.toneSet, songObject.scaleMode, songObject.rhythm, songObject.extractableRhythms, songObject.extractableMelodies, songObject.meter, songObject.verses, songObject.formation, songObject.action, songObject.intervalsNoteGroups, songObject.phrases, songObject.melodicForm, songObject.rhythmicForm, songObject.formType, songObject.songType, songObject.cultureOrigin, songObject.language, songObject.csp, songObject.other, songObject.source, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          var returningSongId = result.rows[0].id;
+          var returningSongId = result.rows[0];
 
           if(songObject.teachableElementsModel.length > 0) {
-            var sqlStringObject = buildSqlForTeachableElements(songObject.teachableElementsModel, returningSongId);
+            var sqlStringObject = buildSqlForTeachableElements(songObject.teachableElementsModel, returningSongId.id);
 
             client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + sqlStringObject.valueString + ';', sqlStringObject.insertArray, function(err,result) {
               done();
               if(err) {
                 console.log('error making database query: ', err);
                 res.sendStatus(500);
-              } else {
-                res.sendStatus(200);
               }
             }); // end client.query
           } else {
-            res.sendStatus(200);
+            res.send(returningSongId);
           }
         }
       }); // end client.query
@@ -287,16 +268,31 @@ router.delete('/removeSong/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+      client.query('DELETE FROM images_songs WHERE song_id = $1 AND user_id = $2 RETURNING images_songs.image_id;', [songId, userId], function(err,result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
-          res.sendStatus(500);
         } else {
-          res.sendStatus(200);
+          var deletedImageId = result.rows[0].image_id;
+          client.query('DELETE FROM images WHERE image.id = $1;', [deletedImageId], function(err, result) {
+            if(err) {
+              console.log('error making database query: ', err);
+            } else {
+              client.query('DELETE FROM songs WHERE id = $1 AND user_id = $2;', [songId, userId], function(err, result) {
+                done();
+                if(err) {
+                  console.log('error making database query: ', err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(200);
+                }
+              }); // end client.query
+            }
+          });
         }
-      }); // end client.query
+      });
     }
+
   }); // end pool.connect
 }); // end router.delete
 

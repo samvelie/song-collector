@@ -7,6 +7,7 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   self.filesUploaded = SongFactory.filesUploaded; //files for single song
   self.notationUpload = SongFactory.notationUpload; // function for uploading notation
   self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
+  console.log(self.notationUploaded);
   self.titlePlaceholder = "Title";
   self.dropdowns = SongFactory.dropdowns;
   self.lightboxImage = '';

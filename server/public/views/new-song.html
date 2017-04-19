@@ -53,7 +53,7 @@
       <div class="form-group">
         <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
         <div class="col-sm-8 half-gutter">
-          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode">
+          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode track by scaleMode.id">
           </select>
         </div>
       </div>
@@ -96,7 +96,7 @@
       <div class="form-group">
         <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in nsc.dropdowns.meter">
+          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in nsc.dropdowns.meter">
           </select>
         </div>
       </div>
@@ -145,14 +145,14 @@
       <div class="form-group">
         <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in nsc.dropdowns.formType">
+          <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in nsc.dropdowns.formType">
           </select>
         </div>
       </div>
       <div class="form-group">
         <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in nsc.dropdowns.songType">
+          <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in nsc.dropdowns.songType">
           </select>
         </div>
       </div>
@@ -165,7 +165,7 @@
       <div class="form-group">
         <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
         <div class="col-sm-8 half-gutter">
-          <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.language for language in nsc.dropdowns.language">
+          <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in nsc.dropdowns.language">
           </select>
         </div>
       </div>
@@ -199,6 +199,7 @@
       <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
       <div class="col-sm-12 half-gutter">
         <button class="btn btn-primary" ng-click="nsc.notationUpload(nsc.oneSong.details.id)">Upload</button>
+        {{nsc.notationUploaded}}
         <div style="margin-top:10px;" ng-if="nsc.notationUploaded.list.length > 0">
           <!-- Show the thumbnail only when the picture is uploaded -->
           <!-- the picture is rendered with width: 500 and sharpened -->
