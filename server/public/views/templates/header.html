@@ -8,8 +8,8 @@
       <!-- <li><span ng-if="!!lc.loggedIn.loginStatus">{{lc.user.info.user_name}}</span></li> -->
       <li ng-click="lc.songClicked=false"><a href="#!collection" title="Visit your collection"><span class="glyphicon glyphicon-th-large" aria-hidden="true" ></span></a></li>
       <li><a href="#!new" title="Add a new song"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
-      <li ng-if="!lc.loggedIn.loginStatus" title="Log in"><a href="#!login" ng-click="lc.login()"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp;Sign In</a></li>
-      <li ng-if="!!lc.loggedIn.loginStatus" ng-click="lc.logout()" title="Log out"><a href="#!logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+      <li ng-if="!lc.loggedIn.loginStatus" title="Sign in"><a href="#!login" ng-click="lc.login()"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp;Sign In</a></li>
+      <li ng-if="!!lc.loggedIn.loginStatus" ng-click="lc.logout()" title="Sign out"><a href="#!logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Sign Out</a></li>
       <li><div class="profileThumb" style="background: url('{{lc.user.info.user_photo}}');"></div></li>
     </ul>
     <div class="nav navbar-nav navbar-center centerProfileInfo">
