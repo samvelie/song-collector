@@ -1,4 +1,4 @@
-app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', function(SongFactory, $uibModal, $filter) {
+app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', '$timeout', function(SongFactory, $uibModal, $filter, $timeout) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
@@ -33,12 +33,14 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
 
     console.log('searching by', input);
     self.filteredResults.list = $filter('filter')(self.songs.list, input);
-    
+
     console.log('self.songs', self.songs.list);
 
 
     console.log(self.filteredResults);
   };
+
+
 
   // self.testmodel = [{id: 1 }];
   var taco = [

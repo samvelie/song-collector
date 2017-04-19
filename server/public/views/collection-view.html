@@ -104,7 +104,7 @@
     <!-- start div for song info column -->
 <div class="col-sm-8 card-holder">
 
-  <form class="form-horizontal">
+  <form name="songInfoForm" class="form-horizontal">
 
     <div class="form-group">
       <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
@@ -130,6 +130,8 @@
         </select>
       </div>
     </div>
+
+    <p>{{songInfoForm.$dirty}}</p>
 
     <div class="form-group">
       <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
@@ -189,14 +191,14 @@
     <div class="form-group">
       <label for="source" class="col-sm-4 control-label no-gutter">Verses</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="5">{{cc.oneSong.details.verses_note}}</textarea>
+        <textarea class="form-control" rows="5" ng-model="cc.oneSong.details.verses_note"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
       <div class="col-sm-8 half-gutter">
-        <input class="form-control" "cc.oneSong.details.intervals_note_groups"/>
+        <input class="form-control" ng-model="cc.oneSong.details.intervals_note_groups"/>
       </div>
     </div>
 
@@ -263,14 +265,14 @@
     <div class="form-group">
       <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.other_note}}</textarea>
+        <textarea class="form-control" rows="3" ng-model="cc.oneSong.details.other_note"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.source_note}}</textarea>
+        <textarea class="form-control" rows="3" ng-model="cc.oneSong.details.source_note"></textarea>
       </div>
     </div>
 
