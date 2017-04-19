@@ -14,9 +14,9 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
     $location.path('/collection');
   };
   self.cancelPopover = {
-    content: 'Are you sure you want to cancel this song?',
+    content: 'Cancel this song?',
     templateUrl: 'cancelPopover.html',// getting from collection-view.html
-    title: 'Cancel this song?'
+    // title: 'Cancel this song?'
   };
 
   self.saveCatches = function(newSongObject) {
@@ -40,9 +40,16 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
     clearSearchOnClose: true,
     showCheckAll: false,
     enableSearch: true,
-    smartButtonMaxItems: 10,
+    smartButtonMaxItems: 5,
     scrollableHeight: '300px',
-    scrollable: true
+    scrollable: true,
+    selectedToTop: true,
+    keyboardControls: true,
+    idProperty: 'id',
+  };
+
+  self.teachableElementsCustomTexts = {
+    buttonDefaultText: 'Select the teachable elements'
   };
 
   self.checkAndDisplayRhythm = function(string) {

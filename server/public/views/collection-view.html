@@ -1,9 +1,10 @@
 <!-- start Search Bar Area -->
 <div class="col-md-12">
   <div class="search-bar text-center">
-    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()"></span>
-    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
+
     <div ng-show="cc.spanClicked" id="filterExpanded">
       <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
       <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
@@ -37,7 +38,7 @@
       </div>
       <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-        <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
+        <a href="#!new" title="Add a new song"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
       <!-- end container for first "add song" card -->
 
@@ -71,6 +72,7 @@
       <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
       <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+
       <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
 
@@ -79,23 +81,24 @@
         <div>{{cc.dynamicPopover.content}}</div>
         <form>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+            <input type="email" class="form-control share" ng-model="home.newEvent" placeholder="Email Address">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+              <button class="btn btn-default btn-share" ng-click="home.nameEvent()" type="submit" title="Send email"><strong>Send!</strong></button>
             </span>
           </div>
-        </form>
-      </script>
+          </form>
+        </script>
       <!-- end Share popover template -->
 
       <!-- start Delete popover template -->
       <script type="text/ng-template" id="deletePopover.html">
-        <div>{{cc.deletePopover.content}}</div>
+        <center>
+        <p class="text-center">{{cc.deletePopover.content}}</p>
         <form>
-          <div class="input-group">
-            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete!</strong></button>
-          </div>
+            <button class="btn btn-default" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
+            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete</strong></button>
         </form>
+        </center>
       </script>
       <!-- end Delete popover template -->
     </div>
@@ -278,7 +281,7 @@
       <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)">Upload</button>
+      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.notationUploaded.notation.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- <a href="{{cc.filesUploaded.list[0].url}}" class="thumbnail"> -->
@@ -298,7 +301,7 @@
       <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)">Upload</button>
+      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachments">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.filesUploaded.attachments.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- the picture is rendered with width: 500 and sharpened -->

@@ -231,6 +231,15 @@ label:after {
     margin: 5px 0;
 }
 
+.btn-share {
+  margin-bottom: -5px;
+}
+
+.form-control.share:not(:focus) {
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
 /* end song view styles*/
 
 /* music note field style */
@@ -372,4 +381,8 @@ div.ql-editor {
   overflow: auto;
   padding-left: 20px;
   right: 0;
+}
+
+.popover {
+  /*border: 1px solid purple;*/
 }
