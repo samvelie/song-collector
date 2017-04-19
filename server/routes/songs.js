@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id WHERE user_id = $1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
+      client.query('SELECT songs.id, songs.song_title, songs.tone_set, scale_mode_options.scale_mode, songs.rhythm, songs.extractable_rhythms, songs.extractable_melodies, meter_options.meter, songs.verses_note, songs.formation_note, songs.action_note, songs.intervals_note_groups, songs.phrases, songs.melodic_form, songs.rhythmic_form, form_type_options.form_type, song_type_options.song_type, songs.culture_origin, language_options.language, songs.csp, songs.other_note, songs.source_note FROM songs LEFT JOIN meter_options ON songs.meter_id = meter_options.id LEFT JOIN scale_mode_options ON songs.scale_mode_id = scale_mode_options.id LEFT JOIN form_type_options ON songs.form_type_id=form_type_options.id LEFT JOIN song_type_options ON songs.song_type_id = song_type_options.id LEFT JOIN language_options ON songs.language_id = language_options.id WHERE user_id=$1 ORDER BY songs.song_title ASC;', [userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);

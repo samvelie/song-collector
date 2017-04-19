@@ -5,8 +5,16 @@
     <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
     <div ng-show="cc.spanClicked" id="filterExpanded">
-      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
-      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
+      <!-- <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
+      <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" /> -->
+      <input type="text" ng-model="searchForm.inputString">
+      <select class="form-control" ng-model="searchForm.searchFilter">
+        <option value="song_title">Song Title</option>
+        <option value="tone_set">Tone Set</option>
+        <option value="scale_mode">Scale / Mode</option>
+        <option value="teachable_elements">Teachable Elements</option>
+      </select>
+      <button class="btn" ng-click="cc.searchPage(searchForm)">Search</button>
     </div>
   </div>
 </div>
@@ -25,7 +33,7 @@
 
 
       <div class="text-center panel songCount" id="toolbar">
-        Songs in collection: 415
+        Songs in collection: {{cc.songs.list.length}}
       </div>
       <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
@@ -137,11 +145,11 @@
       {{cc.editSongObject.teachableElementsModel}}
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-click="cc.findFocus('rhythm')">
       <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
       <div class="col-sm-8 half-gutter">
         <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm)" ng-blur="cc.loseFocus('rhythm')" focusing>
-        <div class="display" ng-click="cc.findFocus('rhythm')">
+        <div class="display">
           <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
             <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
           </span>
@@ -149,11 +157,11 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-click="cc.findFocus('extractableRhythm')">
       <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
       <div class="col-sm-8 half-gutter">
         <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
-        <div class="display" ng-click="cc.findFocus('extractableRhythm')">
+        <div class="display">
           <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
             <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
           </span>

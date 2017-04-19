@@ -1,4 +1,4 @@
-app.controller('CollectionController', ['SongFactory', '$uibModal', function(SongFactory, $uibModal) {
+app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', function(SongFactory, $uibModal, $filter) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
@@ -22,7 +22,13 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', function(Son
   self.te_id = SongFactory.oneSong.details.teachable_elements_id;
   self.te_value = SongFactory.oneSong.details.teachable_elements;
 
-  self.saveSongChanges = SongFactory.updateSong;
+  self.saveSongChanges = SongFactory.updateSong;//function for saving changes made on a song
+
+  self.searchPage = function (input) {
+    self.filteredResults = $filter('filter')(self.songs.list, input.inputString, false, input.searchFilter);
+    console.log(self.filteredResults);
+  }
+
   // self.testmodel = [{id: 1 }];
   var taco = [
     {
