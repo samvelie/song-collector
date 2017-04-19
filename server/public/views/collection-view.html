@@ -70,8 +70,8 @@
       <!-- start toolbar section -->
       <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
       <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-animation="true" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
       <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
@@ -81,23 +81,24 @@
         <div>{{cc.dynamicPopover.content}}</div>
         <form>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+            <input type="email" class="form-control share" ng-model="home.newEvent" placeholder="Email Address">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+              <button class="btn btn-default btn-share" ng-click="home.nameEvent()" type="submit"><strong>Send!</strong></button>
             </span>
           </div>
-        </form>
-      </script>
+          </form>
+        </script>
       <!-- end Share popover template -->
 
       <!-- start Delete popover template -->
       <script type="text/ng-template" id="deletePopover.html">
-        <div>{{cc.deletePopover.content}}</div>
+        <center>
+        <p class="text-center">{{cc.deletePopover.content}}</p>
         <form>
-          <div class="input-group">
-            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete!</strong></button>
-          </div>
+            <button class="btn btn-default" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
+            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete</strong></button>
         </form>
+        </center>
       </script>
       <!-- end Delete popover template -->
     </div>
