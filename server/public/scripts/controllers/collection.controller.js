@@ -130,7 +130,7 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
 
   self.makeDirty = function() {
     self.songInfoForm.$setDirty();
-  }
+  };
 
 
   self.expandFilter = function() {
@@ -148,7 +148,6 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     if(fieldId == 'extractableRhythm') {
       self.editingExtractableRhythm = false;
     }
-
   };
 
   //placeholder function that needs to focus on input field as it appears
@@ -182,6 +181,10 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     content: 'Delete this song?',
     templateUrl: 'deletePopover.html',// getting from collection-view.html
     // title: 'Delete this song?'
+  };
+
+  self.shareSong = function(emailAddress, imageId) {
+    SongFactory.shareSong(emailAddress, imageId);
   };
 
 }]);

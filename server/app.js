@@ -7,6 +7,8 @@ var decoder = require('./modules/decoder');
 var users = require('./routes/users');
 var songs = require('./routes/songs');
 var dropdowns = require('./routes/dropdowns');
+// var email = require('./routes/email');
+
 // uses
 app.use(bodyParser.json());
 
@@ -27,3 +29,4 @@ app.use(decoder.token);
 app.use('/dropdowns', dropdowns);
 app.use('/users', users);
 app.use('/songs', songs);
+// app.use('/email', email);
