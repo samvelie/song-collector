@@ -1,9 +1,11 @@
 <!-- start Search Bar Area -->
 <div class="col-md-12">
   <div class="search-bar text-center">
-    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span> -->
+    <i class="fa fa-search fa-lg" aria-hidden="true"></i></a>
     <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
-    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
+    <!-- <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span> -->
+    <i class="fa fa-filter fa-lg" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></i>
 
     <div ng-show="cc.spanClicked" id="filterExpanded">
       <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
@@ -41,7 +43,7 @@
 
         <!-- start container for first "add song" card -->
         <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-          <a href="#!new" title="Add a new song"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
+          <a href="#!new" title="Add a new song"><div class="circle-around-plus"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></div></a>
         </div>
         <!-- end container for first "add song" card -->
 
@@ -79,10 +81,14 @@
 
       <!-- start toolbar container -->
       <div class="toolbar-container">
-        <button ng-click="cc.showFullCardView()" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
-        <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-        <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isDeleteOpen" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-        <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+        <!-- <button ng-click="cc.showFullCardView()" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button> -->
+        <button ng-click="cc.showFullCardView()" class="btn btn-primary"><i class="fa fa-th" aria-hidden="true"></i></button>
+        <!-- <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button> -->
+        <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+        <!-- <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isDeleteOpen" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button> -->
+        <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isDeleteOpen" class="btn btn-default"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <!-- <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a> -->
+        <a type="button" class="btn btn-primary" href="#!print"><i class="fa fa-print" aria-hidden="true"></i></a>
         <!-- onclick="window.print()" target="_blank" -->
       </div>
       <!-- end toolbar container -->
@@ -286,7 +292,8 @@
       <div class="notation-attachments">
         <div class="form-group">
           <label class="control-label">Music Notation</label>
-          <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
+          <!-- <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button> -->
+          <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation"><i class="fa fa-upload" aria-hidden="true"></i></button>
           <div style="margin-top:10px;" ng-if="cc.notationUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
             <!-- the picture is rendered with width: 500 and sharpened -->
@@ -297,7 +304,7 @@
           <!-- start existing attachments -->
           <div ng-repeat="notation in cc.attachments.notation" class="existing-notation-container">
 
-            <button type="button pull-left" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+            <button type="button pull-left" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><i class="fa fa-share-square-o" aria-hidden="true"></i></button>
 
             <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
             <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
@@ -370,7 +377,8 @@
 <div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
   <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
   <!-- <button type="button" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove" title="Close image"></span></button> -->
-  <a class="btn-default pull-right" href=""><span class="glyphicon glyphicon-remove" aria-hidden="true" title="Close image"></span></a>
+  <!-- <a class="btn-default pull-right" href=""><span class="glyphicon glyphicon-remove" aria-hidden="true" title="Close image"></span></a> -->
+  <a class="btn-default pull-right" href="" title="Close image"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a>
 
 </div>
 <!-- end lightbox modal template -->
