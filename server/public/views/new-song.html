@@ -14,7 +14,7 @@
     <button type="button" class="btn btn-primary" popover-placement="bottom-right" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
-  <!-- start Delete popover template -->
+  <!-- start Cancel popover template -->
   <script type="text/ng-template" id="cancelPopover.html">
     <center>
     <p class="text-center">{{nsc.cancelPopover.content}}</p>
@@ -23,7 +23,7 @@
     </form>
     </center>
   </script>
-  <!-- end Delete popover template -->
+  <!-- end Cancel popover template -->
 
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
@@ -52,7 +52,7 @@
       <div class="form-group">
         <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
         <div class="col-sm-8 half-gutter">
-          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode">
+          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode track by scaleMode.id">
           </select>
         </div>
       </div>
@@ -95,7 +95,7 @@
       <div class="form-group">
         <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in nsc.dropdowns.meter">
+          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in nsc.dropdowns.meter">
           </select>
         </div>
       </div>
@@ -144,14 +144,14 @@
       <div class="form-group">
         <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in nsc.dropdowns.formType">
+          <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in nsc.dropdowns.formType">
           </select>
         </div>
       </div>
       <div class="form-group">
         <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in nsc.dropdowns.songType">
+          <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in nsc.dropdowns.songType">
           </select>
         </div>
       </div>
@@ -164,7 +164,7 @@
       <div class="form-group">
         <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
         <div class="col-sm-8 half-gutter">
-          <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.language for language in nsc.dropdowns.language">
+          <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in nsc.dropdowns.language">
           </select>
         </div>
       </div>
@@ -190,21 +190,48 @@
     </form>
   </div>
 
-  <!-- end div for right column -->
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
-      <div> <!-- existing attachments -->
-        <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in nsc.attachments.list" ng-src="{{photo.image_url}}"/>
-      </div>
-      <div class="col-sm-12 half-gutter">
-        <button class="btn btn-primary" ng-click="nsc.fileUpload()" title="Upload image">Upload</button>
 
-        <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
+  <!-- attachments div -->
+  <div class="col-sm-4">
+    <!-- notation attachments -->
+    <div class="form-group">
+      <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
+      <div class="col-sm-12 half-gutter">
+        <button class="btn btn-primary" ng-click="nsc.notationUpload(nsc.oneSong.details.id)">Upload</button>
+        {{nsc.notationUploaded}}
+        <div style="margin-top:10px;" ng-if="nsc.notationUploaded.list.length > 0">
+          <!-- Show the thumbnail only when the picture is uploaded -->
+          <!-- the picture is rendered with width: 500 and sharpened -->
+          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'notation', $index, true)" ng-src="{{nsc.notationUploaded.list[0].url}}">
+          <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
+        </div>
       </div>
     </div>
   </div>
-  <!-- end div for right column -->
+  <!-- end div for other attachments -->
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
+      <div class="col-sm-12 half-gutter">
+        <button class="btn btn-primary" ng-click="nsc.fileUpload(nsc.oneSong.details.id)">Upload</button>
+        <div style="margin-top:10px;" ng-if="nsc.filesUploaded.list.length > 0">
+          <!-- Show the thumbnail only when the picture is uploaded -->
+          <!-- the picture is rendered with width: 500 and sharpened -->
+          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'attachments', $index, true)" ng-src="{{nsc.filesUploaded.list[0].url}}">
+          <!-- ^^^ will need to be an ng-repeat if we use multiple files ^^^ -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end div for other attachments -->
 
-  <!-- end full screen container -->
+  <!-- begin modal code -->
+  <div ng-if="nsc.viewMore" class="imageModule text-center" ng-click="nsc.viewMoreOnClick(false)">
+    <img style="max-width:100%; max-height:100%;" ng-src="{{nsc.lightboxImage}}" />
+  </div>
+  <!-- end modal code -->
+
+  </div>
+  <!-- end attachements div -->
 </div>
+<!-- end full screen container -->

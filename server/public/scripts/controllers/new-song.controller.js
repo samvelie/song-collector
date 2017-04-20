@@ -3,16 +3,17 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   var self = this;
 
   self.songError = false;
-  self.fileUpload = SongFactory.fileUpload;
-  self.attachments = SongFactory.attachments;
-  // self.showPicker = SongFactory.showPicker;
+  self.fileUpload = SongFactory.fileUpload; //function for uploading
+  self.filesUploaded = SongFactory.filesUploaded; //files for single song
+  self.notationUpload = SongFactory.notationUpload; // function for uploading notation
+  self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
+  console.log(self.notationUploaded);
   self.titlePlaceholder = "Title";
-
   self.dropdowns = SongFactory.dropdowns;
+  self.lightboxImage = '';
+  self.viewMore = false;
   self.newSongObject = {};
-  self.redirectToCollection = function() {
-    $location.path('/collection');
-  };
+
   self.cancelPopover = {
     content: 'Cancel this song?',
     templateUrl: 'cancelPopover.html',// getting from collection-view.html
@@ -20,7 +21,7 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   };
 
   self.saveCatches = function(newSongObject) {
-    if(newSongObject.title == '' || newSongObject.title == undefined) {
+    if(newSongObject.title === '' || newSongObject.title === undefined) {
       console.log('you need a title!');
       self.titlePlaceholder = "Title is required!";
       self.songError = true;
@@ -89,5 +90,21 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
     self.extractableRhythms = res;
   };
 
+  // view image preview modal
+  self.viewMoreOnClick = function(bool, type, index, preview) {
+    self.viewMore = bool; // used in ng-if on the front end
+    console.log('type', type);
+    if(bool === true && type == 'attachments' && preview === false) {
+      self.lightboxImage = SongFactory.filesUploaded[index].image_url;
+    } else if (bool === true && type == 'notation' && preview === false) {
+      self.lightboxImage = SongFactory.notationUploaded[index].image_url;
+    }
+    if(type == 'attachments' && preview === true) {
+      self.lightboxImage = SongFactory.filesUploaded.list[0].url;
+    } else if (type == 'notation' && preview === true) {
+      self.lightboxImage = SongFactory.notationUploaded.list[0].url;
+    }
+
+  };
 
 }]);
