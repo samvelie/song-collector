@@ -395,10 +395,11 @@ div.ql-editor {
 .small {
   color: blue;
   width: 25%;
+  /*width: 100px;*/
   /*float: right;*/
 }
 
-.large {
+/*.large {
   color: red;
   width: 50%;
   position: fixed;
@@ -406,8 +407,12 @@ div.ql-editor {
   overflow: auto;
   padding-left: 20px;
   right: 0;
-}
+}*/
 
 .existing-notation-container {
-  border: 1px solid purple;
+  /*border: 1px solid purple;*/
+}
+
+.document-attachments {
+  padding-top: 10px;
 }
