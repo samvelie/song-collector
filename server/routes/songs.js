@@ -231,16 +231,21 @@ router.put('/editSong/:id', function(req, res) {
               console.log('error deleting in db prior to inserting new elements', err);
               res.sendStatus(500);
             } else {
-              var sqlStringObject = buildSqlForTeachableElements(songObject.teachable_elements, songIdToUpdate);
-              client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + sqlStringObject.valueString + ';', sqlStringObject.insertArray, function(err,result) {
-                done();
-                if(err) {
-                  console.log('error making database query: ', err);
-                  res.sendStatus(500);
-                } else {
-                  res.sendStatus(200);
-                }
-              }); // end client.query for insert
+              if (songObject.teachable_elements_id_group.length > 0) {
+                var sqlStringObject = buildSqlForTeachableElements(songObject.teachable_elements_id_group, songIdToUpdate);
+                client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + sqlStringObject.valueString + ';', sqlStringObject.insertArray, function(err,result) {
+                  done();
+                  if(err) {
+                    console.log('error making database query: ', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.sendStatus(200);
+                  }
+                }); // end client.query for insert
+              } else {
+                res.sendStatus(200);
+              }
+
             }
           });
         }
@@ -301,7 +306,7 @@ router.delete('/removeSong/:id', function(req, res) {
         done();
         if(err) {
           console.log('error making database query: ', err);
-        } 
+        }
       }); // end client.query
       client.query('DELETE FROM images_songs WHERE song_id = $1 AND user_id = $2 RETURNING images_songs.image_id;', [songId, userId], function(err,result) {
         done();
