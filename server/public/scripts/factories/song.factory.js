@@ -2,8 +2,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   var auth = $firebaseAuth();
   var songCollection = {list: []};
   var oneSong = {details: {}};
-  var filesUploaded = {list:[]};
-  var notationUploaded = {list:[]};
+  var filesUploaded = {list:[], isNotation:''};
+  var notationUploaded = {list:[], isNotation:''};
   var attachments = {attachments: [], notation: []};
   var dropdowns = {formType: [], songType: [], language: [], meter: [], scaleMode: [], teachableElements: []};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
@@ -53,6 +53,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   // get's one song from the database based on the song's ID grabbed from $routeParams
   function getOneSong(songId) {
     filesUploaded.list = [];
+    notationUploaded.list = [];
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
@@ -75,6 +76,27 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     }
   }
 
+  function sendFileToDatabase(dataObject, songId) {
+    console.log('passed in dataobject', dataObject);
+    var firebaseUser = auth.$getAuth();
+    if(firebaseUser) {
+      firebaseUser.getToken().then(function (idToken) {
+        $http({
+          method: 'POST',
+          url: '/songs/addImage/' + songId,
+          data: dataObject,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function() {
+          console.log('file posted to database!');
+        });
+      });
+    } else {
+      console.log('not logged in!');
+    }
+  }
+
   // send file to FileStack and db at the same time
   function fileUpload(songId) {
     console.log('file sending to FileStack...');
@@ -88,30 +110,15 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         // }
       }).then(function(result) {
         console.log('file uploaded, now sending to database... ', result.filesUploaded);
-        result.filesUploaded.isNotation = false;
         filesUploaded.list = result.filesUploaded;
-        var firebaseUser = auth.$getAuth();
-        if(firebaseUser) {
-          firebaseUser.getToken().then(function (idToken) {
-            $http({
-              method: 'POST',
-              url: '/songs/addImage/' + songId,
-              data: result.filesUploaded,
-              headers: {
-                id_token: idToken
-              }
-            }).then(function() {
-              console.log('file posted to database!');
-            });
-          });
-        } else {
-          console.log('not logged in!');
+        filesUploaded.isNotation = false;
+        if(songId) {
+          sendFileToDatabase(filesUploaded, songId);
         }
       });
     }
 
     function notationUpload(songId) {
-      console.log('file sending to FileStack...');
       client.pick(
         {
           accept: 'image/*',
@@ -121,32 +128,16 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           // location: 's3'
           // }
         }).then(function(result) {
-          console.log('file uploaded, now sending to database... ', result.notationUploaded);
-          result.isNotation = true;
-          notationUploaded.list = result.notationUploaded;
-          console.log(result);
-          var firebaseUser = auth.$getAuth();
-          if(firebaseUser) {
-            firebaseUser.getToken().then(function (idToken) {
-              $http({
-                method: 'POST',
-                url: '/songs/addImage/' + songId,
-                data: result,
-                headers: {
-                  id_token: idToken
-                }
-              }).then(function() {
-                console.log('file posted to database!');
-              });
-            });
-          } else {
-            console.log('not logged in!');
+          notationUploaded.list = result.filesUploaded;
+          notationUploaded.isNotation = true;
+          console.log(notationUploaded);
+          if(songId) {
+            sendFileToDatabase(notationUploaded, songId);
           }
         });
       }
 
     function getAttachments(songId) {
-      console.log('hitting get attachments function');
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
         firebaseUser.getToken().then(function (idToken) {
@@ -185,6 +176,11 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       } else {
         console.log('not logged in!');
       }
+    }
+
+    function deleteAttachment(url) {
+      client.remove(url);
+      console.log('successful remove?');
     }
 
     function getDropdownValues() {
@@ -264,8 +260,29 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
               id_token: idToken
             }
           }).then(function(response) {
-            console.log(response.data);
-            getAllSongs();
+            if(notationUploaded.list.length > 0) {
+            $http({
+              method: 'POST',
+              url: '/songs/addImage/' + response.data.id,
+              data: notationUploaded,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              getAllSongs();
+            });
+          } else if(filesUploaded.list.length > 0) {
+            $http({
+              method: 'POST',
+              url: '/songs/addImage/' + response.data.id,
+              data: filesUploaded,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              getAllSongs();
+            });
+          }
           });
         });
       } else {
@@ -393,6 +410,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       notationUpload: notationUpload,
       notationUploaded: notationUploaded,
       attachments: attachments,
+      deleteAttachment: deleteAttachment,
       dropdowns: dropdowns,
       saveNewSong: saveNewSong,
       updateSong: updateSong,
