@@ -11,6 +11,8 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.editingRhythm = false;
   self.editingExtractableRhythm = false;
 
+  SongFactory.getAllSongs();
+
   self.oneSong = SongFactory.oneSong; //single song information
   self.fileUpload = SongFactory.fileUpload; //function for uploading
   self.filesUploaded = SongFactory.filesUploaded; //files for single song

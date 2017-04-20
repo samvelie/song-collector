@@ -1,4 +1,4 @@
-app.controller('NewSongController', ['SongFactory','$location', function(SongFactory,$location) {
+app.controller('NewSongController', ['SongFactory','$location', '$scope', function(SongFactory,$location, $scope) {
 
   var self = this;
 
@@ -32,6 +32,12 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
     }
   };
 
+  $scope.$on('$locationChangeStart', function (event, next, current) {
+          if (self.newSongForm.$dirty && !confirm('There are unsaved changes. Would you like to exit the new song form?')) {
+            event.preventDefault();
+          }
+        });
+
   self.saveNewSong = SongFactory.saveNewSong;
 
   self.newSongObject.teachableElementsModel = [];
@@ -54,40 +60,11 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
   };
 
   self.checkAndDisplayRhythm = function(string) {
-    console.log(string);
-    var textString = '';
-    var newString = string;
-    if (string.indexOf("internal")>=0 || string.indexOf("(internal)")>=0) {
-      newString = newString.replace('internal', '');
-      newString = newString.replace('(internal)', '');
-      textString += 'internal ';
-    }
-    if (string.indexOf("eighth")>=0) {
-      newString = newString.replace('eighth', '');
-      textString += 'eighth ';
-    }
-    if (string.indexOf("anacrusis")>=0 || string.indexOf("anacrusic")>=0) {
-      newString = newString.replace('anacrusis', '');
-      newString = newString.replace('anacrusic', '');
-      textString += 'anacrusis ';
-    }
-    if (string.indexOf("all syncopated")>=0) {
-      newString = newString.replace('all syncopated', '');
-      textString += 'all syncopated ';
-    }
-    self.rhythm = [newString, textString];
+    self.rhythm = SongFactory.prepareRhythmForFont(string);
   };
 
-  self.checkAndDisplayExtractableRhythms = function(str) {
-    var res = str.split(/\(([^)]+)\)/);
-
-    for (var i = 0; i < res.length; i++) {
-      if(i%2!==0) {
-        res[i] = '(' + res[i] + ')';
-      }
-    }
-    console.log(res);
-    self.extractableRhythms = res;
+  self.checkAndDisplayExtractableRhythms = function(string) {
+    self.extractableRhythms = SongFactory.prepareExtractableRhythmForFont(string);
   };
 
   // view image preview modal

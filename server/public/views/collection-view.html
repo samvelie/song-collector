@@ -128,8 +128,8 @@
         <!-- start scale/model -->
         <div class="form-group">
           <label for="scaleMode" class="control-label">Scale / Mode</label>
-          <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by cc.oneSong.details.scale_mode_id">
-          </select>
+            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode">
+            </select>
         </div>
         <!-- end scale/model -->
 
@@ -174,9 +174,9 @@
         <!-- start meter -->
         <div class="form-group">
           <label for="meter" class="control-label">Meter</label>
-          <select name="formType" ng-model="cc.oneSong.details.meter_id" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in cc.dropdowns.meter">
-            <option style="display:none" value="" disabled selected>No value selected</option>
-          </select>
+            <select name="formType" ng-model="cc.oneSong.details.meter_id" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in cc.dropdowns.meter">
+              <option style="display:none" value="" disabled selected>No value selected</option>
+            </select>
         </div>
         <!-- end meter -->
 
@@ -193,6 +193,7 @@
           <input class="form-control" ng-model="cc.oneSong.details.intervals_note_groups"/>
         </div>
         <!-- end intervals -->
+
 
         <!-- start phrases -->
         <div class="form-group">
@@ -218,18 +219,18 @@
         <!-- start form type -->
         <div class="form-group">
           <label for="formType" class="control-label">Form Type</label>
-          <select name="formType" ng-model="cc.oneSong.details.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in cc.dropdowns.formType">
-            <option style="display:none" value="">No value selected</option>
-          </select>
+            <select name="formType" ng-model="cc.oneSong.details.form_type_id" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in cc.dropdowns.formType">
+              <option style="display:none" value="">No value selected</option>
+            </select>
         </div>
         <!-- end form type -->
 
         <!-- start song type -->
         <div class="form-group">
           <label for="songType" class="control-label">Song Type</label>
-          <select name="formType" ng-model="cc.oneSong.details.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in cc.dropdowns.songType">
-            <option style="display:none" value="">No value selected</option>
-          </select>
+            <select name="formType" ng-model="cc.oneSong.details.song_type_id" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in cc.dropdowns.songType">
+              <option style="display:none" value="">No value selected</option>
+            </select>
         </div>
         <!-- end song type -->
 
@@ -243,9 +244,9 @@
         <!-- start language -->
         <div class="form-group">
           <label for="language" class="control-label">Language</label>
-          <select name="formType" ng-model="cc.oneSong.details.language" class="form-control" placeholder="Language" ng-options="language.language for language in cc.dropdowns.language">
-            <option style="display:none" value="">No value selected</option>
-          </select>
+            <select name="formType" ng-model="cc.oneSong.details.language_id" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in cc.dropdowns.language">
+              <option style="display:none" value="">No value selected</option>
+            </select>
         </div>
         <!-- end language -->
 
@@ -279,6 +280,7 @@
 
     <!-- start attachments column -->
     <div class="col-sm-4">
+
 
       <!-- start notation attachments -->
       <div class="notation-attachments">
@@ -322,10 +324,12 @@
       </div>
       <!-- end notation attachments -->
 
+
       <!-- start other attachments -->
       <div class="document-attachments">
         <div class="form-group">
           <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
+
 
           <!-- start existing attachments -->
           <div>

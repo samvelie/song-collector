@@ -1,5 +1,5 @@
-app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams',function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
-  var auth = $firebaseAuth();
+app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker', '$location', '$routeParams',function (FirebaseAuthFactory, $http, angularFilepicker, $location, $routeParams) {
+  var auth = FirebaseAuthFactory;
   var songCollection = {list: []};
   var oneSong = {details: {}};
   var filesUploaded = {list:[], isNotation:''};
@@ -33,7 +33,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   function getAllSongs() {
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
-      firebaseUser.getToken().then(function (idToken) {
+      firebaseUser.getToken().then(function(idToken) {
         $http({
           method: 'GET',
           url: '/songs',
@@ -45,7 +45,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         });
       });
     } else {
-      songCollection = {};
+      songCollection.list = [];
       console.log('cannot get when not logged in');
     }
   }
