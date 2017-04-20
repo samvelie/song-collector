@@ -25,7 +25,7 @@
 <div class="col-sm-12" id="songInfoContainer">
 
   <!-- start dynamic-width div for song cards -->
-  <div ng-class="['container-fluid', 'card-holder', cc.songClicked ? 'col-sm-3':'col-md-12']">
+  <div ng-class="['container-fluid', 'card-holder', 'no-right-padding', cc.songClicked ? 'col-sm-3':'col-md-12']">
     <div ng-class="cc.songClicked ? card : row">
 
       <!-- start card header container -->
@@ -37,7 +37,7 @@
       <!-- end card header container -->
 
       <!-- start container for cards -->
-      <div class="card-container scrollable">
+      <div class="card-container scrollable ">
 
         <!-- start container for first "add song" card -->
         <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
@@ -81,33 +81,18 @@
       <div class="toolbar-container">
         <button ng-click="cc.showFullCardView()" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
         <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-        <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-        <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isDeleteOpen" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
         <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
         <!-- onclick="window.print()" target="_blank" -->
       </div>
       <!-- end toolbar container -->
-
-      <!-- start Share popover template -->
-      <script type="text/ng-template" id="sharePopover.html">
-        <div>{{cc.dynamicPopover.content}}</div>
-        <form>
-          <div class="input-group">
-            <input type="email" class="form-control share" ng-model="cc.shareSong.email" placeholder="Email Address">
-            <span class="input-group-btn">
-              <button class="btn btn-default btn-share" ng-click="cc.shareSong(cc.oneSong.details.id)" type="submit" title="Send song"><strong>Send!</strong></button>
-            </span>
-          </div>
-        </form>
-      </script>
-      <!-- end Share popover template -->
 
       <!-- start Delete popover template -->
       <script type="text/ng-template" id="deletePopover.html">
         <center>
           <p class="text-center">{{cc.deletePopover.content}}</p>
           <form>
-            <button class="btn btn-default" ng-click="cc.cancelFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
+            <button class="btn btn-default" ng-click="$parent.isDeleteOpen = false" type="submit"><strong>Cancel</strong></button>
             <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete</strong></button>
           </form>
         </center>
@@ -118,7 +103,7 @@
     <!-- end details header container -->
 
     <!-- start song info column -->
-    <div class="col-sm-8 card-holder">
+    <div class="col-sm-8 card-holder scrollable">
 
       <!-- start form -->
       <form name="cc.songInfoForm" confirm-on-exit>
@@ -304,6 +289,22 @@
           <div ng-repeat="notation in cc.attachments.notation">
             <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
             <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
+            <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+
+            <!-- start Share popover template -->
+            <script type="text/ng-template" id="sharePopover.html">
+              <div>{{cc.dynamicPopover.content}}</div>
+              <form>
+                <div class="input-group">
+                  <input type="email" class="form-control share" ng-model="cc.shareSong.email" placeholder="Email Address">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-share" ng-click="cc.shareSong(cc.shareSong.email, $index); $parent.isOpen = false" type="submit" title="Send song"><strong>Send!</strong></button>
+                  </span>
+                </div>
+              </form>
+            </script>
+            <!-- end Share popover template -->
+
           </div>
           <!-- end existing attachments -->
 
@@ -352,16 +353,16 @@
   </div>
   <!-- end expanded column for song details -->
 
-  <!-- start lightbox modal template -->
-    <!-- start modal background template -->
-    <div ng-if="cc.viewMore" class="backgroundDark">
-    </div>
-    <!-- end modal background template -->
-
-  <div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
-    <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
-  </div>
-  <!-- end lightbox modal template -->
-
 </div>
 <!-- end content container -->
+
+<!-- start lightbox modal template -->
+  <!-- start modal background template -->
+  <div ng-if="cc.viewMore" class="backgroundDark">
+  </div>
+  <!-- end modal background template -->
+
+<div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
+  <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
+</div>
+<!-- end lightbox modal template -->

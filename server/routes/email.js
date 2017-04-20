@@ -2,17 +2,18 @@ var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-var emailMessage = require('./routes/email-message');
-var gmailpass = require('./routes/gmailpass');
+var emailMessage = require('./email-message');
+var gmailpass = require('./gmailpass');
 
 var message = {};
+var pool = require('../modules/pg-pool');
 
 // start nodemailer-smtp-transport
 var transporter = nodemailer.createTransport(smtpTransport({
   service: 'Gmail',
   auth: {
     user: 'isongcollect@gmail.com',
-    pass: gmailpass().password
+    pass: 'phiprimeacademy2017'
   }
 }));
 
@@ -25,26 +26,40 @@ transporter.verify(function (error, success) {
 });
 // end nodemailer-smtp-transport
 
-router.post('/', function(req, res) {
+console.log('log before router.post for shareSong');
+
+router.post('/shareSong', function(req, res) {
   var emailAddress = req.body.emailAddress;
-    console.log(emailAddress);
-    message = {
-      to: emailAddress,
-      subject: 'New song from iSongCollect',
-      text: 'message',
-      html: emailMessage(imageId).message
-    };
-    transporter.sendMail(message, function(error, info){ // sends on server start -- send on button click?
-      if(error){
-        console.log(error);
-        res.sendStatus(500);
-      } else {
-        console.log('Message sent: ' + info.response);
-        console.log(message);
-        res.sendStatus(200);
-      }
-    });
+  var imageUrl = req.body.imageUrl;
+  var userInfo = req.body.userInfo;
+  console.log('object in email.js', req.body);
+  message = {
+    to: emailAddress,
+    subject: 'New song from iSongCollect',
+    text: 'message',
+    html: emailMessage(imageUrl, userInfo).message
+  };
+  transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
+    if (error) {
+      console.log(error);
+      res.sendStatus(500);
+    } else {
+      console.log('Message sent: ' + info.response);
+      console.log(message);
+      res.sendStatus(200);
+    }
   });
+  //     transporter.sendMail(message, function(error, info){ // sends on server start -- send on button click?
+  //       if(error){
+  //         console.log(error);
+  //         res.sendStatus(500);
+  //       } else {
+  //         console.log('Message sent: ' + info.response);
+  //         console.log(message);
+  //         res.sendStatus(200);
+  //       }
+  //     });
+  //   });
 }); // end router.post
 
 module.exports = router;

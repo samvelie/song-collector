@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
-var emailMessage = require('./email-message');
-var gmailpass = require('./gmailpass');
+// var nodemailer = require('nodemailer');
+// var smtpTransport = require('nodemailer-smtp-transport');
+// var emailMessage = require('./email-message');
+// var gmailpass = require('./gmailpass');
 
 var pool = require('../modules/pg-pool');
 
@@ -301,7 +301,7 @@ router.delete('/removeSong/:id', function(req, res) {
         done();
         if(err) {
           console.log('error making database query: ', err);
-        } 
+        }
       }); // end client.query
       client.query('DELETE FROM images_songs WHERE song_id = $1 AND user_id = $2 RETURNING images_songs.image_id;', [songId, userId], function(err,result) {
         done();
@@ -344,44 +344,44 @@ router.delete('/removeSong/:id', function(req, res) {
 
 
 // start nodemailer-smtp-transport
-var transporter = nodemailer.createTransport(smtpTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'isongcollect@gmail.com',
-    pass: gmailpass().password
-  }
-}));
-
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Server is ready to take our messages');
-  }
-});
+// var transporter = nodemailer.createTransport(smtpTransport({
+//   service: 'Gmail',
+//   auth: {
+//     user: 'isongcollect@gmail.com',
+//     pass: gmailpass().password
+//   }
+// }));
+//
+// transporter.verify(function (error, success) {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Server is ready to take our messages');
+//   }
+// });
 // end nodemailer-smtp-transport
 
-router.post('/shareSong', function(req, res) {
-  var emailAddress = req.body.emailAddress;
-  var imageId = req.body.imageId;
-  console.log(emailAddress);
-  message = {
-    to: emailAddress,
-    subject: 'New song from iSongCollect',
-    text: 'message',
-    html: emailMessage(imageId).message
-  };
-  transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
-    if (error) {
-      console.log(error);
-      res.sendStatus(500);
-    } else {
-      console.log('Message sent: ' + info.response);
-      console.log(message);
-      // res.sendStatus(200);
-      res.send(200);
-    }
-  });
+// router.post('/shareSong', function(req, res) {
+//   var emailAddress = req.body.emailAddress;
+//   var imageId = req.body.imageId;
+//   console.log(emailAddress);
+//   message = {
+//     to: emailAddress,
+//     subject: 'New song from iSongCollect',
+//     text: 'message',
+//     html: emailMessage(imageId).message
+//   };
+//   transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
+//     if (error) {
+//       console.log(error);
+//       res.sendStatus(500);
+//     } else {
+//       console.log('Message sent: ' + info.response);
+//       console.log(message);
+//       // res.sendStatus(200);
+//       res.send(200);
+//     }
+//   });
   //     transporter.sendMail(message, function(error, info){ // sends on server start -- send on button click?
   //       if(error){
   //         console.log(error);
@@ -393,7 +393,7 @@ router.post('/shareSong', function(req, res) {
   //       }
   //     });
   //   });
-}); // end router.post
+// }); // end router.post
 
 
 function buildSqlForTeachableElements(teachableElementArray, songId) {
