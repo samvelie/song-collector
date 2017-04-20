@@ -3,7 +3,7 @@
 <div class="col-sm-12" id="songInfoContainer">
 
 
-
+<form name="nsc.newSongForm" confirm-on-exit>
   <div class="col-sm-12 panel text-right" id="toolbar">
     <div class="form-group">
       <div class="col-sm-8 half-gutter text-center">
@@ -28,9 +28,8 @@
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
 
-    <!--  using index passed in params to pull information for specific song from factory list, i.e. esc.songInfo.list[esc.index] -->
     <form class="form-horizontal">
-
+      {{nsc.newSongForm.$dirty}}
       <div class="form-group">
         <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
         <div class="col-sm-8 half-gutter">
@@ -233,5 +232,6 @@
 
   </div>
   <!-- end attachements div -->
+</form>
 </div>
 <!-- end full screen container -->

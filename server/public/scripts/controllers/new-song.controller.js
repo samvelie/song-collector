@@ -1,4 +1,4 @@
-app.controller('NewSongController', ['SongFactory','$location', function(SongFactory,$location) {
+app.controller('NewSongController', ['SongFactory','$location', '$scope', function(SongFactory,$location, $scope) {
 
   var self = this;
 
@@ -31,6 +31,12 @@ app.controller('NewSongController', ['SongFactory','$location', function(SongFac
       self.songError = false;
     }
   };
+
+  $scope.$on('$locationChangeStart', function (event, next, current) {
+          if (self.newSongForm.$dirty && !confirm('There are unsaved changes. Would you like to exit the new song form?')) {
+            event.preventDefault();
+          }
+        });
 
   self.saveNewSong = SongFactory.saveNewSong;
 
