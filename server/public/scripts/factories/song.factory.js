@@ -260,6 +260,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
               id_token: idToken
             }
           }).then(function(response) {
+            if(notationUploaded.list.length > 0) {
             $http({
               method: 'POST',
               url: '/songs/addImage/' + response.data.id,
@@ -270,6 +271,18 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }).then(function(response) {
               getAllSongs();
             });
+          } else if(filesUploaded.list.length > 0) {
+            $http({
+              method: 'POST',
+              url: '/songs/addImage/' + response.data.id,
+              data: filesUploaded,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              getAllSongs();
+            });
+          }
           });
         });
       } else {
