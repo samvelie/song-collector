@@ -324,7 +324,7 @@ span.glyphicon {
   left: 20%;
   overflow: scroll;
   z-index:1000;
-  padding-top:25px;
+  /*padding-top:25px;*/
 }
 
 .backgroundDark {
@@ -395,7 +395,7 @@ div.ql-editor {
 .small {
   color: blue;
   width: 25%;
-  float: right;
+  /*float: right;*/
 }
 
 .large {
@@ -408,6 +408,6 @@ div.ql-editor {
   right: 0;
 }
 
-.popover {
-  /*border: 1px solid purple;*/
+.existing-notation-container {
+  border: 1px solid purple;
 }
