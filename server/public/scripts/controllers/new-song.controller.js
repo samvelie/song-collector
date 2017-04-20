@@ -30,9 +30,14 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
       self.titlePlaceholder = "Title is required!";
       self.songError = true;
     } else {
-      SongFactory.saveNewSong(newSongObject);
-      console.log('saved!');
-      self.songError = false;
+      SongFactory.saveNewSong(newSongObject).then(function(){
+        console.log('saved!');
+        self.titlePlaceholder = "New Song Title";
+        self.songError = false;
+        self.newSongForm.$dirty = false;
+        self.newSongObject = {};
+      });
+
     }
   };
 
