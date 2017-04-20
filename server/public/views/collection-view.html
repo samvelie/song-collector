@@ -51,7 +51,7 @@
         <h3 class="text-center">{{song.song_title}}</h3>
         <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
         <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
-        <p><b>Teachable Element:</b> <span ng-repeat="element in song.teachableElements">{{element.teachable_elements}}{{$last ? '' : ', '}}</span></p>
+        <p><b>Teachable Elements:</b> <span ng-repeat="element in song.teachableElements">{{element.teachable_elements}}{{$last ? '' : ', '}}</span></p>
       </div>
       <!-- end container for all song cards -->
 
@@ -106,170 +106,6 @@
 
     <!-- start div for song info column -->
 <div class="col-sm-8 card-holder">
-
-  <!-- <form class="form-horizontal"> -->
-
-    <!-- <div class="form-group">
-      <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
-      <div class="col-sm-8 half-gutter">
-        <ng-quill-editor class="form-control" theme="bubble" ng-model="cc.oneSong.details.tone_set" placeholder="override default placeholder">
-          <ng-quill-toolbar>
-            <div id="ng-quill-toolbar">
-              <span class="ql-formats">
-                <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
-                <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
-                <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
-              </span>
-            </div>
-          </ng-quill-toolbar>
-        </ng-quill-editor>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
-      <div class="col-sm-8 half-gutter">
-        <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode track by cc.oneSong.details.scale_mode_id">
-        </select>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
-      <div class="col-sm-8 half-gutter">
-        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts"></div>
-      </div> -->
-      <!-- {{cc.oneSong.details.teachable_elements_id_group}} -->
-    <!-- </div> -->
-
-    <!-- <div class="form-group" ng-click="cc.findFocus('rhythm')">
-      <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-      <div class="col-sm-8 half-gutter">
-        <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm)" ng-blur="cc.loseFocus('rhythm')" focusing>
-        <div class="display">
-          <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
-            <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
-          </span>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group" ng-click="cc.findFocus('extractableRhythm')">
-      <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-      <div class="col-sm-8 half-gutter">
-        <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
-        <div class="display">
-          <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
-            <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
-          </span>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
-      <div class="col-sm-8 half-gutter">
-        <input class="form-control" ng-model="cc.oneSong.details.extractable_melodies"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
-      <div class="col-sm-8 half-gutter">
-        <select name="formType" ng-model="cc.oneSong.details.meter_id" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in cc.dropdowns.meter">
-        </select>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="source" class="col-sm-4 control-label no-gutter">Verses</label>
-      <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="5">{{cc.oneSong.details.verses_note}}</textarea>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
-      <div class="col-sm-8 half-gutter">
-        <input class="form-control" "cc.oneSong.details.intervals_note_groups"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
-      <div class="col-sm-8 half-gutter">
-        <input class="form-control" ng-model="cc.oneSong.details.phrases"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
-      <div class="col-sm-8 half-gutter">
-        <input class="form-control" ng-model="cc.oneSong.details.melodic_form"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
-      <div class="col-sm-8 half-gutter">
-        <input class="form-control" ng-model="cc.oneSong.details.rhythmic_form"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
-      <div class="col-sm-8 half-gutter">
-        <select name="formType" ng-model="cc.oneSong.details.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in cc.dropdowns.formType">
-        </select>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
-      <div class="col-sm-8 half-gutter">
-        <select name="formType" ng-model="cc.oneSong.details.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in cc.dropdowns.songType">
-        </select>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
-      <div class="col-sm-8 half-gutter">
-        <input class="form-control" ng-model="cc.oneSong.details.culture_origin"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
-      <div class="col-sm-8 half-gutter">
-        <select name="formType" ng-model="cc.oneSong.details.language" class="form-control" placeholder="Language" ng-options="language.language for language in cc.dropdowns.language">
-        </select>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label> -->
-      <!-- NOTE: CSP stands for: comfortable starting pitch -->
-      <!-- <div class="col-sm-8 half-gutter">
-        <input class="form-control" ng-model="cc.oneSong.details.csp"/>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
-      <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.other_note}}</textarea>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
-      <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.source_note}}</textarea>
-      </div>
-    </div>
-
-  </form> -->
 
   <form>
 
@@ -334,7 +170,7 @@
 
     <div class="form-group">
       <label for="source" class="control-label">Verses</label>
-        <textarea class="form-control" rows="5">{{cc.oneSong.details.verses_note}}</textarea>
+        <textarea class="form-control" rows="5" placeholder="No value saved">{{cc.oneSong.details.verses_note}}</textarea>
     </div>
 
     <div class="form-group">
@@ -344,7 +180,7 @@
 
     <div class="form-group">
       <label for="phrases" class="control-label">Phrases</label>
-        <input class="form-control" ng-model="cc.oneSong.details.phrases"/>
+        <input type="number" class="form-control" ng-model="cc.oneSong.details.phrases"/>
     </div>
 
     <div class="form-group">
