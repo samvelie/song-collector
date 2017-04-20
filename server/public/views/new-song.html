@@ -11,25 +11,14 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
-    <button type="button" class="btn btn-primary" popover-placement="bottom-right" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" popover-placement="bottom-right"  uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
-  <!-- start Cancel popover template -->
-  <script type="text/ng-template" id="cancelPopover.html">
-    <center>
-    <p class="text-center">{{nsc.cancelPopover.content}}</p>
-    <form>
-      <button class="btn btn-danger" ng-click="nsc.redirectToCollection()" type="submit"><strong>Cancel!</strong></button>
-    </form>
-    </center>
-  </script>
-  <!-- end Cancel popover template -->
 
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
 
     <form class="form-horizontal">
-      {{nsc.newSongForm.$dirty}}
       <div class="form-group">
         <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
         <div class="col-sm-8 half-gutter">
@@ -234,3 +223,17 @@
 </form>
 </div>
 <!-- end full screen container -->
+
+
+  <!-- start Cancel popover template -->
+  <script type="text/ng-template" id="cancelPopover.html">
+    <center>
+    <p class="text-center">{{nsc.cancelPopover.content}}</p>
+    <form>
+      <button class="btn btn-default" ng-click="$parent.isCancelOpen = false" type="submit"><strong>No</strong></button>
+      <button class="btn btn-danger" ng-click="nsc.redirectToCollection()" type="submit"><strong>Yes</strong></button>
+
+    </form>
+    </center>
+  </script>
+  <!-- end Cancel popover template -->

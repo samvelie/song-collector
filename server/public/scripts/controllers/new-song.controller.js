@@ -14,6 +14,10 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
   self.viewMore = false;
   self.newSongObject = {};
 
+  self.redirectToCollection = function() {
+    $location.path('/collection');
+  };
+
   self.cancelPopover = {
     content: 'Cancel this song?',
     templateUrl: 'cancelPopover.html',// getting from collection-view.html
