@@ -1,5 +1,5 @@
-app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', function($firebaseAuth, $http, $location, $window) {
-  var auth = $firebaseAuth();
+app.factory('AuthFactory', ['FirebaseAuthFactory', '$http', '$location', '$window', function(FirebaseAuthFactory, $http, $location, $window) {
+  var auth = FirebaseAuthFactory;
   var loggedIn = {};
   var userInfo = { info: '' };
   var newLoggedIn = { loginStatus: false };
@@ -10,7 +10,7 @@ app.factory('AuthFactory', ['$firebaseAuth', '$http', '$location', '$window', fu
     loggedIn.value = firebaseUser !== null;
     if (loggedIn.value) {
       getUserData(firebaseUser);
-      //  $location.path('/collection');
+       $location.path('/collection');
     } else {
       console.log('user is not logged in');
     }
