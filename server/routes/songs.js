@@ -8,25 +8,6 @@ var gmailpass = require('./gmailpass');
 
 var pool = require('../modules/pg-pool');
 
-
-// start nodemailer-smtp-transport
-var transporter = nodemailer.createTransport(smtpTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'isongcollect@gmail.com',
-    pass: gmailpass().password
-  }
-}));
-
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Server is ready to take our messages');
-  }
-});
-// end nodemailer-smtp-transport
-
 router.get('/', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
@@ -287,6 +268,46 @@ router.put('/editSong/:id', function(req, res) {
   });//end pool.connect for edit song
 }); //router.put for single song
 
+router.post('/editSong/:id', function(req, res) {
+  var userId = req.userInfo.id;
+  var songObject = req.body;
+  var songIdToUpdate = req.params.id;
+
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('UPDATE songs SET song_title=$1, tone_set=$2, scale_mode_id=$3, rhythm=$4, extractable_rhythms=$5, extractable_melodies=$6, meter_id=$7, verses_note=$8, formation_note=$9, action_note=$10, intervals_note_groups=$11, phrases=$12, melodic_form=$13, rhythmic_form=$14, form_type_id =$15, song_type_id=$16, culture_origin=$17, language_id=$18, csp=$19, other_note=$20, source_note=$21 WHERE id=$22 AND user_id=$23;', [songObject.song_title, songObject.tone_set, songObject.scale_mode_id, songObject.rhythm, songObject.extractable_rhythms, songObject.extractable_melodies, songObject.meter_id, songObject.verses_note, songObject.formation_note, songObject.action_note, songObject.intervals_note_groups, songObject.phrases, songObject.melodic_form, songObject.rhythmic_form, songObject.form_type_id, songObject.song_type_id, songObject.culture_origin, songObject.language_id, songObject.csp, songObject.other_note, songObject.source_note, songIdToUpdate, userId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making db query', err);
+          res.sendStatus(500);
+        } else {
+          client.query('DELETE FROM song_collection_teachable_elements WHERE song_id=$1', [songIdToUpdate], function(err, result) {
+            if(err) {
+              console.log('error deleting in db prior to inserting new elements', err);
+              res.sendStatus(500);
+            } else {
+              var sqlStringObject = buildSqlForTeachableElements(songObject.teachable_elements, songIdToUpdate);
+              client.query('INSERT INTO song_collection_teachable_elements (song_id, teachable_elements_id) VALUES' + sqlStringObject.valueString + ';', sqlStringObject.insertArray, function(err,result) {
+                done();
+                if(err) {
+                  console.log('error making database query: ', err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(200);
+                }
+              }); // end client.query for insert
+            }
+          });
+        }
+      });//end client.query for update
+    }
+  });//end pool.connect for edit song
+}); //router.put for single song
+
+
 router.delete('/removeSong/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   var songId = req.params.id;
@@ -307,6 +328,59 @@ router.delete('/removeSong/:id', function(req, res) {
     }
   }); // end pool.connect
 }); // end router.delete
+
+
+// start nodemailer-smtp-transport
+var transporter = nodemailer.createTransport(smtpTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'isongcollect@gmail.com',
+    pass: gmailpass().password
+  }
+}));
+
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Server is ready to take our messages');
+  }
+});
+// end nodemailer-smtp-transport
+
+router.post('/shareSong', function(req, res) {
+  var emailAddress = req.body.emailAddress;
+  var imageId = req.body.imageId;
+  console.log(emailAddress);
+  message = {
+    to: emailAddress,
+    subject: 'New song from iSongCollect',
+    text: 'message',
+    html: emailMessage(imageId).message
+  };
+  transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
+    if (error) {
+      console.log(error);
+      res.sendStatus(500);
+    } else {
+      console.log('Message sent: ' + info.response);
+      console.log(message);
+      // res.sendStatus(200);
+      res.send(200);
+    }
+  });
+  //     transporter.sendMail(message, function(error, info){ // sends on server start -- send on button click?
+  //       if(error){
+  //         console.log(error);
+  //         res.sendStatus(500);
+  //       } else {
+  //         console.log('Message sent: ' + info.response);
+  //         console.log(message);
+  //         res.sendStatus(200);
+  //       }
+  //     });
+  //   });
+}); // end router.post
 
 
 function buildSqlForTeachableElements(teachableElementArray, songId) {
