@@ -178,6 +178,11 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       }
     }
 
+    function deleteAttachment(url) {
+      client.remove(url);
+      console.log('successful remove?');
+    }
+
     function getDropdownValues() {
       var firebaseUser = auth.$getAuth();
       if(firebaseUser) {
@@ -380,6 +385,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       notationUpload: notationUpload,
       notationUploaded: notationUploaded,
       attachments: attachments,
+      deleteAttachment: deleteAttachment,
       dropdowns: dropdowns,
       saveNewSong: saveNewSong,
       updateSong: updateSong,

@@ -277,8 +277,9 @@
   <!-- notation attachments -->
   <div class="form-group">
     <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
-    <div> <!-- existing attachments -->
-      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
+    <div ng-repeat="notation in cc.attachments.notation"> <!-- existing attachments -->
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
+      <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
     </div>
     <div class="col-sm-12 half-gutter">
       <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
