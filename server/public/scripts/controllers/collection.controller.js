@@ -1,4 +1,4 @@
-app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', function(SongFactory, $uibModal, $filter) {
+app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal', '$filter', function(SongFactory, AuthFactory, $uibModal, $filter) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
@@ -185,8 +185,8 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     // title: 'Delete this song?'
   };
 
-  self.shareSong = function(emailAddress, imageId) {
-    SongFactory.shareSong(emailAddress, imageId);
+  self.shareSong = function(emailAddress, index) {
+    SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo);
   };
 
 }]);

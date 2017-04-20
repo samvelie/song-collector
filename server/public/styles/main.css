@@ -160,14 +160,35 @@ header .navbar {
 
 .card-holder {
   /*height: 100%;*/
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
   border-right: 1px solid lightgrey;
   /*background-color: orange;*/
-  height: 90vh;
+  /*height: 90vh;*/
+  align: center;
 }
 
 .scrollable {
-  /*overflow-y: scroll;*/
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.no-right-padding {
+  padding-right: 0 !important;
+}
+
+/*.center-block {
+   margin-left:auto;
+   margin-right:auto;
+   display:block;
+}*/
+
+.centerBlock {
+  display: table;
+  margin: auto;
+}
+
+.leftBlock {
+  float: left;
 }
 
 /* end edit song view styles */

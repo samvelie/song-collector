@@ -7,7 +7,9 @@ var decoder = require('./modules/decoder');
 var users = require('./routes/users');
 var songs = require('./routes/songs');
 var dropdowns = require('./routes/dropdowns');
-// var email = require('./routes/email');
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+var email = require('./routes/email');
 
 // uses
 app.use(bodyParser.json());
@@ -26,6 +28,7 @@ app.listen(process.env.PORT || 5812);
 app.use(decoder.token);
 
 //routes
+app.use('/email', email);
 app.use('/dropdowns', dropdowns);
 app.use('/users', users);
 app.use('/songs', songs);
