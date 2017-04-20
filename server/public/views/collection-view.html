@@ -82,9 +82,9 @@
         <div>{{cc.dynamicPopover.content}}</div>
         <form>
           <div class="input-group">
-            <input type="email" class="form-control share" ng-model="home.newEvent" placeholder="Email Address">
+            <input type="email" class="form-control share" ng-model="cc.shareSong.email" placeholder="Email Address">
             <span class="input-group-btn">
-              <button class="btn btn-default btn-share" ng-click="home.sendSong()" type="submit" title="Send song"><strong>Send!</strong></button>
+              <button class="btn btn-default btn-share" ng-click="cc.shareSong(cc.oneSong.details.id)" type="submit" title="Send song"><strong>Send!</strong></button>
             </span>
           </div>
           </form>
@@ -96,7 +96,7 @@
         <center>
         <p class="text-center">{{cc.deletePopover.content}}</p>
         <form>
-            <button class="btn btn-default" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
+            <button class="btn btn-default" ng-click="cc.cancelFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
             <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete</strong></button>
         </form>
         </center>

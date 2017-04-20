@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-var emailMessage = require('./email-message');
-var gmailpass = require('./gmailpass');
+var emailMessage = require('./routes/email-message');
+var gmailpass = require('./routes/gmailpass');
 
 var message = {};
 

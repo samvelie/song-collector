@@ -139,8 +139,8 @@ app.controller('CollectionController', ['SongFactory', '$uibModal', '$filter', f
     // title: 'Delete this song?'
   };
 
-  self.shareSong = function(imageId) {
-    SongFactory.shareSong(imageId);
+  self.shareSong = function(emailAddress, imageId) {
+    SongFactory.shareSong(emailAddress, imageId);
   };
 
 }]);

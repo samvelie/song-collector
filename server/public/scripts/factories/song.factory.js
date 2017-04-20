@@ -316,13 +316,13 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     }
 
     // start share song
-    function shareSong(imageId) {
+    function shareSong(emailAddress, imageId) {
       console.log('hit shareSong in song.factory');
-      console.log('someNewEvent:', someNewEvent);
+      console.log('emailAddress:', emailAddress);
+      console.log('imageId:', imageId);
       $http({
         method: 'POST',
-        url: '/share',
-        data: imageId
+        url: '/shareSong',
       }).then(function(response){
         console.log('response from shareSong', response);
         sharesong.imageId = response.data;
@@ -400,7 +400,8 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
       prepareRhythmForFont: prepareRhythmForFont,
       prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
       changeSongClickedStatus: changeSongClickedStatus,
-      songClicked: songClicked
+      songClicked: songClicked,
+      shareSong: shareSong
       // removeImage: removeImage
     };
   }]);
