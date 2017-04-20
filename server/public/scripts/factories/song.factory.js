@@ -42,6 +42,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
           }
         }).then(function(response) {
           songCollection.list = response.data;
+          console.log(songCollection.list);
         });
       });
     } else {

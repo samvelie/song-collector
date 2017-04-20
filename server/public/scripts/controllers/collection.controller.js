@@ -24,7 +24,11 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.lightboxImage = '';
   self.viewMore = false;
 
-  self.saveSongChanges = SongFactory.updateSong;//function for saving changes made on a song
+  self.saveSongChanges = function(song) {//function for saving changes made on a song
+      SongFactory.updateSong(song);
+      self.songInfoForm.$dirty = false;
+  };
+
 
   self.searchPage = function (input) {
     var searchObject = {};
@@ -79,6 +83,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
       self.editingRhythm = false;
       self.editingExtractableRhythm = false;
       self.deleteSuccessMessage = 'Song Deleted';
+      self.songInfoForm.$dirty = false;
     });
   };
 
