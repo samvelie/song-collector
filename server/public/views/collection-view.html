@@ -1,9 +1,10 @@
 <!-- start Search Bar Area -->
 <div class="col-md-12">
   <div class="search-bar text-center">
-    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()"></span>
-    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
+
     <div ng-show="cc.spanClicked" id="filterExpanded">
       <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
       <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
@@ -37,7 +38,7 @@
       </div>
       <!-- start container for first "add song" card -->
       <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-        <a href="#!new"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
+        <a href="#!new" title="Add a new song"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
       </div>
       <!-- end container for first "add song" card -->
 
@@ -46,7 +47,7 @@
       <!-- start container for all song cards -->
 
       <!-- ng-repeat="song in cc.filteredResults.list"  -->
-      <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
+      <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id, [songInfoForm.$dirty])">
         <h3 class="text-center">{{song.song_title}}</h3>
         <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
         <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
@@ -58,21 +59,20 @@
   </div>
 
 
-
   <div ng-if="cc.songClicked" class="col-sm-9 card-holder no-gutter">
-
     <div class="text-right panel" id="toolbar">
       <div class="col-sm-6 half-gutter text-left">
-        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title"/>
+        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title" ng-change= "cc.makeDirty()"/>
       </div>
       <!-- end song title section -->
 
       <!-- start toolbar section -->
-      <button ng-click="cc.songClicked=false" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
+      <button ng-click="cc.showFullCardView()" class="btn btn-primary"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
       <button type="button" class="btn btn-primary" ng-click="cc.saveSongChanges(cc.oneSong.details)"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
-      <button type="button" popover-placement="bottom" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+      <button type="button" popover-placement="bottom-right" uib-popover-template="cc.deletePopover.templateUrl" popover-title="{{cc.deletePopover.title}}" popover-trigger="'outsideClick'" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
       <a type="button" class="btn btn-primary" href="#!print"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+
       <!-- onclick="window.print()" target="_blank" -->
       <!-- end toolbar section -->
 
@@ -81,23 +81,24 @@
         <div>{{cc.dynamicPopover.content}}</div>
         <form>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="home.newEvent" placeholder="Email Address">
+            <input type="email" class="form-control share" ng-model="home.newEvent" placeholder="Email Address">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="home.nameEvent()" type="submit"><strong>Go!</strong></button>
+              <button class="btn btn-default btn-share" ng-click="home.nameEvent()" type="submit" title="Send email"><strong>Send!</strong></button>
             </span>
           </div>
-        </form>
-      </script>
+          </form>
+        </script>
       <!-- end Share popover template -->
 
       <!-- start Delete popover template -->
       <script type="text/ng-template" id="deletePopover.html">
-        <div>{{cc.deletePopover.content}}</div>
+        <center>
+        <p class="text-center">{{cc.deletePopover.content}}</p>
         <form>
-          <div class="input-group">
-            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete!</strong></button>
-          </div>
+            <button class="btn btn-default" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Cancel</strong></button>
+            <button class="btn btn-danger" ng-click="cc.deleteFunction(cc.oneSong.details.id)" type="submit"><strong>Delete</strong></button>
         </form>
+        </center>
       </script>
       <!-- end Delete popover template -->
     </div>
@@ -105,7 +106,7 @@
     <!-- start div for song info column -->
 <div class="col-sm-8 card-holder">
 
-  <form class="form-horizontal">
+  <form name="cc.songInfoForm" class="form-horizontal" confirm-on-exit>
 
     <div class="form-group">
       <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
@@ -135,17 +136,9 @@
     <div class="form-group">
       <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
       <div class="col-sm-8 half-gutter">
-        <!-- <div name="teachableElements" ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.testmodel" extra-settings="cc.teachableElementsSettings" placeholder="Teachable Elements"></div> -->
-        <!-- {{cc.editSongObject.teachableElementsModel.teachable_elements}} -->
-        <!-- cc.oneSong.details.teachable_elements_id: {{cc.oneSong.details.teachable_elements_id}} <br> -->
-        <!-- cc.oneSong.details.teachable_elements: {{cc.oneSong.details.teachable_elements}} <br> -->
-        <!-- cc.te_id: {{cc.te_id}} <br>
-        cc.te_value: {{cc.te_value}} <br> -->
-        <!-- cc.editSongObject.teachableElementsModel: {{cc.editSongObject.teachableElementsModel}} -->
-        cc.testmodel is {{cc.testmodel}} <br>
-        <div ng-dropdown-multiselect options="cc.testdata" selected-model="cc.testmodel" extra-settings="cc.testsettings" events="cc.testevents"></div>
+        <div ng-dropdown-multiselect options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts" events="cc.multiSelectChange"></div>
       </div>
-      {{cc.editSongObject.teachableElementsModel}}
+      <!-- {{cc.oneSong.details.teachable_elements_id_group}} -->
     </div>
 
     <div class="form-group" ng-click="cc.findFocus('rhythm')">
@@ -190,14 +183,14 @@
     <div class="form-group">
       <label for="source" class="col-sm-4 control-label no-gutter">Verses</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="5">{{cc.oneSong.details.verses_note}}</textarea>
+        <textarea class="form-control" rows="5" ng-model="cc.oneSong.details.verses_note"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
       <div class="col-sm-8 half-gutter">
-        <input class="form-control" "cc.oneSong.details.intervals_note_groups"/>
+        <input class="form-control" ng-model="cc.oneSong.details.intervals_note_groups"/>
       </div>
     </div>
 
@@ -264,14 +257,14 @@
     <div class="form-group">
       <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.other_note}}</textarea>
+        <textarea class="form-control" rows="3" ng-model="cc.oneSong.details.other_note"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
       <div class="col-sm-8 half-gutter">
-        <textarea class="form-control" rows="3">{{cc.oneSong.details.source_note}}</textarea>
+        <textarea class="form-control" rows="3" ng-model="cc.oneSong.details.source_note"></textarea>
       </div>
     </div>
 
@@ -288,7 +281,7 @@
       <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)">Upload</button>
+      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.notationUploaded.list.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- the picture is rendered with width: 500 and sharpened -->
@@ -305,7 +298,7 @@
       <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)">Upload</button>
+      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachment">Upload</button>
       <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- the picture is rendered with width: 500 and sharpened -->
