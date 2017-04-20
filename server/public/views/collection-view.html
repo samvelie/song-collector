@@ -241,18 +241,16 @@
   <!-- notation attachments -->
   <div class="form-group">
     <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
-    <div> <!-- existing attachments -->
-      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index)" ng-repeat="notation in cc.attachments.notation" ng-src="{{notation.image_url}}"/>
+    <div ng-repeat="notation in cc.attachments.notation"> <!-- existing attachments -->
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
+      <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
     </div>
     <div class="col-sm-12 half-gutter">
       <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
-      <div style="margin-top:10px;" ng-if="cc.notationUploaded.notation.length > 0">
+      <div style="margin-top:10px;" ng-if="cc.notationUploaded.list.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
-        <!-- <a href="{{cc.filesUploaded.list[0].url}}" class="thumbnail"> -->
         <!-- the picture is rendered with width: 500 and sharpened -->
-        <img class="small" ng-src="{{cc.notationUploaded.notation[0].url}}">
-        <!-- </a> -->
-        <!-- <button ng-click="cc.removeImage()">Delete</button> -->
+        <img class="small" ng-src="{{cc.notationUploaded.list[0].url}}">
         <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
       </div>
     </div>
@@ -262,14 +260,14 @@
   <div class="form-group">
     <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
     <div> <!-- existing attachments -->
-      <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
     </div>
     <div class="col-sm-12 half-gutter">
-      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachments">Upload</button>
-      <div style="margin-top:10px;" ng-if="cc.filesUploaded.attachments.length > 0">
+      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachment">Upload</button>
+      <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
         <!-- Show the thumbnail only when the picture is uploaded -->
         <!-- the picture is rendered with width: 500 and sharpened -->
-        <img class="small" ng-src="{{cc.filesUploaded.attachments[0].url}}">
+        <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}">
         <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
       </div>
     </div>
