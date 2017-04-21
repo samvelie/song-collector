@@ -56,22 +56,24 @@
         <div class="col-sm-8 half-gutter">
           <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
         </div>
-        <div class="display">
-          <span ng-repeat="component in nsc.rhythm track by $index">
-            <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
-          </span>
-        </div>
+      </div>
+      <span class="col-sm-4 no-gutter"></span>
+      <div class="col-sm-8 half-gutter">
+        <span ng-repeat="component in nsc.rhythm track by $index">
+          <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
+        </span>
       </div>
       <div class="form-group">
         <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
         <div class="col-sm-8 half-gutter">
           <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
         </div>
-        <div class="display">
-          <span ng-repeat="extract in nsc.extractableRhythms track by $index">
-            <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
-          </span>
-        </div>
+      </div>
+      <span class="col-sm-4 no-gutter"></span>
+      <div class="col-sm-8 half-gutter">
+        <span ng-repeat="extract in nsc.extractableRhythms track by $index">
+          <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
+        </span>
       </div>
       <div cla
       <div class="form-group">
