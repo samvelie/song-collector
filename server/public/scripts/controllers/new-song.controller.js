@@ -3,9 +3,17 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
   var self = this;
 
   self.songError = false;
-  self.fileUpload = SongFactory.fileUpload; //function for uploading
-  self.filesUploaded = SongFactory.filesUploaded; //files for single song
-  self.notationUpload = SongFactory.notationUpload; // function for uploading notation
+  self.filesUploaded = SongFactory.filesUploaded; //function for uploading
+  self.fileUpload = function(details) {
+    SongFactory.fileUpload(details).then(function() {
+      $scope.$apply();
+    }); //files for single song
+  };
+  self.notationUpload = function(details) {
+    SongFactory.notationUpload(details).then(function() {
+      $scope.$apply();
+    }); // function for uploading notationj
+  };
   self.notationUploaded = SongFactory.notationUploaded; // notation files for single song
   console.log(self.notationUploaded);
   self.titlePlaceholder = "Title";
@@ -36,16 +44,17 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
         self.songError = false;
         self.newSongForm.$dirty = false;
         self.newSongObject = {};
+        $location.path('/collection');
       });
 
     }
   };
 
   $scope.$on('$locationChangeStart', function (event, next, current) {
-          if (self.newSongForm.$dirty && !confirm('There are unsaved changes. Would you like to exit the new song form?')) {
-            event.preventDefault();
-          }
-        });
+    if (self.newSongForm.$dirty && !confirm('There are unsaved changes. Would you like to exit the new song form?')) {
+      event.preventDefault();
+    }
+  });
 
   self.saveNewSong = SongFactory.saveNewSong;
 
