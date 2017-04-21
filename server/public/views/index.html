@@ -24,6 +24,7 @@
   <script src="../scripts/client.js" charset="utf-8"></script>
   <script src="../scripts/factories/auth.factory.js" charset="utf-8"></script>
   <script src="../scripts/factories/song.factory.js" charset="utf-8"></script>
+  <script src="../scripts/factories/firebase-auth.factory.js" charset="utf-8"></script>
   <script src="../scripts/controllers/login.controller.js" charset="utf-8"></script>
   <script src="../scripts/controllers/collection.controller.js" charset="utf-8"></script>
   <script src="../scripts/controllers/new-song.controller.js" charset="utf-8"></script>
@@ -45,10 +46,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body ng-app="SongCollect">
+  <div id="wrapper">
   <header ng-include="'views/templates/header.html'"></header>
   <main ng-view>
 
   </main>
   <!-- <footer ng-include="'views/templates/footer.html'" class="footer navbar-fixed-bottom"></footer> -->
+</div>
+
 </body>
 </html>

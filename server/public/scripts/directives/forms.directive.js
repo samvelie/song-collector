@@ -8,3 +8,15 @@ app.directive('focusing', ['$timeout', function($timeout) {
     }
   };
 }]);
+
+app.directive('confirmOnExit', function() {
+    return {
+        link: function($scope, elem, attrs, ctrl) {
+            window.onbeforeunload = function(){
+                if ($scope[attrs['name']].$dirty) {
+                    return "Your edits will be lost.";
+                }
+            };
+        }
+    };
+});

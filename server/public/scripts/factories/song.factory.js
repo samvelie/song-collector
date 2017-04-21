@@ -1,9 +1,9 @@
-app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$location', '$routeParams',function ($firebaseAuth, $http, angularFilepicker, $location, $routeParams) {
-  var auth = $firebaseAuth();
+app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker', '$location', '$routeParams',function (FirebaseAuthFactory, $http, angularFilepicker, $location, $routeParams) {
+  var auth = FirebaseAuthFactory;
   var songCollection = {list: []};
   var oneSong = {details: {}};
-  var filesUploaded = {list:[]};
-  var notationUploaded = {list:[]};
+  var filesUploaded = {list:[], isNotation:''};
+  var notationUploaded = {list:[], isNotation:''};
   var attachments = {attachments: [], notation: []};
   var dropdowns = {formType: [], songType: [], language: [], meter: [], scaleMode: [], teachableElements: []};
   var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
@@ -33,7 +33,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   function getAllSongs() {
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
-      firebaseUser.getToken().then(function (idToken) {
+      firebaseUser.getToken().then(function(idToken) {
         $http({
           method: 'GET',
           url: '/songs',
@@ -45,7 +45,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         });
       });
     } else {
-      songCollection = {};
+      songCollection.list = [];
       console.log('cannot get when not logged in');
     }
   }
@@ -53,6 +53,7 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
   // get's one song from the database based on the song's ID grabbed from $routeParams
   function getOneSong(songId) {
     filesUploaded.list = [];
+    notationUploaded.list = [];
     var firebaseUser = auth.$getAuth();
     if(firebaseUser) {
       firebaseUser.getToken().then(function (idToken) {
@@ -75,6 +76,27 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
     }
   }
 
+  function sendFileToDatabase(dataObject, songId) {
+    console.log('passed in dataobject', dataObject);
+    var firebaseUser = auth.$getAuth();
+    if(firebaseUser) {
+      firebaseUser.getToken().then(function (idToken) {
+        $http({
+          method: 'POST',
+          url: '/songs/addImage/' + songId,
+          data: dataObject,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function() {
+          console.log('file posted to database!');
+        });
+      });
+    } else {
+      console.log('not logged in!');
+    }
+  }
+
   // send file to FileStack and db at the same time
   function fileUpload(songId) {
     console.log('file sending to FileStack...');
@@ -88,30 +110,15 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
         // }
       }).then(function(result) {
         console.log('file uploaded, now sending to database... ', result.filesUploaded);
-        result.filesUploaded.isNotation = false;
         filesUploaded.list = result.filesUploaded;
-        var firebaseUser = auth.$getAuth();
-        if(firebaseUser) {
-          firebaseUser.getToken().then(function (idToken) {
-            $http({
-              method: 'POST',
-              url: '/songs/addImage/' + songId,
-              data: result.filesUploaded,
-              headers: {
-                id_token: idToken
-              }
-            }).then(function() {
-              console.log('file posted to database!');
-            });
-          });
-        } else {
-          console.log('not logged in!');
+        filesUploaded.isNotation = false;
+        if(songId) {
+          sendFileToDatabase(filesUploaded, songId);
         }
       });
     }
 
     function notationUpload(songId) {
-      console.log('file sending to FileStack...');
       client.pick(
         {
           accept: 'image/*',
@@ -121,163 +128,174 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
           // location: 's3'
           // }
         }).then(function(result) {
-          console.log('file uploaded, now sending to database... ', result.notationUploaded);
-          result.isNotation = true;
-          notationUploaded.list = result.notationUploaded;
-          console.log(result);
-          var firebaseUser = auth.$getAuth();
-          if(firebaseUser) {
-            firebaseUser.getToken().then(function (idToken) {
-              $http({
-                method: 'POST',
-                url: '/songs/addImage/' + songId,
-                data: result,
-                headers: {
-                  id_token: idToken
-                }
-              }).then(function() {
-                console.log('file posted to database!');
-              });
-            });
-          } else {
-            console.log('not logged in!');
+          notationUploaded.list = result.filesUploaded;
+          notationUploaded.isNotation = true;
+          console.log(notationUploaded);
+          if(songId) {
+            sendFileToDatabase(notationUploaded, songId);
           }
         });
       }
 
-    function getAttachments(songId) {
-      console.log('hitting get attachments function');
-      var firebaseUser = auth.$getAuth();
-      if(firebaseUser) {
-        firebaseUser.getToken().then(function (idToken) {
-          console.log('firebase user authenticated');
-          $http({
-            method: 'GET',
-            url: '/songs/getAttachments/' + songId,
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            attachments.attachments = response.data;
+      function getAttachments(songId) {
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          firebaseUser.getToken().then(function (idToken) {
+            console.log('firebase user authenticated');
+            $http({
+              method: 'GET',
+              url: '/songs/getAttachments/' + songId,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              attachments.attachments = response.data;
+            });
           });
-        });
-      } else {
-        console.log('not logged in!');
+        } else {
+          console.log('not logged in!');
+        }
       }
-    }
 
-    function getNotation(songId) {
-      console.log('hitting get notation function');
-      var firebaseUser = auth.$getAuth();
-      if(firebaseUser) {
-        firebaseUser.getToken().then(function (idToken) {
-          console.log('firebase user authenticated');
-          $http({
-            method: 'GET',
-            url: '/songs/getNotation/' + songId,
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            attachments.notation = response.data;
+      function getNotation(songId) {
+        console.log('hitting get notation function');
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          firebaseUser.getToken().then(function (idToken) {
+            console.log('firebase user authenticated');
+            $http({
+              method: 'GET',
+              url: '/songs/getNotation/' + songId,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              attachments.notation = response.data;
+            });
           });
-        });
-      } else {
-        console.log('not logged in!');
+        } else {
+          console.log('not logged in!');
+        }
       }
-    }
 
-    function getDropdownValues() {
-      var firebaseUser = auth.$getAuth();
-      if(firebaseUser) {
-        firebaseUser.getToken().then(function (idToken) {
-          $http({
-            method: 'GET',
-            url: '/dropdowns/form-type',
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            dropdowns.formType = response.data;
-          });
-          $http({
-            method: 'GET',
-            url: '/dropdowns/song-type',
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            dropdowns.songType = response.data;
-          });
-          $http({
-            method: 'GET',
-            url: '/dropdowns/language',
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            dropdowns.language = response.data;
-          });
-          $http({
-            method: 'GET',
-            url: '/dropdowns/meter',
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            dropdowns.meter = response.data;
-          });
-          $http({
-            method: 'GET',
-            url: '/dropdowns/scale-mode',
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            dropdowns.scaleMode = response.data;
-          });
-          $http({
-            method: 'GET',
-            url: '/dropdowns/teachable-elements',
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            dropdowns.teachableElements = response.data;
-          });
-        });
-
-      } else {
+      function deleteAttachment(url) {
+        client.remove(url);
+        console.log('successful remove?');
       }
-    }
 
-    function saveNewSong(newSong) {
-      console.log('newSong', newSong);
-      var firebaseUser = auth.$getAuth();
-      if(firebaseUser) {
-        firebaseUser.getToken().then(function (idToken) {
-          $http({
-            method: 'POST',
-            url: '/songs/newSong',
-            data: newSong,
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            console.log(response.data);
-            getAllSongs();
+      function getDropdownValues() {
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'GET',
+              url: '/dropdowns/form-type',
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              dropdowns.formType = response.data;
+            });
+            $http({
+              method: 'GET',
+              url: '/dropdowns/song-type',
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              dropdowns.songType = response.data;
+            });
+            $http({
+              method: 'GET',
+              url: '/dropdowns/language',
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              dropdowns.language = response.data;
+            });
+            $http({
+              method: 'GET',
+              url: '/dropdowns/meter',
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              dropdowns.meter = response.data;
+            });
+            $http({
+              method: 'GET',
+              url: '/dropdowns/scale-mode',
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              dropdowns.scaleMode = response.data;
+            });
+            $http({
+              method: 'GET',
+              url: '/dropdowns/teachable-elements',
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              dropdowns.teachableElements = response.data;
+            });
           });
-        });
-      } else {
-        console.log('not logged in!');
-      }
-    }
 
-    function updateSong(changedSong) {
-      console.log('existing song with changes', changedSong);
-      var firebaseUser = auth.$getAuth();
-      if(firebaseUser) {
-        firebaseUser.getToken().then(function (idToken) {
+        } else {
+        }
+      }
+
+      function saveNewSong(newSong) {
+        console.log('newSong', newSong);
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          return firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'POST',
+              url: '/songs/newSong',
+              data: newSong,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              if(notationUploaded.list.length > 0) {
+                $http({
+                  method: 'POST',
+                  url: '/songs/addImage/' + response.data.id,
+                  data: notationUploaded,
+                  headers: {
+                    id_token: idToken
+                  }
+                }).then(function(response) {
+                  getAllSongs();
+                });
+              } else if(filesUploaded.list.length > 0) {
+                $http({
+                  method: 'POST',
+                  url: '/songs/addImage/' + response.data.id,
+                  data: filesUploaded,
+                  headers: {
+                    id_token: idToken
+                  }
+                }).then(function(response) {
+                  console.log('song saved!');
+                  getAllSongs();
+                });
+              }
+            });
+          });
+        } else {
+          console.log('not logged in!');
+        }
+      }
+
+      function updateSong(changedSong) {
+        console.log('existing song with changes', changedSong);
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          firebaseUser.getToken().then(function (idToken) {
             $http({
               method: 'PUT',
               url: '/songs/editSong/' + changedSong.id,
@@ -288,107 +306,129 @@ app.factory('SongFactory', ['$firebaseAuth', '$http', 'angularFilepicker', '$loc
             }).then(function(response) {
               console.log('updated song');
               getOneSong(changedSong.id);
-
+              getAllSongs();
             });
-        });
-      } else {
-        console.log('not logged in!');
-      }
-    }
-
-    function deleteSong(songId) {
-      var firebaseUser = auth.$getAuth();
-      if(firebaseUser) {
-        return firebaseUser.getToken().then(function (idToken) {
-          $http({
-            method: 'DELETE',
-            url: '/songs/removeSong/' + songId,
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response) {
-            getAllSongs();
           });
-        });
-      } else {
-        console.log('not logged in!');
+        } else {
+          console.log('not logged in!');
+        }
       }
-    }
 
-    // remove Image function
-    // function removeImage() {
-    //   var storedurl = filesUploaded.list[0].url;
-    //   console.log(filesUploaded.list[0].url);
-    //   var handle = storedurl.substr(storedurl.lastIndexOf("/") + 1);
-    //   console.log(handle);
-    //   client.remove(handle);
-    //   console.log('file removed successfully: ' + storedurl);
-    // }
-
-    function prepareRhythmForFont(rhythmString) {
-      if(rhythmString===null || rhythmString ==='') {
-        return [];
-      } else {
-        var textString = '';
-        var newString = rhythmString;
-        if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
-          newString = newString.replace('internal', '');
-          newString = newString.replace('(internal)', '');
-          textString += 'internal ';
+      function deleteSong(songId) {
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          return firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'DELETE',
+              url: '/songs/removeSong/' + songId,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response) {
+              getAllSongs();
+            });
+          });
+        } else {
+          console.log('not logged in!');
         }
-        if (rhythmString.indexOf("eighth")>=0) {
-          newString = newString.replace('eighth', '');
-          textString += 'eighth ';
-        }
-        if (rhythmString.indexOf("anacrusis")>=0 || rhythmString.indexOf("anacrusic")>=0) {
-          newString = newString.replace('anacrusis', '');
-          newString = newString.replace('anacrusic', '');
-          textString += 'anacrusis ';
-        }
-        if (rhythmString.indexOf("all syncopated")>=0) {
-          newString = newString.replace('all syncopated', '');
-          textString += 'all syncopated ';
-        }
-        return [newString, textString];
       }
-    }
 
-    function prepareExtractableRhythmForFont(extractableRhythmString) {
-      if(extractableRhythmString===null || extractableRhythmString==='') {
-        return [];
-      } else {
-        var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
+      // start share song
+      function shareSong(emailAddress, imageUrl, userInfo) {
+        var emailObject = { emailAddress: emailAddress, imageUrl: imageUrl, userInfo: userInfo };
+        console.log('emailObject is', emailObject);
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          return firebaseUser.getToken().then(function (idToken) {
+            // console.log('hit shareSong in song.factory');
+            // console.log('emailAddress:', emailAddress);
+            // console.log('imageId:', imageId);
+            // console.log('idToken is', idToken);
+            // console.log('firebaseUser is', firebaseUser);
+            $http({
+              method: 'POST',
+              url: '/email/shareSong',
+              data: emailObject,
+              headers: {id_token: idToken}
+            }).then(function(response){
+              console.log('response from shareSong', response);
+              shareSong.imageUrl = response.data;
+              console.log('response.data is', response.data);
+              console.log('shareSong.imageUrl is', shareSong.imageUrl);
+            });
+          });
+          } else {
+            console.log('not logged in!');
+          }
+        }
+        // end share song
 
-        for (var i = 0; i < resultArray.length; i++) {
-          if(i%2!==0) {
-            resultArray[i] = '(' + resultArray[i] + ')';
+        function prepareRhythmForFont(rhythmString) {
+          if(rhythmString===null || rhythmString ==='') {
+            return [];
+          } else {
+            var textString = '';
+            var newString = rhythmString;
+            if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
+              newString = newString.replace('internal', '');
+              newString = newString.replace('(internal)', '');
+              textString += 'internal ';
+            }
+            if (rhythmString.indexOf("eighth")>=0) {
+              newString = newString.replace('eighth', '');
+              textString += 'eighth ';
+            }
+            if (rhythmString.indexOf("anacrusis")>=0 || rhythmString.indexOf("anacrusic")>=0) {
+              newString = newString.replace('anacrusis', '');
+              newString = newString.replace('anacrusic', '');
+              textString += 'anacrusis ';
+            }
+            if (rhythmString.indexOf("all syncopated")>=0) {
+              newString = newString.replace('all syncopated', '');
+              textString += 'all syncopated ';
+            }
+            return [newString, textString];
           }
         }
 
-        return resultArray;
-      }
+        function prepareExtractableRhythmForFont(extractableRhythmString) {
+          if(extractableRhythmString===null || extractableRhythmString==='') {
+            return [];
+          } else {
+            var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
 
-    }
+            for (var i = 0; i < resultArray.length; i++) {
+              if(i%2!==0) {
+                resultArray[i] = '(' + resultArray[i] + ')';
+              }
+            }
 
-    return {
-      showSong: showSong,
-      getAllSongs: getAllSongs,
-      songCollection: songCollection,
-      getOneSong: getOneSong,
-      oneSong: oneSong,
-      fileUpload: fileUpload,
-      filesUploaded: filesUploaded,
-      notationUpload: notationUpload,
-      notationUploaded: notationUploaded,
-      attachments: attachments,
-      dropdowns: dropdowns,
-      saveNewSong: saveNewSong,
-      updateSong: updateSong,
-      deleteSong: deleteSong,
-      prepareRhythmForFont: prepareRhythmForFont,
-      prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
-      changeSongClickedStatus: changeSongClickedStatus,
-      songClicked: songClicked
-      // removeImage: removeImage
-    };
-  }]);
+            return resultArray;
+          }
+
+        }
+
+        return {
+          showSong: showSong,
+          getAllSongs: getAllSongs,
+          songCollection: songCollection,
+          getOneSong: getOneSong,
+          oneSong: oneSong,
+          fileUpload: fileUpload,
+          filesUploaded: filesUploaded,
+          notationUpload: notationUpload,
+          notationUploaded: notationUploaded,
+          attachments: attachments,
+          deleteAttachment: deleteAttachment,
+          dropdowns: dropdowns,
+          saveNewSong: saveNewSong,
+          updateSong: updateSong,
+          deleteSong: deleteSong,
+          prepareRhythmForFont: prepareRhythmForFont,
+          prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
+          changeSongClickedStatus: changeSongClickedStatus,
+          songClicked: songClicked,
+          shareSong: shareSong
+          // removeImage: removeImage
+        };
+      }]);

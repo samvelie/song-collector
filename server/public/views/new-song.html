@@ -3,34 +3,22 @@
 <div class="col-sm-12" id="songInfoContainer">
 
 
-
+<form name="nsc.newSongForm" confirm-on-exit>
   <div class="col-sm-12 panel text-right" id="toolbar">
     <div class="form-group">
       <div class="col-sm-8 half-gutter text-center">
         <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
-    <button type="button" class="btn btn-primary" popover-placement="bottom" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
+    <button type="button" class="btn btn-primary" popover-placement="bottom-right"  uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
   </div>
 
-  <!-- start Delete popover template -->
-  <script type="text/ng-template" id="cancelPopover.html">
-    <div>{{nsc.cancelPopover.content}}</div>
-    <form>
-      <div class="input-group">
-          <button class="btn btn-danger" ng-click="nsc.redirectToCollection()"
- type="submit"><strong>Cancel!</strong></button>
-      </div>
-    </form>
-  </script>
-  <!-- end Delete popover template -->
+
   <!-- start div for right column -->
   <div class="col-sm-8 card-holder">
 
-    <!--  using index passed in params to pull information for specific song from factory list, i.e. esc.songInfo.list[esc.index] -->
     <form class="form-horizontal">
-
       <div class="form-group">
         <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
         <div class="col-sm-8 half-gutter">
@@ -52,35 +40,43 @@
       <div class="form-group">
         <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
         <div class="col-sm-8 half-gutter">
-          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode">
+          <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode track by scaleMode.id">
           </select>
         </div>
       </div>
       <div class="form-group">
         <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
         <div class="col-sm-8 half-gutter">
-          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" placeholder="Teachable Elements"></div>
+          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" translation-texts="nsc.teachableElementsCustomTexts"></div>
         </div>
-        {{nsc.newSongObject}}
+        <!-- {{nsc.newSongObject}} -->
       </div>
       <div class="form-group">
         <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-        <div class="col-sm-8 half-gutter">
+        <div class="col-sm-7 half-gutter">
           <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
         </div>
+        <div class="col-sm-1 no-gutter">
+          <a href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+        </div>
       </div>
-      <div class="display">
+      <span class="col-sm-4 no-gutter"></span>
+      <div class="col-sm-8 half-gutter">
         <span ng-repeat="component in nsc.rhythm track by $index">
           <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
         </span>
       </div>
       <div class="form-group">
         <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-        <div class="col-sm-8 half-gutter">
+        <div class="col-sm-7 half-gutter">
           <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
         </div>
+          <div class="col-sm-1 no-gutter">
+            <a href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+          </div>
       </div>
-      <div class="display">
+      <span class="col-sm-4 no-gutter"></span>
+      <div class="col-sm-8 half-gutter">
         <span ng-repeat="extract in nsc.extractableRhythms track by $index">
           <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
         </span>
@@ -95,7 +91,7 @@
       <div class="form-group">
         <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.meter for meter in nsc.dropdowns.meter">
+          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in nsc.dropdowns.meter">
           </select>
         </div>
       </div>
@@ -144,14 +140,14 @@
       <div class="form-group">
         <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.form_type for formType in nsc.dropdowns.formType">
+          <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in nsc.dropdowns.formType">
           </select>
         </div>
       </div>
       <div class="form-group">
         <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
         <div class="col-sm-8 half-gutter">
-          <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.song_type for songType in nsc.dropdowns.songType">
+          <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in nsc.dropdowns.songType">
           </select>
         </div>
       </div>
@@ -164,7 +160,7 @@
       <div class="form-group">
         <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
         <div class="col-sm-8 half-gutter">
-          <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.language for language in nsc.dropdowns.language">
+          <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in nsc.dropdowns.language">
           </select>
         </div>
       </div>
@@ -190,21 +186,63 @@
     </form>
   </div>
 
-  <!-- end div for right column -->
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="notation" class="col-sm-12 control-label no-gutter">Attachments</label>
-      <div> <!-- existing attachments -->
-        <img ng-class="viewMore ? 'large':'small'" ng-click="viewMore= !viewMore" ng-repeat="photo in nsc.attachments.list" ng-src="{{photo.image_url}}"/>
-      </div>
-      <div class="col-sm-12 half-gutter">
-        <button class="btn btn-primary" ng-click="nsc.fileUpload()">Upload</button>
 
-        <!-- <div contenteditable class="form-control">{{esc.songInfo.list[esc.index].notation_photo}}</div> -->
+  <!-- attachments div -->
+  <div class="col-sm-4">
+    <!-- notation attachments -->
+    <div class="form-group">
+      <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
+      <div class="col-sm-12 half-gutter">
+        <button class="btn btn-primary" ng-click="nsc.notationUpload(nsc.oneSong.details.id)">Upload</button>
+        <div style="margin-top:10px;" ng-if="nsc.notationUploaded.list.length > 0">
+          <!-- Show the thumbnail only when the picture is uploaded -->
+          <!-- the picture is rendered with width: 500 and sharpened -->
+          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'notation', $index, true)" ng-src="{{nsc.notationUploaded.list[0].url}}">
+          <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
+        </div>
       </div>
     </div>
   </div>
-  <!-- end div for right column -->
+  <!-- end div for other attachments -->
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
+      <div class="col-sm-12 half-gutter">
+        <button class="btn btn-primary" ng-click="nsc.fileUpload(nsc.oneSong.details.id)">Upload</button>
+        <div style="margin-top:10px;" ng-if="nsc.filesUploaded.list.length > 0">
+          <!-- Show the thumbnail only when the picture is uploaded -->
+          <!-- the picture is rendered with width: 500 and sharpened -->
+          <img class="small" ng-click="nsc.viewMoreOnClick(true, 'attachments', $index, true)" ng-src="{{nsc.filesUploaded.list[0].url}}">
+          <!-- ^^^ will need to be an ng-repeat if we use multiple files ^^^ -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end div for other attachments -->
 
-  <!-- end full screen container -->
+  <!-- begin modal code -->
+  <div ng-if="nsc.viewMore" class="imageModule text-center" ng-click="nsc.viewMoreOnClick(false)">
+    <img style="max-width:100%; max-height:100%;" ng-src="{{nsc.lightboxImage}}" />
+  </div>
+  <!-- end modal code -->
+
+
+  </div>
+  <!-- end attachements div -->
+</form>
 </div>
+<!-- end full screen container -->
+
+
+  <!-- start Cancel popover template -->
+  <script type="text/ng-template" id="cancelPopover.html">
+    <center>
+    <p class="text-center">{{nsc.cancelPopover.content}}</p>
+    <form>
+      <button class="btn btn-default" ng-click="$parent.isCancelOpen = false" type="submit"><strong>No</strong></button>
+      <button class="btn btn-danger" ng-click="nsc.redirectToCollection()" type="submit"><strong>Yes</strong></button>
+
+    </form>
+    </center>
+  </script>
+  <!-- end Cancel popover template -->
