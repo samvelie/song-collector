@@ -410,9 +410,17 @@ div.ql-editor {
 }*/
 
 .existing-notation-container {
-  /*border: 1px solid purple;*/
 }
 
 .document-attachments {
   padding-top: 10px;
+}
+
+.multiselect {
+  margin-bottom: 5px;
+
+}
+
+.form-control {
+  margin-top: 0 !important;
 }
