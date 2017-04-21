@@ -251,7 +251,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         console.log('newSong', newSong);
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
-          firebaseUser.getToken().then(function (idToken) {
+          return firebaseUser.getToken().then(function (idToken) {
             $http({
               method: 'POST',
               url: '/songs/newSong',
@@ -280,6 +280,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
                     id_token: idToken
                   }
                 }).then(function(response) {
+                  console.log('song saved!');
                   getAllSongs();
                 });
               }
