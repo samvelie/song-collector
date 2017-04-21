@@ -74,8 +74,68 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
   };
 
   self.teachableElementsCustomTexts = {
-    buttonDefaultText: 'Select the teachable elements'
+    buttonDefaultText: 'Select teachable elements'
   };
+
+  self.newSongObject.scaleModeModel = [];
+  self.scaleModeSettings = {
+    displayProp: 'scale_mode',
+    closeOnBlur: true,
+    clearSearchOnClose: true,
+    showCheckAll: false,
+    showUncheckAll: false,
+    enableSearch: true,
+    smartButtonMaxItems: 1,
+    scrollableHeight: '300px',
+    scrollable: true,
+    selectedToTop: true,
+    keyboardControls: true,
+    idProperty: 'id',
+    closeOnSelect: true,
+    selectionLimit: 1
+  };
+
+  self.scaleModeCustomTexts = {
+    buttonDefaultText: 'Select scale / mode'
+  };
+
+  //
+  // var _selected;
+  //
+  // $scope.selected = undefined;
+  // $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+  // // Any function returning a promise object can be used to load values asynchronously
+  // $scope.getLocation = function(val) {
+  //   return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+  //     params: {
+  //       address: val,
+  //       sensor: false
+  //     }
+  //   }).then(function(response){
+  //     return response.data.results.map(function(item){
+  //       return item.formatted_address;
+  //     });
+  //   });
+  // };
+  //
+  // $scope.ngModelOptionsSelected = function(value) {
+  //   if (arguments.length) {
+  //     _selected = value;
+  //   } else {
+  //     return _selected;
+  //   }
+  // };
+  //
+  // $scope.modelOptions = {
+  //   debounce: {
+  //     default: 500,
+  //     blur: 250
+  //   },
+  //   getterSetter: true
+  // };
+  //
+  // $scope.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'};
+  //
 
   self.checkAndDisplayRhythm = function(string) {
     self.rhythm = SongFactory.prepareRhythmForFont(string);
