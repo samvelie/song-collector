@@ -100,7 +100,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
   // send file to FileStack and db at the same time
   function fileUpload(songId) {
     console.log('file sending to FileStack...');
-    client.pick(
+    return client.pick(
       {
         accept: 'image/*',
         fromSources: ['local_file_system', 'googledrive', 'imagesearch', 'dropbox'],
@@ -119,7 +119,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
     }
 
     function notationUpload(songId) {
-      client.pick(
+      return client.pick(
         {
           accept: 'image/*',
           fromSources: ['local_file_system', 'googledrive', 'imagesearch', 'dropbox'],
@@ -260,21 +260,23 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
                 id_token: idToken
               }
             }).then(function(response) {
+              var idBackFromNewSong = response.data.id;
               if(notationUploaded.list.length > 0) {
                 $http({
                   method: 'POST',
-                  url: '/songs/addImage/' + response.data.id,
+                  url: '/songs/addImage/' + idBackFromNewSong,
                   data: notationUploaded,
                   headers: {
                     id_token: idToken
                   }
                 }).then(function(response) {
                   getAllSongs();
+                  getAttachments(idBackFromNewSong);
                 });
               } else if(filesUploaded.list.length > 0) {
                 $http({
                   method: 'POST',
-                  url: '/songs/addImage/' + response.data.id,
+                  url: '/songs/addImage/' + idBackFromNewSong,
                   data: filesUploaded,
                   headers: {
                     id_token: idToken
@@ -282,6 +284,8 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
                 }).then(function(response) {
                   console.log('song saved!');
                   getAllSongs();
+                  getAttachments(idBackFromNewSong);
+
                 });
               }
             });
