@@ -77,6 +77,33 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
     buttonDefaultText: 'Select the teachable elements'
   };
 
+  self.scaleModeOptions = [
+    {id:1, name: 'merp'},
+    {id:2, name: 'merpaderp'},
+    {id:3, name: 'celina'}
+  ];
+
+  self.scaleModeSettings = {
+    displayProp: 'scale_mode',
+    closeOnBlur: true,
+    clearSearchOnClose: true,
+    showCheckAll: false,
+    showUncheckAll: false,
+    enableSearch: true,
+    smartButtonMaxItems: 1,
+    scrollableHeight: '300px',
+    scrollable: true,
+    selectedToTop: true,
+    keyboardControls: true,
+    idProperty: 'id',
+    closeOnSelect: true,
+    selectionLimit: 1
+  };
+
+  self.scaleModeCustomTexts = {
+    buttonDefaultText: 'Select scale / mode'
+  };
+
   // have a promise so that after a song is deleted, user gets redirected back to the main card view
   // need to create a confirmation popup and an alert of deletion popup
   self.deleteFunction = function(songId) {
@@ -208,7 +235,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   };
 
   self.shareSong = function(emailAddress, index) {
-    SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo);
+    SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo, SongFactory.oneSong.details.song_title);
   };
 
 }]);

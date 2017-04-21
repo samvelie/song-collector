@@ -1,6 +1,6 @@
 
 <div id="printPage">
-
+<!-- {{pc.oneSong.details.teachable_elements[0].teachable_elements}} -->
 <h1>{{pc.oneSong.details.song_title}}</h1>
 
   <div id="printButton">
@@ -30,7 +30,7 @@
       <tr>
         <td class="col-xs-6">
           <label for="toneSet">Tone Set</label>
-          <div>{{pc.oneSong.details.tone_set}}</div>
+          <div><span  ng-bind-html="pc.oneSong.details.tone_set"></span></div>
         </td>
         <td class="col-xs-6">
           <label for="scaleMode">Scale / Mode</label>
@@ -41,7 +41,7 @@
       <tr>
         <td class="col-xs-6">
           <label for="teachableElements">Teachable Elements</label>
-          <div>{{pc.editSongObject.teachableElementsModel}}</div>
+          <div>{{pc.oneSong.details.teachable_elements[0].teachable_elements}}</div>
         </td>
         <td class="col-xs-6">
           <label for="rhythm">Rhythm</label>
