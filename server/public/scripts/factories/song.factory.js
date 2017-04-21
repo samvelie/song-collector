@@ -334,27 +334,19 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
       }
 
       // start share song
-      function shareSong(emailAddress, imageUrl, userInfo) {
-        var emailObject = { emailAddress: emailAddress, imageUrl: imageUrl, userInfo: userInfo };
+      function shareSong(emailAddress, imageUrl, userInfo, songName) {
+        var emailObject = { emailAddress: emailAddress, imageUrl: imageUrl, userInfo: userInfo, songName: songName };
         console.log('emailObject is', emailObject);
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
           return firebaseUser.getToken().then(function (idToken) {
-            // console.log('hit shareSong in song.factory');
-            // console.log('emailAddress:', emailAddress);
-            // console.log('imageId:', imageId);
-            // console.log('idToken is', idToken);
-            // console.log('firebaseUser is', firebaseUser);
             $http({
               method: 'POST',
               url: '/email/shareSong',
               data: emailObject,
               headers: {id_token: idToken}
             }).then(function(response){
-              console.log('response from shareSong', response);
               shareSong.imageUrl = response.data;
-              console.log('response.data is', response.data);
-              console.log('shareSong.imageUrl is', shareSong.imageUrl);
             });
           });
           } else {

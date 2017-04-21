@@ -112,7 +112,6 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
     if(self.songInfoForm) {
       self.songInfoForm.$dirty = false;
     }
-    console.log(SongFactory.oneSong.details);
   }
 
   self.showFullCardView = function () {
@@ -191,7 +190,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   };
 
   self.shareSong = function(emailAddress, index) {
-    SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo);
+    SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo, SongFactory.oneSong.details.song_title);
   };
 
 }]);

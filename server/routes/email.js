@@ -32,12 +32,13 @@ router.post('/shareSong', function(req, res) {
   var emailAddress = req.body.emailAddress;
   var imageUrl = req.body.imageUrl;
   var userInfo = req.body.userInfo;
+  var songName = req.body.songName;
   console.log('object in email.js', req.body);
   message = {
-    to: emailAddress,
+    to: 'pdbystrom@gmail.com',
     subject: 'New song from iSongCollect',
     text: 'message',
-    html: emailMessage(imageUrl, userInfo).message
+    html: emailMessage(imageUrl, userInfo, songName).message
   };
   transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
     if (error) {
