@@ -14,6 +14,11 @@
     <div ng-if="!!lc.loggedIn.loginStatus">
       <button ng-click="lc.logout()" class="btn btn-primary">Sign Out</button>
     </div>
+
+    <p>Or, create a collection with your Google account:</p>
+    <div ng-if="!lc.loggedIn.loginStatus">
+      <button ng-click="lc.login()" class="btn btn-primary">Sign Up</button>
+    </div>
   </div>
 
   <!-- <img class="log-in-photo" ng-src="{{lc.user.info[0].user_photo}}">  NOTE: commented out because unnecessary functionality? -->
