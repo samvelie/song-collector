@@ -71,11 +71,8 @@
 
         <!-- start rhythm -->
         <div class="form-group">
-          <label for="rhythm" class="control-label">Rhythm</label>
+          <label for="rhythm" class="control-label" style="margin-right:10px;">Rhythm</label><a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
           <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Example: q,n,h" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
-          <div class="col-sm-1 no-gutter">
-            <a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-          </div>
           <div class="display">
             <span ng-repeat="component in nsc.rhythm track by $index">
               <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
@@ -86,11 +83,8 @@
 
         <!-- start extractable rhythms -->
         <div class="form-group">
-          <label for="extractableRhythms" class="control-label">Extractable Rhythms</label>
+          <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label><a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
           <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Example: nn'qn'qn'qq(*,2) qn'nq'qn'nq(3) nn'qn'qq'h(f)" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
-        </div>
-        <div class="col-sm-1 no-gutter">
-          <a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
         </div>
         <div class="display">
           <span ng-repeat="extract in nsc.extractableRhythms track by $index">
