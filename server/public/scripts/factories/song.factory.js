@@ -100,7 +100,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
   // send file to FileStack and db at the same time
   function fileUpload(songId) {
     console.log('file sending to FileStack...');
-    client.pick(
+    return client.pick(
       {
         accept: 'image/*',
         fromSources: ['local_file_system', 'googledrive', 'imagesearch', 'dropbox'],
@@ -119,7 +119,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
     }
 
     function notationUpload(songId) {
-      client.pick(
+      return client.pick(
         {
           accept: 'image/*',
           fromSources: ['local_file_system', 'googledrive', 'imagesearch', 'dropbox'],
