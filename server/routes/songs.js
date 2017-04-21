@@ -35,6 +35,17 @@ router.get('/', function(req, res) {
                 }
               }
             }
+
+            // for(var j = 0; j < allSongs.length; j++) {
+            //   allSongs[j].teachableElements = [];
+            //
+            //   for (var i = 0; i < result.rows.length; i++) {
+            //     // console.log((result.rows[i].id));
+            //     if(result.rows[i].id == allSongs[j].id) {
+            //       allSongs[j].teachableElements.push({teachable_elements: (result.rows[i].teachable_elements), id: (result.rows[i].teid)});
+            //     }
+            //   }
+            // }
             // console.log('new array', allSongs);
 
             if (err) {
