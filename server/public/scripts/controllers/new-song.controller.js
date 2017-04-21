@@ -36,6 +36,7 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
         self.songError = false;
         self.newSongForm.$dirty = false;
         self.newSongObject = {};
+        $location.path('/collection');
       });
 
     }
