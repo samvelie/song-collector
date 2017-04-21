@@ -1,4 +1,4 @@
-app.controller('NewSongController', ['SongFactory','$location', '$scope', function(SongFactory,$location, $scope) {
+app.controller('NewSongController', ['SongFactory','$location', '$scope', '$timeout', '$window', function(SongFactory,$location, $scope, $timeout, $window) {
 
   var self = this;
 
@@ -36,17 +36,33 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', functi
         self.songError = false;
         self.newSongForm.$dirty = false;
         self.newSongObject = {};
+        alertify.success('Saved New Song!');
         $location.path('/collection');
       });
 
     }
   };
 
-  $scope.$on('$locationChangeStart', function (event, next, current) {
-          if (self.newSongForm.$dirty && !confirm('There are unsaved changes. Would you like to exit the new song form?')) {
-            event.preventDefault();
-          }
-        });
+  $scope.$on('$locationChangeStart', function (event, next) {
+    console.log('location change: ', self.newSongForm.$dirty);
+    if (self.newSongForm.$dirty) {
+      event.preventDefault();
+      alertify.confirm('Unsaved Song', 'There are unsaved changes. Would you like to exit the new song form without saving?',
+        function(){
+          console.log(next);
+          self.newSongForm.$dirty=false;
+          $window.open(next, "_self");
+        },
+        function(){ alertify.error('Cancel');}
+      ).set('labels', {ok:'Leave without saving', cancel:'Stay on form'});
+    }
+    //previously working code (not a pretty alert)
+    // if (self.newSongForm.$dirty && !confirm('There are unsaved changes. Would you like to exit the new song form?')) {
+    //  event.preventDefault();
+    // }
+  });
+
+
 
   self.saveNewSong = SongFactory.saveNewSong;
 
