@@ -1,4 +1,4 @@
-app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal', '$filter', function(SongFactory, AuthFactory, $uibModal, $filter) {
+app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal', '$filter', '$scope', '$window', function(SongFactory, AuthFactory, $uibModal, $filter, $scope, $window) {
   var self = this;
   console.log('in CollectionController');
   //full song collection
@@ -25,8 +25,10 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.viewMore = false;
 
   self.saveSongChanges = function(song) {//function for saving changes made on a song
-      SongFactory.updateSong(song);
-      self.songInfoForm.$dirty = false;
+      SongFactory.updateSong(song).then(function() {
+        self.songInfoForm.$dirty = false;
+        alertify.success('Updates Saved!');
+      });
   };
 
 
@@ -109,7 +111,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
       self.songClicked = false;
       self.editingRhythm = false;
       self.editingExtractableRhythm = false;
-      self.deleteSuccessMessage = 'Song Deleted';
+      alertify.error('Song Deleted!');
       self.songInfoForm.$dirty = false;
     });
   };
@@ -117,10 +119,12 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.showSong = function(songId) {
     if(self.songClicked) {
       if(self.songInfoForm.$dirty) {
-        var moveOn = confirm('You have unsaved changes, are you sure you want to go to another song?');
-          if(moveOn) {
+        alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to see another song before saving this one?',
+          function(){
             whenSongShouldShowOnClick(songId);
-          }
+          },
+          function(){return;}
+        ).set('labels', {ok:'Go without saving', cancel:'Stay here'});
       } else {
         whenSongShouldShowOnClick(songId);
       }
@@ -140,6 +144,20 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
       self.songInfoForm.$dirty = false;
     }
   }
+
+  $scope.$on('$locationChangeStart', function (event, next) {
+    if (self.songInfoForm.$dirty) {
+      event.preventDefault();
+      alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to leave without saving?',
+        function(){
+          console.log(next);
+          self.songInfoForm.$dirty=false;
+          $window.open(next, "_self");
+        },
+        function(){ alertify.error('Cancel');}
+      ).set('labels', {ok:'Yes, leave without saving', cancel:'Stay here.'});
+    }
+  });
 
   self.showFullCardView = function () {
     if (self.songInfoForm.$dirty) {
