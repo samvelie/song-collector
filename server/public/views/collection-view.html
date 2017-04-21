@@ -194,7 +194,6 @@
         </div>
         <!-- end intervals -->
 
-
         <!-- start phrases -->
         <div class="form-group">
           <label for="phrases" class="control-label">Phrases</label>
@@ -253,7 +252,6 @@
         <!-- start comfortable starting pitch -->
         <div class="form-group">
           <label for="csp" class="control-label">Comfortable Starting Pitch</label>
-          <!-- NOTE: CSP stands for: comfortable starting pitch -->
           <input class="form-control" ng-model="cc.oneSong.details.csp"/>
         </div>
         <!-- start comfortable starting pitch -->
@@ -281,78 +279,84 @@
     <!-- start attachments column -->
     <div class="col-sm-4">
 
-
-      <!-- start notation attachments -->
+      <!-- start notation attachments container -->
       <div class="notation-attachments">
-        <div class="form-group">
+
+        <!-- start upload new notation attachment container -->
+        <div class="add-notation-attachment">
+
           <label class="control-label">Music Notation</label>
           <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
+
+          <!-- start preview new notation attachment image container -->
           <div style="margin-top:10px;" ng-if="cc.notationUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
             <!-- the picture is rendered with width: 500 and sharpened -->
             <img class="small text-right" ng-src="{{cc.notationUploaded.list[0].url}}">
             <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
           </div>
-
-          <!-- start existing attachments -->
-          <div ng-repeat="notation in cc.attachments.notation" class="existing-notation-container">
-
-            <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
-
-            <button type="button pull-left" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;Share</button>
-            <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
-
-            <!-- start Share popover template -->
-            <script type="text/ng-template" id="sharePopover.html">
-              <div>{{cc.dynamicPopover.content}}</div>
-              <form>
-                <div class="input-group">
-                  <input type="email" class="form-control share" ng-model="cc.shareSong.email" placeholder="Email Address">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default btn-share" ng-click="cc.shareSong(cc.shareSong.email, $index); $parent.isOpen = false" type="submit" title="Send song"><strong>Send!</strong></button>
-                  </span>
-                </div>
-              </form>
-            </script>
-            <!-- end Share popover template -->
-
-          </div>
-          <!-- end existing attachments -->
-
-
+          <!-- end preview new notation attachment image container -->
 
         </div>
+        <!-- end upload new notation attachment container -->
+
+        <!-- start existing notation attachments container -->
+        <div ng-repeat="notation in cc.attachments.notation" class="existing-notation-container">
+
+          <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
+
+          <button class="btn btn-primary" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;Share</button>
+          <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
+
+        </div>
+        <!-- end existing notation attachments container -->
+
       </div>
-      <!-- end notation attachments -->
+      <!-- end notation attachments container -->
 
+      <!-- start Share popover template -->
+      <script type="text/ng-template" id="sharePopover.html">
+        <div>{{cc.dynamicPopover.content}}</div>
+        <form>
+          <div class="input-group">
+            <input type="email" class="form-control share" ng-model="cc.shareSong.email" placeholder="Email Address">
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-share" ng-click="cc.shareSong(cc.shareSong.email, $index); $parent.isOpen = false" type="submit" title="Send song"><strong>Send!</strong></button>
+            </span>
+          </div>
+        </form>
+      </script>
+      <!-- end Share popover template -->
 
-      <!-- start other attachments -->
+      <!-- start document attachments container -->
       <div class="document-attachments">
-        <div class="form-group">
+
+        <!-- start upload new document attachment container -->
+        <div class="add-document-attachment">
+
           <label class="control-label">Attachments</label>
           <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachment">Upload</button>
 
-          <!-- start existing attachments -->
+          <!-- start existing document attachments container -->
           <div>
             <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
           </div>
-          <!-- end existing attachments -->
+          <!-- end existing document attachments container -->
 
-          <div class="col-sm-12 half-gutter">
-            <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
-              <!-- Show the thumbnail only when the picture is uploaded -->
-              <!-- the picture is rendered with width: 500 and sharpened -->
-              <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}">
-              <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
-            </div>
+          <!-- start preview new document attachment container -->
+          <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
+            <!-- Show the thumbnail only when the picture is uploaded -->
+            <!-- the picture is rendered with width: 500 and sharpened -->
+            <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}">
+            <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
           </div>
+          <!-- end preview new document attachment container -->
 
-        </div>
       </div>
-      <!-- end other attachments -->
+      <!-- end upload new document attachment container -->
 
     </div>
-    <!-- end attachments column -->
+    <!-- end document attachments container -->
 
   </div>
   <!-- end expanded column for song details -->

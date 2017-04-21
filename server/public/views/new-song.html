@@ -4,24 +4,39 @@
 
 
 <form name="nsc.newSongForm" confirm-on-exit>
+
+  <!-- start header container -->
   <div class="col-sm-12 panel text-right" id="toolbar">
     <div class="form-group">
+
+      <!-- start song title container -->
       <div class="col-sm-8 half-gutter text-center">
         <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
       </div>
+      <!-- end song title container -->
+
     </div>
-    <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
-    <button type="button" class="btn btn-primary" popover-placement="bottom-right"  uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+
+    <!-- start toolbar container -->
+    <div class="toolbar-container">
+      <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
+      <button type="button" class="btn btn-primary" popover-placement="bottom-right"  uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    </div>
+    <!-- end toolbar container -->
+
   </div>
+  <!-- end header container -->
 
 
-  <!-- start div for right column -->
+  <!-- start song info column -->
   <div class="col-sm-8 card-holder">
 
-    <form class="form-horizontal">
+    <!-- start form -->
+    <form>
+
+      <!-- start tone set -->
       <div class="form-group">
-        <label for="toneSet" class="col-sm-4 control-label no-gutter">Tone Set</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="toneSet" class="control-label">Tone Set</label>
           <!-- <div contenteditable class="form-control" id="toneSet"> -->
           <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="nsc.newSongObject.toneSet" placeholder="Tone Set">
             <ng-quill-toolbar>
@@ -34,196 +49,250 @@
               </div>
             </ng-quill-toolbar>
           </ng-quill-editor>
-          <!-- </div> -->
-        </div>
       </div>
+      <!-- end tone set -->
+
+      <!-- start scale/model  -->
       <div class="form-group">
-        <label for="scaleMode" class="col-sm-4 control-label no-gutter">Scale / Mode</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="scaleMode" class="control-label">Scale / Mode</label>
           <select name="scaleMode" ng-model="nsc.newSongObject.scaleMode" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in nsc.dropdowns.scaleMode track by scaleMode.id">
           </select>
-        </div>
       </div>
+      <!-- end scale/model -->
+
+      <!-- start teachable elements -->
       <div class="form-group">
-        <label for="teachableElements" class="col-sm-4 control-label no-gutter">Teachable Elements</label>
-        <div class="col-sm-8 half-gutter">
-          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" translation-texts="nsc.teachableElementsCustomTexts"></div>
-        </div>
-        <!-- {{nsc.newSongObject}} -->
+        <label for="teachableElements" class="control-label">Teachable Elements</label>
+        <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" translation-texts="nsc.teachableElementsCustomTexts"></div>
       </div>
+      <!-- end teachable elements -->
+
+      <!-- start rhythm -->
       <div class="form-group">
-        <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
-        <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
-        </div>
+        <label for="rhythm" class="control-label">Rhythm</label>
+        <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
         <div class="display">
           <span ng-repeat="component in nsc.rhythm track by $index">
             <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
           </span>
         </div>
       </div>
+      <!-- end rhythm -->
+
+      <!-- start extractable rhythms -->
       <div class="form-group">
-        <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="extractableRhythms" class="control-label">Extractable Rhythms</label>
           <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
         </div>
         <div class="display">
           <span ng-repeat="extract in nsc.extractableRhythms track by $index">
             <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
           </span>
-        </div>
       </div>
-      <div cla
+      <!-- end extractable rhythms -->
+
+      <!-- start extractable melodies -->
       <div class="form-group">
-        <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="extractableMelodies" class="control-label">Extractable Melodies</label>
           <input class="form-control" ng-model="nsc.newSongObject.extractableMelodies" placeholder="Extractable Melodies">
-        </div>
       </div>
+      <!-- end extractable melodies -->
+
+      <!-- start meter -->
       <div class="form-group">
-        <label for="meter" class="col-sm-4 control-label no-gutter">Meter</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="meter" class="control-label">Meter</label>
           <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in nsc.dropdowns.meter">
           </select>
-        </div>
       </div>
+      <!-- end meter -->
+
+      <!-- start verses -->
       <div class="form-group">
-        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Verses</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="intervalNoteGroup" class="control-label">Verses</label>
           <textarea class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Verses" rows="5"></textarea>
-        </div>
       </div>
+      <!-- end verses -->
+
+      <!-- start formation -->
       <div class="form-group">
-        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Formation</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="intervalNoteGroup" class="control-label">Formation</label>
           <input class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
-        </div>
       </div>
+      <!-- end formation -->
+
+      <!-- start action -->
       <div class="form-group">
-        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Action</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="intervalNoteGroup" class="control-label">Action</label>
           <input class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
-        </div>
       </div>
+      <!-- end action -->
+
+      <!-- start intervals -->
       <div class="form-group">
-        <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="intervalNoteGroup" class="control-label">Intervals / Note Group</label>
           <input class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroups" placeholder="Intervals / Note Group" />
-        </div>
       </div>
+      <!-- end intervals -->
+
+      <!-- start phrases -->
       <div class="form-group">
-        <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="phrases" class="control-label">Phrases</label>
           <input class="form-control" ng-model="nsc.newSongObject.phrases" placeholder="Phrases" />
-        </div>
       </div>
+      <!-- end phrases -->
+
+      <!-- start melodic form -->
       <div class="form-group">
-        <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="melodicForm" class="control-label">Melodic Form</label>
           <input class="form-control" ng-model="nsc.newSongObject.melodicForm" placeholder="Melodic Form" />
-        </div>
       </div>
+      <!-- end melodic form -->
+
+      <!-- start rhythmic form -->
       <div class="form-group">
-        <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="rhythmicForm" class="control-label">Rhythmic Form</label>
           <input class="form-control" ng-model="nsc.newSongObject.rhythmicForm" placeholder="Rhythmic Form" />
-        </div>
       </div>
+      <!-- end rhythmic form -->
+
+      <!-- start form type -->
       <div class="form-group">
-        <label for="formType" class="col-sm-4 control-label no-gutter">Form Type</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="formType" class="control-label">Form Type</label>
           <select name="formType" ng-model="nsc.newSongObject.formType" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in nsc.dropdowns.formType">
           </select>
-        </div>
       </div>
+      <!-- end form type -->
+
+      <!-- start song type -->
       <div class="form-group">
-        <label for="songType" class="col-sm-4 control-label no-gutter">Song Type</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="songType" class="control-label">Song Type</label>
           <select name="formType" ng-model="nsc.newSongObject.songType" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in nsc.dropdowns.songType">
           </select>
-        </div>
       </div>
+      <!-- end song type -->
+
+      <!-- start culture origin -->
       <div class="form-group">
-        <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="cultureOrigin" class="control-label">Culture / Origin</label>
           <input class="form-control" ng-model="nsc.newSongObject.cultureOrigin" placeholder="Culture / Origin" />
-        </div>
       </div>
+      <!-- end culture origin -->
+
+      <!-- start language -->
       <div class="form-group">
-        <label for="language" class="col-sm-4 control-label no-gutter">Language</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="language" class="control-label">Language</label>
           <select name="language" ng-model="nsc.newSongObject.language" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in nsc.dropdowns.language">
           </select>
-        </div>
       </div>
+      <!-- end language -->
+
+      <!-- start comfortable starting pitch -->
       <div class="form-group">
-        <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
+        <label for="csp" class="control-label">Comfortable Starting Pitch</label>
         <!-- comfortable starting pitch -->
-        <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.csp" placeholder="CSP" />
-        </div>
+          <input class="form-control" ng-model="nsc.newSongObject.csp" placeholder="Comfortable Starting Pitch" />
       </div>
+      <!-- end comfortable starting pitch -->
+
+      <!-- start other -->
       <div class="form-group">
-        <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="other" class="control-label">Other</label>
           <textarea class="form-control" ng-model="nsc.newSongObject.other" placeholder="Other Notes" rows="3"></textarea>
-        </div>
       </div>
+      <!-- end other -->
+
+      <!-- start source -->
       <div class="form-group">
-        <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
-        <div class="col-sm-8 half-gutter">
+        <label for="source" class="control-label">Source</label>
           <textarea class="form-control" ng-model="nsc.newSongObject.source" placeholder="Source Notes" rows="3"></textarea>
-        </div>
       </div>
+      <!-- end source -->
+
     </form>
+    <!-- end form -->
+
   </div>
+  <!-- end song info column -->
 
 
-  <!-- attachments div -->
+  <!-- start attachments column -->
   <div class="col-sm-4">
-    <!-- notation attachments -->
-    <div class="form-group">
-      <label for="notation" class="col-sm-12 control-label no-gutter">Music Notation</label>
-      <div class="col-sm-12 half-gutter">
+
+    <!-- start notation attachments container  -->
+    <div class="notation-attachments">
+
+      <!-- start upload new notation attachment container -->
+      <div class="add-notation-attachment">
+
+        <label class="control-label">Music Notation</label>
         <button class="btn btn-primary" ng-click="nsc.notationUpload(nsc.oneSong.details.id)">Upload</button>
+
+        <!-- start preview new notation attachment image container -->
         <div style="margin-top:10px;" ng-if="nsc.notationUploaded.list.length > 0">
           <!-- Show the thumbnail only when the picture is uploaded -->
           <!-- the picture is rendered with width: 500 and sharpened -->
           <img class="small" ng-click="nsc.viewMoreOnClick(true, 'notation', $index, true)" ng-src="{{nsc.notationUploaded.list[0].url}}">
           <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
         </div>
+        <!-- end preview new notation attachment image container -->
+
       </div>
+      <!-- end upload new notation attachment container -->
+
     </div>
-  </div>
-  <!-- end div for other attachments -->
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="attachments" class="col-sm-12 control-label no-gutter">Attachments</label>
-      <div class="col-sm-12 half-gutter">
-        <button class="btn btn-primary" ng-click="nsc.fileUpload(nsc.oneSong.details.id)">Upload</button>
+    <!-- end notation attachments container -->
+
+
+    <!-- start document attachments container -->
+    <div class="document-attachments">
+
+      <!-- start upload new document attachment container -->
+      <div class="add-document-attachment">
+
+        <label class="control-label">Attachments</label>
+        <button class="btn btn-primary" ng-click="nsc.fileUpload(nsc.oneSong.details.id)" title="Upload attachment">Upload</button>
+
+        <!-- start preview new document attachment image container -->
         <div style="margin-top:10px;" ng-if="nsc.filesUploaded.list.length > 0">
           <!-- Show the thumbnail only when the picture is uploaded -->
           <!-- the picture is rendered with width: 500 and sharpened -->
           <img class="small" ng-click="nsc.viewMoreOnClick(true, 'attachments', $index, true)" ng-src="{{nsc.filesUploaded.list[0].url}}">
           <!-- ^^^ will need to be an ng-repeat if we use multiple files ^^^ -->
         </div>
+        <!-- end preview new document attachment image container -->
+
       </div>
+      <!-- end upload new document attachment container -->
+
     </div>
-  </div>
-  <!-- end div for other attachments -->
+    <!-- end document attachments container -->
 
-  <!-- begin modal code -->
-  <div ng-if="nsc.viewMore" class="imageModule text-center" ng-click="nsc.viewMoreOnClick(false)">
-    <img style="max-width:100%; max-height:100%;" ng-src="{{nsc.lightboxImage}}" />
   </div>
-  <!-- end modal code -->
+  <!-- end document attachments container -->
+
 
 
   </div>
-  <!-- end attachements div -->
-</form>
+  <!-- end song info column -->
+
+  <!-- end attachements column -->
+
 </div>
 <!-- end full screen container -->
+
+<!-- start lightbox modal template -->
+  <!-- start modal background template -->
+  <div ng-if="cc.viewMore" class="backgroundDark">
+  </div>
+  <!-- end modal background template -->
+
+<div ng-if="nsc.viewMore" class="imageModule text-center" ng-click="nsc.viewMoreOnClick(false)">
+  <img style="max-width:100%; max-height:100%;" ng-src="{{nsc.lightboxImage}}" />
+  <!-- <button type="button" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove" title="Close image"></span></button> -->
+  <a class="btn-default pull-right" href=""><span class="glyphicon glyphicon-remove" aria-hidden="true" title="Close image"></span></a>
+</div>
+<!-- end lightbox modal template -->
+
 
 
   <!-- start Cancel popover template -->
