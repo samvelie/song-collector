@@ -142,7 +142,7 @@
 
         <!-- start rhythm -->
         <div class="form-group" ng-click="cc.findFocus('rhythm')">
-          <label for="rhythm" class="control-label" style="margin-right:10px;">Rhythm</label><a href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+          <label for="rhythm" class="control-label" style="margin-right:10px;">Rhythm</label><a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
           <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm)" ng-blur="cc.loseFocus('rhythm')" focusing>
           <div class="display">
             <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
@@ -154,7 +154,7 @@
 
         <!-- start extractable rhythm -->
         <div class="form-group" ng-click="cc.findFocus('extractableRhythm')">
-          <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label><a href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+          <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label><a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
           <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
           <div class="display">
             <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
