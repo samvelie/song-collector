@@ -40,9 +40,9 @@
       <div class="card-container scrollable ">
 
         <!-- start container for first "add song" card -->
-        <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-          <a href="#!new" title="Add a new song"><div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></a>
-        </div>
+        <a href="#!new" title="Add a new song"><div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
+          <div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+        </div></a>
         <!-- end container for first "add song" card -->
 
         <!-- for users who have just logged in and don't yet have songs in the db -->
@@ -142,7 +142,7 @@
 
         <!-- start rhythm -->
         <div class="form-group" ng-click="cc.findFocus('rhythm')">
-          <label for="rhythm" class="control-label">Rhythm</label>
+          <label for="rhythm" class="control-label" style="margin-right:10px;">Rhythm</label><a href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
           <input ng-if="cc.editingRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.rhythm" placeholder="Rhythm" ng-change="cc.updateRhythmDisplay(cc.oneSong.details.rhythm)" ng-blur="cc.loseFocus('rhythm')" focusing>
           <div class="display">
             <span ng-repeat="component in cc.oneSong.details.rhythmArray track by $index">
@@ -154,7 +154,7 @@
 
         <!-- start extractable rhythm -->
         <div class="form-group" ng-click="cc.findFocus('extractableRhythm')">
-          <label for="extractableRhythms" class="control-label">Extractable Rhythms</label>
+          <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label><a href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
           <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
           <div class="display">
             <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">

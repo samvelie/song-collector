@@ -295,6 +295,14 @@ label:after {
 span.glyphicon {
   color: #333;
 }
+
+span.glyphicon-plus {
+  margin:auto;
+}
+
+span.glyphicon-question-sign {
+  margin-top: 13px;
+}
 .circle-around-plus {
   height: 60px;
   width: 60px;
@@ -302,7 +310,7 @@ span.glyphicon {
   border-radius: 100%;
   display: flex;
   align-items: center;
-  padding-left: 37%;
+  margin-left: 37%;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
