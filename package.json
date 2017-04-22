@@ -32,6 +32,6 @@
     "ng-quill": "^3.1.0",
     "nodemailer": "^4.0.1",
     "nodemailer-smtp-transport": "^2.7.4",
-    "pg": "^6.1.5",
+    "pg": "^6.1.5"
   }
 }
