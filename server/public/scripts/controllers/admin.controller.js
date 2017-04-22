@@ -1,4 +1,4 @@
-app.controller('AdminController', ['SongFactory', function(SongFactory) {
+app.controller('AdminController', ['SongFactory', 'UserFactory', function(SongFactory, UserFactory) {
   var self = this;
   self.dropdowns = SongFactory.dropdowns;
   self.newSort = {};
@@ -7,7 +7,13 @@ app.controller('AdminController', ['SongFactory', function(SongFactory) {
   self.expandMeter = false;
   self.expandFormType = false;
   self.expandSongType = false;
+  self.expandLanguage = false;
+  self.users = UserFactory.users;
+  self.setAdminStatus = UserFactory.setAdminStatus;
+  self.setActiveStatus = UserFactory.setActiveStatus;
   
+  UserFactory.getAllUsers();
+
   self.deleteSort = function(sort, tableName) {
     SongFactory.deleteSort(sort, tableName);
   };

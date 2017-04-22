@@ -267,6 +267,25 @@ label:after {
 
 /* end song view styles*/
 
+/* begin admin view styles */
+.adminDropdownEditing {
+  display:inline;
+  margin-right: 10px;
+}
+
+.deactiveRow {
+  background: lightgrey;
+}
+
+.image-muted {
+  opacity: .5;
+}
+
+.adminRow {
+  box-shadow: 0 0 8px gold;
+}
+/* end admin view styles */
+
 /* music note field style */
 
 .music-font {
