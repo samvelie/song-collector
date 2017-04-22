@@ -75,14 +75,40 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
     buttonDefaultText: 'Select the teachable elements'
   };
 
-  self.scaleModeOptions = [
-    {id:1, name: 'merp'},
-    {id:2, name: 'merpaderp'},
-    {id:3, name: 'celina'}
+  // self.scaleModeOptionsTest = [
+  //   {id:1, name: 'merp'},
+  //   {id:2, name: 'merpaderp'},
+  //   {id:3, name: 'celina'}
+  // ];
+
+  self.example9model = [];
+
+  self.oneSongScaleMode = [
+    { id: 45, scale_mode: "Plagal do major" }
   ];
+
+  self.example9data = [
+    { id: 1, label: 'David' },
+    { id: 2, label: 'Jhon' },
+    { id: 3, label: 'Danny' }];
 
   self.scaleModeSettings = {
     displayProp: 'scale_mode',
+    enableSearch: true,
+    selectionLimit: 1,
+    keyboardControls: true,
+    smartButtonMaxItems: 1,
+    scrollableHeight: '300px',
+    scrollable: true,
+    selectedToTop: true,
+    closeOnBlur: true,
+    clearSearchOnClose: true,
+    showCheckAll: false,
+    showUncheckAll: false,
+  };
+
+  self.example9settings = {
+    displayProp: 'scale_mode_id',
     closeOnBlur: true,
     clearSearchOnClose: true,
     showCheckAll: false,
@@ -101,6 +127,78 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.scaleModeCustomTexts = {
     buttonDefaultText: 'Select scale / mode'
   };
+
+  self.scaleModeOptions = [
+    { id: 1, scale_mode: "Aeolian"},
+    { id: 2, scale_mode: "Authentic do hexachord" },
+    { id: 3, scale_mode: "Authentic do hexatone" },
+    { id: 4, scale_mode: "Authentic do major" },
+    { id: 5, scale_mode: "Authentic do pentachord" },
+    { id: 6, scale_mode: "Authentic do pentatone" },
+    { id: 7, scale_mode: "Authentic do tetratone" },
+    { id: 8, scale_mode: "Authentic do trichord" },
+    { id: 9, scale_mode: "Authentic do tritone" },
+    { id: 10, scale_mode: "Authentic la hexatone" },
+    { id: 11, scale_mode: "Authentic la pentachord" },
+    { id: 12, scale_mode: "Authentic la pentatone" },
+    { id: 13, scale_mode: "Authentic la tetratone" },
+    { id: 14, scale_mode: "Authentic la tritone" },
+    { id: 15, scale_mode: "Authentic mi bitone" },
+    { id: 16, scale_mode: "Authentic mi tritone" },
+    { id: 17, scale_mode: "Authentic sol hexachord" },
+    { id: 18, scale_mode: "Authentic sol hexatone" },
+    { id: 19, scale_mode: "Authentic sol pentatone" },
+    { id: 22, scale_mode: "Do tetratone" },
+    { id: 23, scale_mode: "Dorian" },
+    { id: 24, scale_mode: "Extended do major" },
+    { id: 25, scale_mode: "Extended do pentachord" },
+    { id: 26, scale_mode: "Extended do pentatone" },
+    { id: 27, scale_mode: "Extended la" },
+    { id: 28, scale_mode: "Extended la minor" },
+    { id: 29, scale_mode: "Extended la pentachord" },
+    { id: 30, scale_mode: "Extended mi hexachord" },
+    { id: 31, scale_mode: "Harmonic minor" },
+    { id: 32, scale_mode: "Incomplete do major" },
+    { id: 33, scale_mode: "Incomplete do pentatone" },
+    { id: 34, scale_mode: "Incomplete la scale" },
+    { id: 35, scale_mode: "Incomplete natural minor" },
+    { id: 36, scale_mode: "Ionian" },
+    { id: 37, scale_mode: "Locrian" },
+    { id: 38, scale_mode: "Lydian" },
+    { id: 39, scale_mode: "Major" },
+    { id: 40, scale_mode: "Melodic minor" },
+    { id: 41, scale_mode: "Mixed meter" },
+    { id: 42, scale_mode: "Mixolydian" },
+    { id: 43, scale_mode: "Natural minor" },
+    { id: 44, scale_mode: "Phrygian" },
+    { id: 45, scale_mode: "Plagal do major" },
+    { id: 46, scale_mode: "Plagal do hexachord" },
+    { id: 47, scale_mode: "Plagal do hexatone" },
+    { id: 48, scale_mode: "Plagal do incomplete major" },
+    { id: 49, scale_mode: "Plagal do incomplete blues scale" },
+    { id: 50, scale_mode: "Plagal do pentachord" },
+    { id: 51, scale_mode: "Plagal do tetratone" },
+    { id: 52, scale_mode: "Plagal do tritone" },
+    { id: 53, scale_mode: "Plagal la hexatone" },
+    { id: 54, scale_mode: "Plagal la pentatone" },
+    { id: 55, scale_mode: "Quarter note and two eighth notes" },
+    { id: 56, scale_mode: "do hexachord" },
+    { id: 57, scale_mode: "do hexatone" },
+    { id: 58, scale_mode: "do tetrachord" },
+    { id: 59, scale_mode: "do tritone" },
+    { id: 60, scale_mode: "la hexachord" },
+    { id: 61, scale_mode: "la pentatone" },
+    { id: 62, scale_mode: "la tetratone" },
+    { id: 63, scale_mode: "mi hexachord" },
+    { id: 64, scale_mode: "mi pentachord" },
+    { id: 65, scale_mode: "mi tritone" },
+    { id: 66, scale_mode: "re pentachord" },
+    { id: 68, scale_mode: "Soprano recorder" },
+    { id: 69, scale_mode: "Plagal do pentatone" },
+    { id: 20, scale_mode: "Authentic sol tetratone" },
+    { id: 67, scale_mode: "sol tritone" },
+    { id: 21, scale_mode: "Blues scale" }
+];
 
   // have a promise so that after a song is deleted, user gets redirected back to the main card view
   // need to create a confirmation popup and an alert of deletion popup

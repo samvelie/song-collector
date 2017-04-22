@@ -128,15 +128,18 @@
         <!-- start scale/mode -->
         <div class="form-group">
           <label for="scaleMode" class="control-label">Scale / Mode</label>
-            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode">
-            </select>
+          <br>{{cc.oneSongScaleMode}}<br>
+          <div ng-dropdown-multiselect="" options="cc.scaleModeOptions" selected-model="cc.oneSong.details.scale_mode_id" extra-settings="cc.scaleModeSettings" translation-texts="cc.scaleModeCustomTexts"></div>
+
+            <!-- <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode">
+            </select> -->
         </div>
         <!-- <div class="form-group">
           <div class="form-group">
             {{cc.dropdowns.scaleMode}}
-            {{cc.oneSong.details}}
+            {{cc.oneSong.details.scale_mode_id}}
             <label for="scaleMode" class="control-label">Scale / Mode</label>
-            <div name="scaleMode" ng-dropdown-multiselect="" options="cc.dropdowns.scaleMode" selected-model="cc.oneSong.details" extra-settings="cc.scaleModeSettings" translation-texts="cc.scaleModeCustomTexts" class="multiselect"></div>
+            <div name="scaleMode" ng-dropdown-multiselect="" options="cc.scaleModeOptions" selected-model="cc.oneSong.details.scale_mode_id" extra-settings="cc.scaleModeSettings" translation-texts="cc.scaleModeCustomTexts" class="multiselect"></div>
           </div>
         </div> -->
         <!-- end scale/mode -->
