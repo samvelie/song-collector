@@ -190,14 +190,17 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
         }
       }); // end client.query
     } else {
-      client.query('DELETE FROM '+ tableName + ' WHERE ' + columnName + ' = $1;', [deleteSortItem], function(err, result) {
-        done();
-        if(err) {
-          console.log('error making database query: ', err);
-          res.sendStatus(500);
-        } else {
-          res.sendStatus(200);
-        }
+      var scte = 'song_collection_' + req.params.table;
+      client.query('DELETE FROM '+ scte + ' WHERE ' + columnName + ' = $1;' [deleteSortItem], function(err, result) {
+        client.query('DELETE FROM '+ tableName + ' WHERE ' + columnName + ' = $1;', [deleteSortItem], function(err, result) {
+          done();
+          if(err) {
+            console.log('error making database query: ', err);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(200);
+          }
+        }); // end client.query
       }); // end client.query
     }
     }
