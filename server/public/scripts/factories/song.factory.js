@@ -351,6 +351,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
               headers: {id_token: idToken}
             }).then(function(response){
               shareSong.imageUrl = response.data;
+              alertify.success('Email sent to: ' + emailAddress);
             });
           });
         } else {
