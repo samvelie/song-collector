@@ -300,7 +300,7 @@
           <div style="margin-top:10px;" ng-if="cc.notationUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
             <!-- the picture is rendered with width: 500 and sharpened -->
-            <img class="small text-right" ng-src="{{cc.notationUploaded.list[0].url}}">
+            <img class="small text-right" ng-src="{{cc.notationUploaded.list[0].url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, true)">
             <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
           </div>
           <!-- end preview new notation attachment image container -->
@@ -311,7 +311,7 @@
         <!-- start existing notation attachments container -->
         <div ng-repeat="notation in cc.attachments.notation" class="existing-notation-container">
 
-          <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
+          <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, false)"  ng-src="{{notation.image_url}}"/>
 
           <button class="btn btn-primary" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;Share</button>
           <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
@@ -347,7 +347,7 @@
 
           <!-- start existing document attachments container -->
           <div>
-            <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+            <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
           </div>
           <!-- end existing document attachments container -->
 
@@ -355,7 +355,7 @@
           <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
             <!-- Show the thumbnail only when the picture is uploaded -->
             <!-- the picture is rendered with width: 500 and sharpened -->
-            <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}">
+            <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, true)">
             <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
           </div>
           <!-- end preview new document attachment container -->

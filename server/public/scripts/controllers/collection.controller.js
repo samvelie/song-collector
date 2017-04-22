@@ -47,13 +47,18 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
     console.log(self.filteredResults);
   };
 
-  self.viewMoreOnClick = function(bool, type, index) {
+  self.viewMoreOnClick = function(bool, type, index, isNew) {
     self.viewMore = bool;
     console.log('type', type);
-    if(bool === true && type == 'attachments') {
+    if(bool === true && type == 'attachments' && isNew === false) {
       self.lightboxImage = SongFactory.attachments.attachments[index].image_url;
-    } else if (bool === true && type == 'notation') {
+    } else if (bool === true && type == 'notation' && isNew === false) {
       self.lightboxImage = SongFactory.attachments.notation[index].image_url;
+      console.log('light box image', self.lightboxImage);
+    } else if(type=='notation' && isNew === true) {
+      self.lightboxImage = SongFactory.notationUploaded.list[0].url;
+    } else if(type=='attachments' && isNew === true) {
+      self.lightboxImage = SongFactory.filesUploaded.list[0].url;
     }
     console.log(self.lightboxImage);
 
@@ -236,6 +241,8 @@ self.deletePopover = {
 
 self.shareSong = function(emailAddress, index) {
   SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo, SongFactory.oneSong.details.song_title);
+  console.log('index', index);
+  console.log('SongFactory.attachments.notation[index].image_url', SongFactory.attachments.notation[index].image_url);
 };
 
 }]);
