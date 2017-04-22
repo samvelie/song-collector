@@ -62,7 +62,6 @@ var tokenDecoder = function (req, res, next) {
                   insertResult.rows[0].user_name = userName;
                   insertResult.rows[0].user_email = userEmail;
                   insertResult.rows[0].user_photo = userPhoto;
-                  insertResult.rows[0].is_admin = isAdmin;
                   console.log('user added and authenticated:', userName);
                   req.userInfo = insertResult.rows[0];
                   next();
