@@ -3,7 +3,7 @@ function (SongFactory, AuthFactory, $routeParams, angularFilepicker) {
 
   var self = this;
 
-  console.log("print controller loaded yo");
+  console.log("print controller loaded");
 
   self.message = 'This is the PrintController View';
 

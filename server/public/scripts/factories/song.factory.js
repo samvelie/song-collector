@@ -291,7 +291,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
             });
           });
         } else {
-          console.log('not logged in!');
+          return console.log('not logged in!');
         }
       }
 
@@ -299,7 +299,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         console.log('existing song with changes', changedSong);
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
-          firebaseUser.getToken().then(function (idToken) {
+          return firebaseUser.getToken().then(function (idToken) {
             $http({
               method: 'PUT',
               url: '/songs/editSong/' + changedSong.id,
@@ -314,7 +314,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
             });
           });
         } else {
-          console.log('not logged in!');
+          return console.log('not logged in!');
         }
       }
 
@@ -333,7 +333,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
             });
           });
         } else {
-          console.log('not logged in!');
+          return console.log('not logged in!');
         }
       }
 
