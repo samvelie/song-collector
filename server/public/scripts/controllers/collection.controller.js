@@ -146,7 +146,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   }
 
   $scope.$on('$locationChangeStart', function (event, next) {
-    if (self.songInfoForm.$dirty) {
+    if (self.songClicked && self.songInfoForm.$dirty) {
       event.preventDefault();
       alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to leave without saving?',
         function(){
