@@ -37,15 +37,15 @@ var tokenDecoder = function (req, res, next) {
       pool.connect(function (err, client, done) {
         //this user_id property on the decodedToken comes from the google auth
         var googleId = req.decodedToken.user_id;
-        client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo FROM users WHERE google_id = $1;', [googleId], function (err, result) {
+        client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo, users.is_admin FROM users WHERE google_id = $1;', [googleId], function (err, result) {
           done();
           if (err) {
             console.log('Error querying db for users:', err);
             res.sendStatus(500);
           } else {
-            if (result.rowCount > 0) {
-              console.log('user identified:', result.rows[0].user_name);
-              req.userInfo = result.rows;
+            if (result.rows.length > 0) {
+              req.userInfo = result.rows[0];
+              console.log('user identified:', req.userInfo.user_name);
               next();
             } else {
               //adding information from user into db if not already there
@@ -53,7 +53,6 @@ var tokenDecoder = function (req, res, next) {
               var userName = req.decodedToken.name;
               var userEmail = req.decodedToken.email;
               var userGoogleId = req.decodedToken.user_id;
-              console.log('test userGoogleId log', userGoogleId);
               client.query('INSERT INTO users (user_name, user_photo, user_email, google_id) VALUES ($1, $2, $3, $4) RETURNING id;', [userName, userPhoto, userEmail, userGoogleId], function (err, insertResult) {
                 done();
                 if (err) {
@@ -63,9 +62,8 @@ var tokenDecoder = function (req, res, next) {
                   insertResult.rows[0].user_name = userName;
                   insertResult.rows[0].user_email = userEmail;
                   insertResult.rows[0].user_photo = userPhoto;
-
                   console.log('user added and authenticated:', userName);
-                  req.userInfo = insertResult.rows;
+                  req.userInfo = insertResult.rows[0];
                   next();
                 }
               }); // end client.query

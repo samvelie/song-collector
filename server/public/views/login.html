@@ -1,26 +1,21 @@
 <div class="container text-center log-in-info">
-  <div>
+  <div style="width:60%; margin:auto;">
     <h1>iSongCollect</h1>
     <p>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+      Zoltan Kodaly (1882-1967) was a musician, composer and ethnomusicologist who dedicated his life to collecting the folk music of the Hungarian people.  He discovered that teaching students using their musical backgrounds was quite natural.
     </p>
-    <p>
-      Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
-    </p>
-    <p>
-      Integer tincidunt. Cras dapibus.
-    </p>
-    <p>
-      Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+    <p>Kodaly-inspired teaching means that students learn music literacy through American folk music as well as the folk music of the communities.  Students learn music using solfege and rhythm syllables.
     </p>
   </div>
   <div class="button-holder text-center"> <!-- button holder -->
     <div ng-if="!lc.loggedIn.loginStatus">
-      <button ng-click="lc.login()" class="btn btn-primary">Sign In</button>
+      <button style="display: inline;" ng-click="lc.login()" class="btn btn-primary">Sign In</button>
+      <button style="display: inline;" ng-click="lc.login()" class="btn btn-primary">Sign Up</button>
     </div>
     <div ng-if="!!lc.loggedIn.loginStatus">
       <button ng-click="lc.logout()" class="btn btn-primary">Sign Out</button>
     </div>
+
   </div>
 
   <!-- <img class="log-in-photo" ng-src="{{lc.user.info[0].user_photo}}">  NOTE: commented out because unnecessary functionality? -->

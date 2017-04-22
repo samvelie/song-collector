@@ -17,11 +17,6 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'NewSongController',
             controllerAs: 'nsc'
         })
-        .when('/edit/:id?', { //eventually remove optionality of index
-            templateUrl: '/views/edit-song.html',
-            controller: 'EditSongController',
-            controllerAs: 'esc'
-        })
         .when('/collection', {
             templateUrl: '/views/collection-view.html',
             controller: 'CollectionController',
@@ -32,6 +27,11 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'PrintController',
             controllerAs: 'pc'
         })
+				.when('/admin', {
+						templateUrl: '/views/admin-view.html',
+						controller: 'AdminController',
+						controllerAs: 'ac'
+				})
         .otherwise({
             redirectTo: 'login'
         });

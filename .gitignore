@@ -1,3 +1,6 @@
 node_modules/
 firebase-service-account.json
 gmailpass.js
+.DS_Store
+textdump.html
+npm-debug.log

@@ -1,17 +1,12 @@
 var express = require('express');
 
-var path = "evntz.herokuapp.com";
-
-
-var emailMessage = function(eventId, adminId) {
+var emailMessage = function(imageUrl, userInfo, songName) {
   return { // html version of our email
-    message: '<div><h1>Your event has been created!</h1>\n\n' +
-    '<p>Share this link to invite your friends: ' +
-    '<a href="http://' + path + '/#!/' + eventId + '">' + 'http://' + path + '/#!/' + eventId + '</a></p>\n\n' +
-    'Anyone with this link can modify your event. <b>Do not share this link!</b> ' +
-    '<a href="http://' + path + '/#!/' + eventId + '/' + adminId +'">' + 'http://' + path + '/#!/' + eventId + '/' + adminId + '</a></p>'
+    message: '<div><h1>New song from iSongCollect</h1>\n\n' +
+    '<p>' + userInfo.info.user_name + ' has shared the notation for \'' + songName + '\' with you!</p>\n\n' +
+    '<img style="height:300px; width: auto; display:block;" src="' + imageUrl + '"></img>\n\n' +
+    '<p><a href="http://localhost:5812/#!/login">Click here to go to iSongCollect!</a></p>\n'
   };
 };
-
 
 module.exports = emailMessage;
