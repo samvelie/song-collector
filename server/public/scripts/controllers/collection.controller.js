@@ -25,10 +25,10 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.viewMore = false;
 
   self.saveSongChanges = function(song) {//function for saving changes made on a song
-      SongFactory.updateSong(song).then(function() {
-        self.songInfoForm.$dirty = false;
-        alertify.success('Updates Saved!');
-      });
+    SongFactory.updateSong(song).then(function() {
+      self.songInfoForm.$dirty = false;
+      alertify.success('Updates Saved!');
+    });
   };
 
 
@@ -117,125 +117,125 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   };
 
   self.showSong = function(songId) {
-    if(self.songClicked) {
-      if(self.songInfoForm.$dirty) {
-        alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to see another song before saving this one?',
-          function(){
-            whenSongShouldShowOnClick(songId);
-          },
-          function(){return;}
-        ).set('labels', {ok:'Go without saving', cancel:'Stay here'});
-      } else {
+    if(self.songClicked && self.songInfoForm.$dirty) {
+      alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to see another song before saving this one?',
+      function(songId){
         whenSongShouldShowOnClick(songId);
-      }
+      },
+      function(){return;}
+      ).set('labels', {ok:'Go without saving', cancel:'Stay here'});
     } else {
-      whenSongShouldShowOnClick(songId);
-    }
-  };
-
-  function whenSongShouldShowOnClick(songId) {
-    console.log('show song of id ' + songId);
-    SongFactory.showSong(songId);
-    self.songClicked = true;
-    self.editingRhythm = false;
-    self.editingExtractableRhythm = false;
-    self.editSongObject.teachableElementsModel = SongFactory.oneSong.details.teachable_elements_id_group;
-    if(self.songInfoForm) {
-      self.songInfoForm.$dirty = false;
-    }
+    whenSongShouldShowOnClick(songId);
   }
+};
 
-  $scope.$on('$locationChangeStart', function (event, next) {
-    if (self.songClicked && self.songInfoForm.$dirty) {
-      event.preventDefault();
-      alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to leave without saving?',
-        function(){
-          console.log(next);
-          self.songInfoForm.$dirty=false;
-          $window.open(next, "_self");
-        },
-        function(){ alertify.error('Cancel');}
-      ).set('labels', {ok:'Yes, leave without saving', cancel:'Stay here.'});
-    }
-  });
+function whenSongShouldShowOnClick(songId) {
+  console.log('show song of id ' + songId);
+  SongFactory.showSong(songId);
+  self.songClicked = true;
+  self.editingRhythm = false;
+  self.editingExtractableRhythm = false;
+  self.editSongObject.teachableElementsModel = SongFactory.oneSong.details.teachable_elements_id_group;
+  if(self.songInfoForm) {
+    self.songInfoForm.$dirty = false;
+  }
+}
 
-  self.showFullCardView = function () {
-    if (self.songInfoForm.$dirty) {
-      var showAll = confirm('You have unsaved changes, are you sure you want to view all songs?');
-        if(showAll) {
-          self.songClicked=false;
-        }
-    } else {
-      self.songClicked=false;
-    }
-  };
-
-  self.multiSelectChange = {
-    onItemSelect: function(item) {
-      self.makeDirty();
+$scope.$on('$locationChangeStart', function (event, next) {
+  if (self.songClicked && self.songInfoForm.$dirty) {
+    event.preventDefault();
+    alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to leave without saving?',
+    function(){
+      console.log(next);
+      self.songInfoForm.$dirty=false;
+      $window.open(next, "_self");
     },
-    onItemDeselect: function(item) {
-      self.makeDirty();
-    }
-  };
+    function(){ return;}
+  ).set('labels', {ok:'Yes, leave without saving', cancel:'Stay here.'});
+}
+});
 
-  self.makeDirty = function() {
-    self.songInfoForm.$setDirty();
-  };
+self.showFullCardView = function () {
+  if (self.songInfoForm.$dirty) {
+    alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to see another song before saving this one?',
+    function(){
+      self.songClicked=false;
+      self.songInfoForm.$dirty=false;
+      $scope.$apply();
+    },
+    function(){return;}
+    ).set('labels', {ok:'Go without saving', cancel:'Stay here'});
+} else {
+  self.songClicked=false;
+}
+};
+
+self.multiSelectChange = {
+  onItemSelect: function(item) {
+    self.makeDirty();
+  },
+  onItemDeselect: function(item) {
+    self.makeDirty();
+  }
+};
+
+self.makeDirty = function() {
+  self.songInfoForm.$setDirty();
+};
 
 
-  self.expandFilter = function() {
-    if(self.spanClicked) {
-      self.spanClicked = false;
-    } else {
-      self.spanClicked = true;
-    }
-  };
+self.expandFilter = function() {
+  if(self.spanClicked) {
+    self.spanClicked = false;
+  } else {
+    self.spanClicked = true;
+  }
+};
 
-  self.loseFocus = function(fieldId, rhythmString) {
-    if(fieldId == 'rhythm') {
-      self.editingRhythm = false;
-    }
-    if(fieldId == 'extractableRhythm') {
-      self.editingExtractableRhythm = false;
-    }
-  };
+self.loseFocus = function(fieldId, rhythmString) {
+  if(fieldId == 'rhythm') {
+    self.editingRhythm = false;
+  }
+  if(fieldId == 'extractableRhythm') {
+    self.editingExtractableRhythm = false;
+  }
+};
 
-  //placeholder function that needs to focus on input field as it appears
-  self.findFocus = function(fieldId) {
-    if(fieldId == 'rhythm') {
-      self.editingRhythm = true;
-    }
-    if(fieldId == 'extractableRhythm') {
-      self.editingExtractableRhythm = true;
-    }
-  };
+//placeholder function that needs to focus on input field as it appears
+self.findFocus = function(fieldId) {
+  if(fieldId == 'rhythm') {
+    self.editingRhythm = true;
+  }
+  if(fieldId == 'extractableRhythm') {
+    self.editingExtractableRhythm = true;
+  }
+};
 
-  self.updateRhythmDisplay = function (rhythmString) {
-    self.oneSong.details.rhythmArray = SongFactory.prepareRhythmForFont(rhythmString);
-  };
+self.updateRhythmDisplay = function (rhythmString) {
+  self.oneSong.details.rhythmArray = SongFactory.prepareRhythmForFont(rhythmString);
+};
 
-  self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
-    self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(extractableRhythmString);
-  };
+self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
+  self.oneSong.details.extractableRhythmArray = SongFactory.prepareExtractableRhythmForFont(extractableRhythmString);
+};
 
-  // self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
-  self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';
+// self.htmlPopover = '<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content';
+self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';
 
-  self.dynamicPopover = {
-    content: 'Email the notation images to:',
-    templateUrl: 'sharePopover.html', // getting from collection-view.html
-    // title: 'Share this song:',
-  };
+self.dynamicPopover = {
+  content: 'Email the notation images to:',
+  templateUrl: 'sharePopover.html', // getting from collection-view.html
+  // title: 'Share this song:',
+};
 
-  self.deletePopover = {
-    content: 'Delete this song?',
-    templateUrl: 'deletePopover.html',// getting from collection-view.html
-    // title: 'Delete this song?'
-  };
+self.deletePopover = {
+  content: 'Delete this song?',
+  templateUrl: 'deletePopover.html',// getting from collection-view.html
+  // title: 'Delete this song?'
+};
 
-  self.shareSong = function(emailAddress, index) {
-    SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo, SongFactory.oneSong.details.song_title);
-  };
+self.shareSong = function(emailAddress, index) {
+  SongFactory.shareSong(emailAddress, SongFactory.attachments.notation[index].image_url, AuthFactory.userInfo, SongFactory.oneSong.details.song_title);
+};
 
 }]);
