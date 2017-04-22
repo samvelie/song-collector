@@ -27,6 +27,11 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'PrintController',
             controllerAs: 'pc'
         })
+				.when('/admin', {
+						templateUrl: '/views/admin-view.html',
+						controller: 'AdminController',
+						controllerAs: 'ac'
+				})
         .otherwise({
             redirectTo: 'login'
         });

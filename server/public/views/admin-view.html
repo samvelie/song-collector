@@ -1,0 +1,71 @@
+<div class="col-md-12">
+  <p>
+    Add values to dropdowns
+  </p>
+  <div class="col-md-12">
+    <h3>Scale / Mode</h3>
+    <input type="text" class="form-control" ng-model="ac.newSort.newScaleModeOption" placeholder="Example: Plagal do Hexachord">
+    <div ng-if="ac.newSort.newScaleModeOption" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newScaleModeOption, 'scale_mode')">
+      <p>{{ac.newSort.newScaleModeOption}}</p><span class="glyphicon glyphicon-plus"></span>
+    </div>
+    <div class="list-of-options" ng-repeat="scaleMode in ac.dropdowns.scaleMode" ng-click="ac.deleteSort(scaleMode, 'scale_mode')">
+      <p>{{scaleMode.scale_mode}}</p><span class="glyphicon glyphicon-minus"></span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <h3>Teachable Elements</h3>
+    <input type="text" class="form-control" ng-model="ac.newSort.newTeachableElement" placeholder="Example: Harmonic Minor">
+    <div ng-if="ac.newSort.newTeachableElement" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newTeachableElement, 'teachable_elements')">
+      <p>{{ac.newSort.newTeachableElement}}</p><span class="glyphicon glyphicon-plus"></span>
+    </div>
+    <div class="list-of-options" ng-repeat="te in ac.dropdowns.teachableElements" ng-click="ac.deleteSort(te, 'teachable_elements')">
+      <p>{{te.teachable_elements}}</p><span class="glyphicon glyphicon-minus"></span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <h3>Meter</h3>
+    <input type="text" class="form-control" ng-model="ac.newSort.newMeter" placeholder="Example: 3/4">
+    <div ng-if="ac.newSort.newMeter" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newMeter, 'meter')">
+      <p>{{ac.newSort.newMeter}}</p><span class="glyphicon glyphicon-plus"></span>
+    </div>
+    <div class="list-of-options" ng-repeat="meter in ac.dropdowns.meter" ng-click="ac.deleteSort(meter, 'meter')">
+      <p>{{meter.meter}}</p><span class="glyphicon glyphicon-minus"></span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <h3>Form Type</h3>
+    <input type="text" class="form-control" ng-model="ac.newSort.newFormType" placeholder="Example: Strophic">
+    <div ng-if="ac.newSort.newFormType" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newFormType, 'form_type')">
+      <p>{{ac.newSort.newFormType}}</p><span class="glyphicon glyphicon-plus"></span>
+    </div>
+    <div class="list-of-options" ng-repeat="formType in ac.dropdowns.formType" ng-click="ac.deleteSort(formType, 'form_type')">
+      <p>{{formType.form_type}}</p><span class="glyphicon glyphicon-minus"></span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <h3>Song Type</h3>
+    <input type="text" class="form-control" ng-model="ac.newSort.newSongType" placeholder="Example: Comic">
+    <div ng-if="ac.newSort.newSongType" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newSongType, 'song_type')">
+      <p>{{ac.newSort.newSongType}}</p><span class="glyphicon glyphicon-plus"></span>
+    </div>
+    <div class="list-of-options" ng-repeat="songType in ac.dropdowns.songType" ng-click="ac.deleteSort(songType, 'song_type')">
+      <p>{{songType.song_type}}</p><span class="glyphicon glyphicon-minus"></span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <h3>Language</h3>
+    <input type="text" class="form-control" ng-model="ac.newSort.newLanguage" placeholder="Example: French">
+    <div ng-if="ac.newSort.newLanguage" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newLanguage, 'language')">
+      <p>{{ac.newSort.newLanguage}}</p><span class="glyphicon glyphicon-plus"></span>
+    </div>
+    <div class="list-of-options" ng-repeat="language in ac.dropdowns.language" ng-click="ac.deleteSort(language, 'language')">
+      <p >{{language.language}}</p><span class="glyphicon glyphicon-minus"></span>
+    </div>
+  </div>
+
+</div>

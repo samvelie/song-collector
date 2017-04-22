@@ -37,7 +37,7 @@ var tokenDecoder = function (req, res, next) {
       pool.connect(function (err, client, done) {
         //this user_id property on the decodedToken comes from the google auth
         var googleId = req.decodedToken.user_id;
-        client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo FROM users WHERE google_id = $1;', [googleId], function (err, result) {
+        client.query('SELECT users.id, users.user_name, users.user_email, users.user_photo, users.is_admin FROM users WHERE google_id = $1;', [googleId], function (err, result) {
           done();
           if (err) {
             console.log('Error querying db for users:', err);
@@ -53,7 +53,6 @@ var tokenDecoder = function (req, res, next) {
               var userName = req.decodedToken.name;
               var userEmail = req.decodedToken.email;
               var userGoogleId = req.decodedToken.user_id;
-              console.log('test userGoogleId log', userGoogleId);
               client.query('INSERT INTO users (user_name, user_photo, user_email, google_id) VALUES ($1, $2, $3, $4) RETURNING id;', [userName, userPhoto, userEmail, userGoogleId], function (err, insertResult) {
                 done();
                 if (err) {
@@ -63,7 +62,7 @@ var tokenDecoder = function (req, res, next) {
                   insertResult.rows[0].user_name = userName;
                   insertResult.rows[0].user_email = userEmail;
                   insertResult.rows[0].user_photo = userPhoto;
-
+                  insertResult.rows[0].is_admin = isAdmin;
                   console.log('user added and authenticated:', userName);
                   req.userInfo = insertResult.rows[0];
                   next();

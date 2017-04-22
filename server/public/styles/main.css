@@ -303,6 +303,30 @@ span.glyphicon-plus {
 span.glyphicon-question-sign {
   margin-top: 13px;
 }
+
+.list-of-options {
+  float: left;
+  width: auto;
+  display: inline-block;
+  height: 30px;
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #5e5e5e;
+  cursor: pointer;
+}
+
+.list-of-options p{
+  display: inline;
+}
+
+.list-of-options .glyphicon-plus, .list-of-options .glyphicon-minus {
+  margin-left: 5px;
+}
+
+.list-of-options:hover {
+  box-shadow:0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
 .circle-around-plus {
   height: 60px;
   width: 60px;
