@@ -172,13 +172,14 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
     }
     else {
       if (songsColumnName != 'teachable_elements_id') {
+        console.log('hit if');
       client.query('UPDATE songs SET ' + songsColumnName +' = NULL WHERE ' + songsColumnName + ' = $1;', [deleteSortItem], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
-          client.query('DELETE FROM '+ tableName + ' WHERE ' + columnName + ' = $1;', [deleteSortItem], function(err, result) {
+          client.query('DELETE FROM '+ tableName + ' WHERE id = $1;', [deleteSortItem], function(err, result) {
             done();
             if(err) {
               console.log('error making database query: ', err);
@@ -190,17 +191,24 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
         }
       }); // end client.query
     } else {
-      var scte = 'song_collection_' + req.params.table;
-      client.query('DELETE FROM '+ scte + ' WHERE ' + columnName + ' = $1;' [deleteSortItem], function(err, result) {
-        client.query('DELETE FROM '+ tableName + ' WHERE ' + columnName + ' = $1;', [deleteSortItem], function(err, result) {
-          done();
+      client.query('DELETE FROM song_collection_teachable_elements WHERE teachable_elements_id = $1;', [deleteSortItem], function(err, result) {
+        done(); {
           if(err) {
             console.log('error making database query: ', err);
             res.sendStatus(500);
           } else {
-            res.sendStatus(200);
+            client.query('DELETE FROM teachable_elements_options WHERE id = $1;', [deleteSortItem], function(err, result) {
+              done();
+              if(err) {
+                console.log('error making database query: ', err);
+                res.sendStatus(500);
+              } else {
+                res.sendStatus(200);
+              }
+            }); // end client.query
           }
-        }); // end client.query
+        }
+
       }); // end client.query
     }
     }
