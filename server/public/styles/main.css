@@ -14,6 +14,11 @@
     50% {margin-left: 20px;}
     100% {margin-left: 0;}
 }
+
+@keyframes fadeWhenAdded {
+    0% {box-shadow: 0 0 10px gold;}
+    100% {box-shadow: none;}
+}
 /* end imports */
 
 /* body styles */
@@ -283,6 +288,11 @@ label:after {
 
 .adminRow {
   box-shadow: 0 0 8px gold;
+}
+
+.addInAndFade {
+  animation-name: fadeWhenAdded;
+  animation-duration: 1.5s;
 }
 /* end admin view styles */
 

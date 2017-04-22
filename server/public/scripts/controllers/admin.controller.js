@@ -11,7 +11,7 @@ app.controller('AdminController', ['SongFactory', 'UserFactory', function(SongFa
   self.users = UserFactory.users;
   self.setAdminStatus = UserFactory.setAdminStatus;
   self.setActiveStatus = UserFactory.setActiveStatus;
-  
+
   UserFactory.getAllUsers();
 
   self.deleteSort = function(sort, tableName) {
@@ -19,7 +19,12 @@ app.controller('AdminController', ['SongFactory', 'UserFactory', function(SongFa
   };
 
   self.addNewSort = function(newSort, tableName){
-    SongFactory.addNewSort(newSort, tableName).then(function(response) {
+    SongFactory.addNewSort(newSort, tableName).then(function() {
+      // for (var i = 0; i < dropdowns.scaleMode.length; i++) {
+      //   console.log(dropdowns.scaleMode[i].scale_mode);
+      //   if(self.newSort == dropdowns.scaleMode[i].scale_mode)
+      //     console.log('new Sort', self.newSort + 'scale mode', dropdowns.scaleMode[i].scale_mode);
+      // }
       self.newSort = {};
     });
   };
