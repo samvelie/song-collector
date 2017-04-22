@@ -2,12 +2,12 @@
 
 <div class="col-sm-12" id="songInfoContainer">
 
-
 <form name="nsc.newSongForm" confirm-on-exit>
+
   <div style="background:none;" class="col-sm-12 panel text-right" id="toolbar">
     <div class="form-group">
       <div class="col-sm-8 half-gutter text-center">
-        <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
+        <input name="title" ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
       </div>
     </div>
     <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
@@ -54,7 +54,7 @@
       <div class="form-group">
         <label for="rhythm" class="col-sm-4 control-label no-gutter">Rhythm</label>
         <div class="col-sm-7 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
+          <input name="rhythm" class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Rhythm" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
         </div>
         <div class="col-sm-1 no-gutter">
           <a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
@@ -69,7 +69,7 @@
       <div class="form-group">
         <label for="extractableRhythms" class="col-sm-4 control-label no-gutter">Extractable Rhythms</label>
         <div class="col-sm-7 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
+          <input name="extracable-rhythms" class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Extractable Rhythms" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
         </div>
           <div class="col-sm-1 no-gutter">
             <a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
@@ -85,7 +85,7 @@
       <div class="form-group">
         <label for="extractableMelodies" class="col-sm-4 control-label no-gutter">Extractable Melodies</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.extractableMelodies" placeholder="Extractable Melodies">
+          <input name="extractable-melodies" class="form-control" ng-model="nsc.newSongObject.extractableMelodies" placeholder="Extractable Melodies">
         </div>
       </div>
       <div class="form-group">
@@ -98,43 +98,43 @@
       <div class="form-group">
         <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Verses</label>
         <div class="col-sm-8 half-gutter">
-          <textarea class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Verses" rows="5"></textarea>
+          <textarea name="verses" class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Verses" rows="5"></textarea>
         </div>
       </div>
       <div class="form-group">
         <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Formation</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
+          <input name="formation" class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
         </div>
       </div>
       <div class="form-group">
         <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Action</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
+          <input name="action" class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
         </div>
       </div>
       <div class="form-group">
         <label for="intervalNoteGroup" class="col-sm-4 control-label no-gutter">Intervals / Note Group</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroups" placeholder="Intervals / Note Group" />
+          <input name="intervals-note-group" class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroups" placeholder="Intervals / Note Group" />
         </div>
       </div>
       <div class="form-group">
         <label for="phrases" class="col-sm-4 control-label no-gutter">Phrases</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.phrases" placeholder="Phrases" />
+          <input name="phrases" class="form-control" ng-model="nsc.newSongObject.phrases" placeholder="Phrases" />
         </div>
       </div>
       <div class="form-group">
         <label for="melodicForm" class="col-sm-4 control-label no-gutter">Melodic Form</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.melodicForm" placeholder="Melodic Form" />
+          <input name="melodic-form" class="form-control" ng-model="nsc.newSongObject.melodicForm" placeholder="Melodic Form" />
         </div>
       </div>
       <div class="form-group">
         <label for="rhythmicForm" class="col-sm-4 control-label no-gutter">Rhythmic Form</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.rhythmicForm" placeholder="Rhythmic Form" />
+          <input name="rhythmic-form" class="form-control" ng-model="nsc.newSongObject.rhythmicForm" placeholder="Rhythmic Form" />
         </div>
       </div>
       <div class="form-group">
@@ -154,7 +154,7 @@
       <div class="form-group">
         <label for="cultureOrigin" class="col-sm-4 control-label no-gutter">Culture / Origin</label>
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.cultureOrigin" placeholder="Culture / Origin" />
+          <input name="culture-origin" class="form-control" ng-model="nsc.newSongObject.cultureOrigin" placeholder="Culture / Origin" />
         </div>
       </div>
       <div class="form-group">
@@ -165,22 +165,22 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="csp" class="col-sm-4 control-label no-gutter">CSP</label>
+        <label for="csp" class="col-sm-4 control-label no-gutter">Comfortable Starting Pitch</label>
         <!-- comfortable starting pitch -->
         <div class="col-sm-8 half-gutter">
-          <input class="form-control" ng-model="nsc.newSongObject.csp" placeholder="CSP" />
+          <input name="csp" class="form-control" ng-model="nsc.newSongObject.csp" placeholder="CSP" />
         </div>
       </div>
       <div class="form-group">
         <label for="other" class="col-sm-4 control-label no-gutter">Other</label>
         <div class="col-sm-8 half-gutter">
-          <textarea class="form-control" ng-model="nsc.newSongObject.other" placeholder="Other Notes" rows="3"></textarea>
+          <textarea name="other" class="form-control" ng-model="nsc.newSongObject.other" placeholder="Other Notes" rows="3"></textarea>
         </div>
       </div>
       <div class="form-group">
         <label for="source" class="col-sm-4 control-label no-gutter">Source</label>
         <div class="col-sm-8 half-gutter">
-          <textarea class="form-control" ng-model="nsc.newSongObject.source" placeholder="Source Notes" rows="3"></textarea>
+          <textarea name="source" class="form-control" ng-model="nsc.newSongObject.source" placeholder="Source Notes" rows="3"></textarea>
         </div>
       </div>
     </form>
