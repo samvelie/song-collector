@@ -81,10 +81,15 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   //   {id:3, name: 'celina'}
   // ];
 
+  // JavaScript
+  self.example6data = [ { id: 1, label: 'David' }, { id: 2, label: 'Jhon' }, { id: 3, label: 'Danny' } ];
+  self.example6model = [self.example6data[0],self.example6data[2]];
+  self.example6settings = {};
+
   self.example9model = [];
 
   self.oneSongScaleMode = [
-    { id: 45, scale_mode: "Plagal do major" }
+    { id: 45 }
   ];
 
   self.example9data = [
@@ -95,9 +100,9 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.scaleModeSettings = {
     displayProp: 'scale_mode',
     enableSearch: true,
-    selectionLimit: 1,
+    selectionLimit: 4,
     keyboardControls: true,
-    smartButtonMaxItems: 1,
+    smartButtonMaxItems: 4,
     scrollableHeight: '300px',
     scrollable: true,
     selectedToTop: true,
@@ -123,6 +128,8 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
     closeOnSelect: true,
     selectionLimit: 1
   };
+
+  // self.scaleModeSelected = SongFactory.oneSong.details.scale_mode_array[0];
 
   self.scaleModeCustomTexts = {
     buttonDefaultText: 'Select scale / mode'

@@ -35,6 +35,7 @@ router.get('/', function(req, res) {
                 }
               }
             }
+            // console.log('allSongs.scale_mode');
 
             // for(var j = 0; j < allSongs.length; j++) {
             //   allSongs[j].teachableElements = [];
@@ -148,6 +149,21 @@ router.get('/singleSong/:id', function(req, res) {
           res.sendStatus(500);
         } else {
           var songObject = result.rows[0];
+          console.log('songObject is', songObject);
+          console.log('songObject.scale_mode_id is', songObject.scale_mode_id);
+
+          var oneSongScaleModeArray = [];
+          oneSongScaleModeArray.push(
+            {
+              id: songObject.scale_mode_id
+            }
+            // {
+            //   id: songObject.scale_mode_id,
+            //   scale_mode: songObject.scale_mode
+            // }
+          );
+          songObject.scale_mode_array = oneSongScaleModeArray;
+
           client.query('SELECT songs.id, array_agg(teachable_elements_options.id) AS te_id_array, array_agg(teachable_elements_options.teachable_elements) AS te_name_array FROM songs LEFT JOIN song_collection_teachable_elements ON song_collection_teachable_elements.song_id=songs.id LEFT JOIN teachable_elements_options ON song_collection_teachable_elements.teachable_elements_id=teachable_elements_options.id WHERE songs.id=$1 AND songs.user_id=$2 GROUP BY songs.id;', [songId, userId], function(err, result) {
             if (err) {
               console.log('error making database query: ', err);
