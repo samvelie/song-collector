@@ -35,7 +35,7 @@ router.post('/shareSong', function(req, res) {
   var songName = req.body.songName;
   console.log('object in email.js', req.body);
   message = {
-    to: 'veliesamr@gmail.com',
+    to: 'marygradstudent@gmail.com',
     subject: 'New song from iSongCollect',
     text: 'message',
     html: emailMessage(imageUrl, userInfo, songName).message
