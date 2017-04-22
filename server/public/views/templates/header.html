@@ -5,6 +5,8 @@
       <a class="navbar-brand" ng-click="lc.songClicked=false" title="iSongCollect Home">iSongCollect</a>
     </div>
     <ul class="nav navbar-nav navbar-right vertical-align">
+      <!-- link for admin view -->
+      <li ng-if="lc.user.info.is_admin"><a href="#!admin" title="Collection view"><span class="glyphicon glyphicon-wrench"></span></a></li>
 
       <!-- link to collection view -->
       <li ng-click="lc.songClicked=false"><a href="#!collection" title="Collection view"><span class="glyphicon glyphicon-th-large" aria-hidden="true" ></span></a></li>

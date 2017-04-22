@@ -269,7 +269,6 @@ router.post('/editSong/:id', function(req, res) {
   var userId = req.userInfo.id;
   var songObject = req.body;
   var songIdToUpdate = req.params.id;
-
   pool.connect(function(err, client, done) {
     if(err) {
       console.log('error connecting to the database: ', err);

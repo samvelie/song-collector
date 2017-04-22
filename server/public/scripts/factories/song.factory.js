@@ -353,78 +353,119 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
               shareSong.imageUrl = response.data;
             });
           });
-          } else {
-            console.log('not logged in!');
-          }
+        } else {
+          console.log('not logged in!');
         }
-        // end share song
+      }
+      // end share song
 
-        function prepareRhythmForFont(rhythmString) {
-          if(rhythmString===null || rhythmString ==='') {
-            return [];
-          } else {
-            var textString = '';
-            var newString = rhythmString;
-            if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
-              newString = newString.replace('internal', '');
-              newString = newString.replace('(internal)', '');
-              textString += 'internal ';
-            }
-            if (rhythmString.indexOf("eighth")>=0) {
-              newString = newString.replace('eighth', '');
-              textString += 'eighth ';
-            }
-            if (rhythmString.indexOf("anacrusis")>=0 || rhythmString.indexOf("anacrusic")>=0) {
-              newString = newString.replace('anacrusis', '');
-              newString = newString.replace('anacrusic', '');
-              textString += 'anacrusis ';
-            }
-            if (rhythmString.indexOf("all syncopated")>=0) {
-              newString = newString.replace('all syncopated', '');
-              textString += 'all syncopated ';
-            }
-            return [newString, textString];
+      function prepareRhythmForFont(rhythmString) {
+        if(rhythmString===null || rhythmString ==='') {
+          return [];
+        } else {
+          var textString = '';
+          var newString = rhythmString;
+          if (rhythmString.indexOf("internal")>=0 || rhythmString.indexOf("(internal)")>=0) {
+            newString = newString.replace('internal', '');
+            newString = newString.replace('(internal)', '');
+            textString += 'internal ';
           }
+          if (rhythmString.indexOf("eighth")>=0) {
+            newString = newString.replace('eighth', '');
+            textString += 'eighth ';
+          }
+          if (rhythmString.indexOf("anacrusis")>=0 || rhythmString.indexOf("anacrusic")>=0) {
+            newString = newString.replace('anacrusis', '');
+            newString = newString.replace('anacrusic', '');
+            textString += 'anacrusis ';
+          }
+          if (rhythmString.indexOf("all syncopated")>=0) {
+            newString = newString.replace('all syncopated', '');
+            textString += 'all syncopated ';
+          }
+          return [newString, textString];
+        }
+      }
+
+      function prepareExtractableRhythmForFont(extractableRhythmString) {
+        if(extractableRhythmString===null || extractableRhythmString==='') {
+          return [];
+        } else {
+          var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
+
+          for (var i = 0; i < resultArray.length; i++) {
+            if(i%2!==0) {
+              resultArray[i] = '(' + resultArray[i] + ')';
+            }
+          }
+
+          return resultArray;
         }
 
-        function prepareExtractableRhythmForFont(extractableRhythmString) {
-          if(extractableRhythmString===null || extractableRhythmString==='') {
-            return [];
-          } else {
-            var resultArray = extractableRhythmString.split(/\(([^)]+)\)/); //checks for Regex of anything between "(" and ")", splits on these values
+      }
 
-            for (var i = 0; i < resultArray.length; i++) {
-              if(i%2!==0) {
-                resultArray[i] = '(' + resultArray[i] + ')';
+      function addNewSort(newSort, tableName) {
+        var newSortObject = {newSortItem: newSort};
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          return firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'POST',
+              url: '/dropdowns/newSort/' + tableName,
+              data: newSortObject,
+              headers: {
+                id_token: idToken
               }
-            }
-
-            return resultArray;
-          }
-
+            }).then(function(response){
+              console.log('after add new sort', response);
+              getDropdownValues();
+            });
+          });
         }
+      }
 
-        return {
-          showSong: showSong,
-          getAllSongs: getAllSongs,
-          songCollection: songCollection,
-          getOneSong: getOneSong,
-          oneSong: oneSong,
-          fileUpload: fileUpload,
-          filesUploaded: filesUploaded,
-          notationUpload: notationUpload,
-          notationUploaded: notationUploaded,
-          attachments: attachments,
-          deleteAttachment: deleteAttachment,
-          dropdowns: dropdowns,
-          saveNewSong: saveNewSong,
-          updateSong: updateSong,
-          deleteSong: deleteSong,
-          prepareRhythmForFont: prepareRhythmForFont,
-          prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
-          changeSongClickedStatus: changeSongClickedStatus,
-          songClicked: songClicked,
-          shareSong: shareSong
-          // removeImage: removeImage
-        };
-      }]);
+      function deleteSort(sortToDelete, tableName) {
+        console.log('sortToDelete', sortToDelete);
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          return firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'DELETE',
+              url: '/dropdowns/deleteSort/' + tableName + '/' + sortToDelete.id,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response){
+              console.log('after add new sort', response);
+              getDropdownValues();
+            });
+          });
+        }
+      }
+
+      return {
+        showSong: showSong,
+        getAllSongs: getAllSongs,
+        songCollection: songCollection,
+        getOneSong: getOneSong,
+        oneSong: oneSong,
+        fileUpload: fileUpload,
+        filesUploaded: filesUploaded,
+        notationUpload: notationUpload,
+        notationUploaded: notationUploaded,
+        attachments: attachments,
+        deleteAttachment: deleteAttachment,
+        dropdowns: dropdowns,
+        saveNewSong: saveNewSong,
+        updateSong: updateSong,
+        deleteSong: deleteSong,
+        prepareRhythmForFont: prepareRhythmForFont,
+        prepareExtractableRhythmForFont: prepareExtractableRhythmForFont,
+        changeSongClickedStatus: changeSongClickedStatus,
+        songClicked: songClicked,
+        shareSong: shareSong,
+        addNewSort: addNewSort,
+        deleteSort: deleteSort
+        // removeImage: removeImage
+      };
+    }]);
