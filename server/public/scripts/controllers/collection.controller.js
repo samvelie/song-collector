@@ -119,7 +119,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.showSong = function(songId) {
     if(self.songClicked && self.songInfoForm.$dirty) {
       alertify.confirm('Unsaved Updates', 'There are unsaved changes. Would you like to see another song before saving this one?',
-      function(songId){
+      function(){
         whenSongShouldShowOnClick(songId);
       },
       function(){return;}

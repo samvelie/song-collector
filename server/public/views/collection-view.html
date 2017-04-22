@@ -49,7 +49,7 @@
 
         <!-- start container for all song cards -->
         <!-- ng-repeat="song in cc.filteredResults.list"  -->
-        <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id, [songInfoForm.$dirty])">
+        <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
           <h3 class="text-center">{{song.song_title}}</h3>
           <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
           <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
