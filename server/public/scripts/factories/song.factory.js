@@ -121,7 +121,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
     function notationUpload(songId) {
       return client.pick(
         {
-          accept: 'image/*',
+          accept: ['image/*', '.js'],
           fromSources: ['local_file_system', 'googledrive', 'imagesearch', 'dropbox'],
           maxFiles: 1,
           // storeTo: {

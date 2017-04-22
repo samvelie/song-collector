@@ -171,6 +171,7 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
       res.sendStatus(500);
     }
     else {
+      if (songsColumnName != 'teachable_elements_id') {
       client.query('UPDATE songs SET ' + songsColumnName +' = NULL WHERE ' + songsColumnName + ' = $1;', [deleteSortItem], function(err, result) {
         done();
         if(err) {
@@ -188,6 +189,17 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
           }); // end client.query
         }
       }); // end client.query
+    } else {
+      client.query('DELETE FROM '+ tableName + ' WHERE ' + columnName + ' = $1;', [deleteSortItem], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      }); // end client.query
+    }
     }
   }); // end pool.connect
 }); // end router.post
