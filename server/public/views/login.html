@@ -2,15 +2,13 @@
   <div style="width:60%; margin:auto;">
     <h1>iSongCollect</h1>
     <p>
-      Zoltan Kodaly (1882-1967) was a musician, composer and ethnomusicologist who dedicated his life to collecting the folk music of the Hungarian people.  He discovered that teaching students using their musical backgrounds was quite natural.
-    </p>
-    <p>Kodaly-inspired teaching means that students learn music literacy through American folk music as well as the folk music of the communities.  Students learn music using solfege and rhythm syllables.
+       Welcome to iSongCollect, a web platform designed for music educators to collect, save, organize, print, search, and share their song collections. Whether you're a student, or a seasoned professional, iSongCollect provides the features you need to story your song analysis, tag important teaching details, and quickly retrieve relevant materials for your teaching curriculum. Happy collecting!
     </p>
   </div>
   <div class="button-holder text-center"> <!-- button holder -->
     <div ng-if="!lc.loggedIn.loginStatus">
-      <button style="display: inline;" ng-click="lc.login()" class="btn btn-primary">Sign In</button>
       <button style="display: inline;" ng-click="lc.login()" class="btn btn-primary">Sign Up</button>
+      <button style="display: inline;" ng-click="lc.login()" class="btn btn-primary">Sign In</button>
     </div>
     <div ng-if="!!lc.loggedIn.loginStatus">
       <button ng-click="lc.logout()" class="btn btn-primary">Sign Out</button>
