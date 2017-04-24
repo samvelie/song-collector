@@ -43,7 +43,6 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
 
     console.log('self.songs', self.songs.list);
 
-
     console.log(self.filteredResults);
   };
 

@@ -246,10 +246,10 @@ label:after {
     padding-left: 7.5px;
 }
 
-.form-control:not(:focus) {
+/*.form-control:not(:focus) {
     border: 0;
     box-shadow: none;
-}
+}*/
 
 .form-group {
     margin-bottom: 0 !important;
@@ -485,4 +485,8 @@ div.ql-editor {
 
 .form-control {
   margin-top: 0 !important;
+}
+
+.filter {
+  width: 150px;
 }
