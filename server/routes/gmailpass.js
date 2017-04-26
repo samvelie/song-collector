@@ -2,7 +2,7 @@ var express = require('express');
 
 var gmailpass = function () {
   return {
-    password: 'phiprimeacademy2017'
+    password: process.env.NODEMAILER_EMAIL_PASSWORD
   };
 };
 
