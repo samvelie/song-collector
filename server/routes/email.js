@@ -12,8 +12,8 @@ var pool = require('../modules/pg-pool');
 var transporter = nodemailer.createTransport(smtpTransport({
   service: 'Gmail',
   auth: {
-    user: 'isongcollect@gmail.com',
-    pass: 'phiprimeacademy2017'
+    user: process.env.NODEMAILER_EMAIL_ADDRESS,
+    pass: process.env.NODEMAILER_EMAIL_PASSWORD
   }
 }));
 
@@ -35,7 +35,7 @@ router.post('/shareSong', function(req, res) {
   var songName = req.body.songName;
   console.log('object in email.js', req.body);
   message = {
-    to: 'marygradstudent@gmail.com',
+    to: emailAddress,
     subject: 'New song from iSongCollect',
     text: 'message',
     html: emailMessage(imageUrl, userInfo, songName).message
