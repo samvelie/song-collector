@@ -6,7 +6,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
   var notationUploaded = {list:[], isNotation:''};
   var attachments = {attachments: [], notation: []};
   var dropdowns = {formType: [], songType: [], language: [], meter: [], scaleMode: [], teachableElements: []};
-  var fileStackAPI = 'AIJdcA3UQs6mAMvmUvaTkz'; // NOTE: create as environment var when move to Heroku
+  var fileStackAPI = process.env.FILESTACK_API;
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
   var songClicked = false;
