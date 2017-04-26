@@ -6,8 +6,10 @@
     <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
 
     <div ng-show="cc.spanClicked" id="filterExpanded">
-      <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" />
+      <!-- <input type="text" class="search" placeholder="search titles..." ng-model="search.song_title" /> -->
       <input type="text" class="search" placeholder="search tone sets..." ng-model="search.tone_set" />
+      <input type="text" class="search" placeholder="search scale / mode" ng-model="search.scale_mode" />
+      <!-- <input type="text" class="search" placeholder="search teachable elements..." ng-model="teachable_elements.$" /> -->
       <!-- <input type="text" ng-model="searchForm" ng-change="cc.searchPage(searchForm)">
       <select class="form-control" ng-model="searchForm.searchFilter">
       <option value="song_title">Song Title</option>
@@ -324,7 +326,7 @@
 
       <!-- start Share popover template -->
       <script type="text/ng-template" id="sharePopover.html">
-        <div>{{cc.dynamicPopover.content}}</div>
+        <label>{{cc.dynamicPopover.content}}</label>
         <form>
           <div class="input-group">
             <input type="email" class="form-control share" ng-model="cc.shareSong.email" placeholder="Email Address">
