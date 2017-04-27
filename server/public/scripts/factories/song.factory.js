@@ -444,6 +444,23 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         }
       }
 
+function sendToDatabase(url, songId) {
+  var imageObject = {url: url};
+  var firebaseUser = auth.$getAuth();
+  if(firebaseUser) {
+    firebaseUser.getToken().then(function (idToken) {
+      $http({
+        method: 'POST',
+        url: '/songs/addImageNewProcess/' + songId,
+        data: imageObject,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+      });
+    });
+  }
+}
       return {
         showSong: showSong,
         getAllSongs: getAllSongs,
@@ -466,7 +483,8 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         songClicked: songClicked,
         shareSong: shareSong,
         addNewSort: addNewSort,
-        deleteSort: deleteSort
+        deleteSort: deleteSort,
+        sendToDatabase: sendToDatabase
         // removeImage: removeImage
       };
     }]);

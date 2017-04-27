@@ -245,4 +245,48 @@ self.shareSong = function(emailAddress, index) {
   console.log('SongFactory.attachments.notation[index].image_url', SongFactory.attachments.notation[index].image_url);
 };
 
+function getSignedRequest(file, songId){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/sign-s3?file-name=' + file.name + '&file-type=' + file.type);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        var response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.signedRequest, response.url, songId);
+      }
+      else{
+        alert('Could not get signed URL.');
+      }
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, signedRequest, url, songId){
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        document.getElementById('preview').src = url;
+        document.getElementById('avatar-url').value = url;
+        SongFactory.sendToDatabase(url, songId);
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(file);
+}
+
+self.initUpload = function(songId){
+  var files = document.getElementById('file-input').files;
+  var file = files[0];
+  console.log('file init', file);
+  if(file === null){
+    return alert('No file selected.');
+  }
+  getSignedRequest(file, songId);
+};
 }]);

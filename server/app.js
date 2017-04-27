@@ -10,7 +10,44 @@ var dropdowns = require('./routes/dropdowns');
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var email = require('./routes/email');
+var aws = require('aws-sdk');
+require('dotenv').config();
 
+app.engine('html', require('ejs').renderFile);
+
+var S3_BUCKET = process.env.S3_BUCKET || 'isongcollect-notation';
+
+app.get('/sign-s3', function(req, res){
+  var s3 = new aws.S3({
+    region: 'us-east-2'
+  });
+  var fileName = req.query['file-name'];
+  var fileType = req.query['file-type'];
+  var s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+  s3.getSignedUrl('putObject', s3Params, function(err, data){
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    var returnData = {
+      signedRequest: data,
+      url: 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + fileName
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
+
+app.post('/save-details', function(req, res) {
+  console.log('posting');
+  console.log('s3-bucket', S3_BUCKET);
+});
 // uses
 app.use(bodyParser.json());
 

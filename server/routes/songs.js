@@ -87,6 +87,31 @@ router.post('/addImage/:id', function(req, res) {
   }); // end pool.connect
 }); //end router.post
 
+
+router.post('/addImageNewProcess/:id', function(req, res) {
+  var userId = req.userInfo.id; // will become user id pulled from decoder token
+  var imageObject = req.body;
+  var songId = req.params.id;
+  console.log('imageObject: ', imageObject);
+  console.log('songId', songId);
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log('error connecting to the database: ', err);
+      res.sendStatus(500);
+    } else {
+      client.query('WITH new_image_id AS (INSERT INTO images (image_url) VALUES ($1) RETURNING id) INSERT INTO images_songs (image_id, song_id, user_id) VALUES ((SELECT id FROM new_image_id), $2, $3);', [imageObject.url, songId, userId], function(err, result) {
+        done();
+        if(err) {
+          console.log('error making database query: ', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      }); // end client.query
+    }
+  }); // end pool.connect
+}); //end router.post
+
 // get attachments from db and add to dom
 router.get('/getAttachments/:id', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
@@ -356,59 +381,6 @@ router.delete('/removeSong/:id', function(req, res) {
     }
   }); // end pool.connect
 }); // end router.delete
-
-
-// start nodemailer-smtp-transport
-// var transporter = nodemailer.createTransport(smtpTransport({
-//   service: 'Gmail',
-//   auth: {
-//     user: 'isongcollect@gmail.com',
-//     pass: gmailpass().password
-//   }
-// }));
-//
-// transporter.verify(function (error, success) {
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log('Server is ready to take our messages');
-//   }
-// });
-// end nodemailer-smtp-transport
-
-// router.post('/shareSong', function(req, res) {
-//   var emailAddress = req.body.emailAddress;
-//   var imageId = req.body.imageId;
-//   console.log(emailAddress);
-//   message = {
-//     to: emailAddress,
-//     subject: 'New song from iSongCollect',
-//     text: 'message',
-//     html: emailMessage(imageId).message
-//   };
-//   transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
-//     if (error) {
-//       console.log(error);
-//       res.sendStatus(500);
-//     } else {
-//       console.log('Message sent: ' + info.response);
-//       console.log(message);
-//       // res.sendStatus(200);
-//       res.send(200);
-//     }
-//   });
-  //     transporter.sendMail(message, function(error, info){ // sends on server start -- send on button click?
-  //       if(error){
-  //         console.log(error);
-  //         res.sendStatus(500);
-  //       } else {
-  //         console.log('Message sent: ' + info.response);
-  //         console.log(message);
-  //         res.sendStatus(200);
-  //       }
-  //     });
-  //   });
-// }); // end router.post
 
 
 function buildSqlForTeachableElements(teachableElementArray, songId) {
