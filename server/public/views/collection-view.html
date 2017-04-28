@@ -292,30 +292,25 @@
 
     <!-- start upload new notation attachment container -->
     <div class="add-notation-attachment">
-
       <label class="control-label">Music Notation</label>
-      <button class="btn btn-primary" ng-click="cc.notationUpload(cc.oneSong.details.id)" title="Upload music notation">Upload</button>
-
-      <!-- start preview new notation attachment image container -->
-      <div style="margin-top:10px;" ng-if="cc.notationUploaded.list.length > 0">
-        <!-- Show the thumbnail only when the picture is uploaded -->
-        <!-- the picture is rendered with width: 500 and sharpened -->
-        <img class="small text-right" ng-src="{{cc.notationUploaded.list[0].url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, true)">
-        <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
-      </div>
-      <!-- end preview new notation attachment image container -->
-
+      <label for="notation-input" class="btn btn-primary">
+        Select Notation
+        <input id="notation-input" type="file" ng-click="cc.uploadButton('notation', 'notation-input')"/>
+      </label>
+      {{cc.previewUrl.notation.fileName}}
+      <!-- ^^^ needs to be updated on cc.uploadButton() click ^^^ -->
+      <img class="small" id="preview" ng-src="{{cc.previewUrl.notation.url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, true)">
+      <form>
+        <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{cc.previewUrl.notation}}">
+        <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, true,'notation', 'notation-input')">
+      </form>
     </div>
     <!-- end upload new notation attachment container -->
 
     <!-- start existing notation attachments container -->
     <div ng-repeat="notation in cc.attachments.notation" class="existing-notation-container">
-
-      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, false)"  ng-src="{{notation.image_url}}"/>
-
+      <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false)"  ng-src="{{notation.image_url}}"/>
       <button class="btn btn-primary" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;Share</button>
-      <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
-
     </div>
     <!-- end existing notation attachments container -->
 
@@ -343,34 +338,25 @@
     <div class="add-document-attachment">
 
       <label class="control-label">Attachments</label>
-      <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachment">Upload</button>
-
+      <!-- <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachment">Upload</button> -->
+      <label for="file-input" class="btn btn-primary">
+        Select Attachment
+        <input id="file-input" type="file" ng-click="cc.uploadButton('attachment','file-input')"/>
+      </label>
+      {{cc.previewUrl.attachment.fileName}}
+      <img class="small" id="preview" ng-src="{{cc.previewUrl.attachment.url}}" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, true)">
+      <form>
+        <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{cc.previewUrl.attachment}}">
+        <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, false, 'attachment', 'file-input')">
+      </form>
       <!-- start existing document attachments container -->
       <div>
-        <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+        <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
       </div>
       <!-- end existing document attachments container -->
 
-      <!-- start preview new document attachment container -->
-      <div style="margin-top:10px;" ng-if="cc.filesUploaded.list.length > 0">
-        <!-- Show the thumbnail only when the picture is uploaded -->
-        <!-- the picture is rendered with width: 500 and sharpened -->
-        <img class="small" ng-src="{{cc.filesUploaded.list[0].url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, true)">
-        <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
-      </div>
-      <!-- end preview new document attachment container -->
-
     </div>
     <!-- end upload new document attachment container -->
-
-    <input type="file" id="file-input">
-    <p id="status">Please select a file</p>
-    <img id="preview" src="/images/default.png">
-
-    <form>
-      <input type="hidden" id="avatar-url" name="avatar-url" value="/images/default.png">
-      <input class="btn btn-primary" type="submit" value="Update profile" ng-click="cc.initUpload(cc.oneSong.details.id)">
-    </form>
 
   </div>
   <!-- end document attachments container -->

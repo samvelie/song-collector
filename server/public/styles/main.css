@@ -483,6 +483,14 @@ div.ql-editor {
 
 }
 
+input[type="file"] {
+    display: none;
+}
+
+label.btn:after {
+  content: '';
+}
+
 .form-control {
   margin-top: 0 !important;
 }

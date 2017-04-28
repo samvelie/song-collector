@@ -23,6 +23,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
   self.lightboxImage = '';
   self.viewMore = false;
+  self.previewUrl = SongFactory.previewUrl;
 
   self.saveSongChanges = function(song) {//function for saving changes made on a song
     SongFactory.updateSong(song).then(function() {
@@ -56,9 +57,9 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
       self.lightboxImage = SongFactory.attachments.notation[index].image_url;
       console.log('light box image', self.lightboxImage);
     } else if(type=='notation' && isNew === true) {
-      self.lightboxImage = SongFactory.notationUploaded.list[0].url;
+      self.lightboxImage = SongFactory.previewUrl.notation.url;
     } else if(type=='attachments' && isNew === true) {
-      self.lightboxImage = SongFactory.filesUploaded.list[0].url;
+      self.lightboxImage = SongFactory.previewUrl.attachment.url;
     }
     console.log(self.lightboxImage);
 
@@ -245,48 +246,29 @@ self.shareSong = function(emailAddress, index) {
   console.log('SongFactory.attachments.notation[index].image_url', SongFactory.attachments.notation[index].image_url);
 };
 
-function getSignedRequest(file, songId){
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/sign-s3?file-name=' + file.name + '&file-type=' + file.type);
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
-        var response = JSON.parse(xhr.responseText);
-        uploadFile(file, response.signedRequest, response.url, songId);
-      }
-      else{
-        alert('Could not get signed URL.');
-      }
-    }
-  };
-  xhr.send();
-}
+self.uploadButton =function(typeOfFile, elementId) {
+  document.getElementById(elementId).onchange = function () {
+    str = this.value;
+    if(typeOfFile === 'notation') {
+      console.log('notation!', typeOfFile);
+    self.previewUrl.notation.fileName = str.substring(str.lastIndexOf("\\") + 1);
+  } else if (typeOfFile === 'attachment') {
+    console.log('attachment!', typeOfFile);
+    self.previewUrl.attachment.fileName = str.substring(str.lastIndexOf("\\") + 1);
 
-function uploadFile(file, signedRequest, url, songId){
-  var xhr = new XMLHttpRequest();
-  xhr.open('PUT', signedRequest);
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
-        document.getElementById('preview').src = url;
-        document.getElementById('avatar-url').value = url;
-        SongFactory.sendToDatabase(url, songId);
-      }
-      else{
-        alert('Could not upload file.');
-      }
-    }
+  }
+    console.log('str' , self.previewUrl);
+    $scope.$apply();
   };
-  xhr.send(file);
-}
+};
 
-self.initUpload = function(songId){
-  var files = document.getElementById('file-input').files;
+self.initUpload = function(songId, isNotation, type, elementId){
+  var files = document.getElementById(elementId).files;
   var file = files[0];
   console.log('file init', file);
   if(file === null){
     return alert('No file selected.');
   }
-  getSignedRequest(file, songId);
+  SongFactory.getSignedRequest(file, songId, isNotation, type);
 };
 }]);

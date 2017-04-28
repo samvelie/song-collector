@@ -99,7 +99,7 @@ router.post('/addImageNewProcess/:id', function(req, res) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('WITH new_image_id AS (INSERT INTO images (image_url) VALUES ($1) RETURNING id) INSERT INTO images_songs (image_id, song_id, user_id) VALUES ((SELECT id FROM new_image_id), $2, $3);', [imageObject.url, songId, userId], function(err, result) {
+      client.query('WITH new_image_id AS (INSERT INTO images (image_url, is_notation) VALUES ($1, $2) RETURNING id) INSERT INTO images_songs (image_id, song_id, user_id) VALUES ((SELECT id FROM new_image_id), $3, $4);', [imageObject.url, imageObject.isNotation, songId, userId], function(err, result) {
         done();
         if(err) {
           console.log('error making database query: ', err);

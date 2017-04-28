@@ -10,6 +10,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
   var songClicked = false;
+  var previewUrl = {notation:{}, attachment:{}};
   auth.$onAuthStateChanged(getAllSongs);
   auth.$onAuthStateChanged(getDropdownValues);
 
@@ -444,22 +445,56 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         }
       }
 
-function sendToDatabase(url, songId) {
-  var imageObject = {url: url};
-  var firebaseUser = auth.$getAuth();
-  if(firebaseUser) {
-    firebaseUser.getToken().then(function (idToken) {
-      $http({
-        method: 'POST',
-        url: '/songs/addImageNewProcess/' + songId,
-        data: imageObject,
-        headers: {
-          id_token: idToken
+function getSignedRequest(file, songId, isNotation, type){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/sign-s3?file-name=' + file.name + '&file-type=' + file.type);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        var response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.signedRequest, response.url, songId, isNotation, type);
+      }
+      else{
+        alert('Could not get signed URL.');
+      }
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, signedRequest, url, songId, isNotation, type){
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        if(type == 'notation') {
+        previewUrl.notation.url = url;
+      } else if (type == 'attachment') {
+        previewUrl.attachment.url = url;
+      }
+        var imageObject = {url: url, isNotation: isNotation};
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'POST',
+              url: '/songs/addImageNewProcess/' + songId,
+              data: imageObject,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response){
+            });
+          });
         }
-      }).then(function(response){
-      });
-    });
-  }
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(file);
 }
       return {
         showSong: showSong,
@@ -484,7 +519,8 @@ function sendToDatabase(url, songId) {
         shareSong: shareSong,
         addNewSort: addNewSort,
         deleteSort: deleteSort,
-        sendToDatabase: sendToDatabase
+        getSignedRequest: getSignedRequest,
+        previewUrl: previewUrl
         // removeImage: removeImage
       };
     }]);
