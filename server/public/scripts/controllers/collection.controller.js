@@ -231,7 +231,7 @@ self.updateExtractableRhythmDisplay = function (extractableRhythmString) {
 self.htmlPopover = 'Share this song:<input type="text" class="form-control" placeholder="Email address"><button class="btn btn-default" type="submit">';
 
 self.dynamicPopover = {
-  content: 'Email the notation images to:',
+  content: 'Email the notation images to',
   templateUrl: 'sharePopover.html', // getting from collection-view.html
   // title: 'Share this song:',
 };
