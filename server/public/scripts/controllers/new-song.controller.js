@@ -21,7 +21,8 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', '$time
   self.lightboxImage = '';
   self.viewMore = false;
   self.newSongObject = {};
-
+  self.previewUrl = SongFactory.previewUrl;
+  self.imageUpload = {typeOfFile: '', elementId: '', isNotation: ''};
   self.redirectToCollection = function() {
     $location.path('/collection');
   };
@@ -38,7 +39,9 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', '$time
       self.titlePlaceholder = "Title is required!";
       self.songError = true;
     } else {
-      SongFactory.saveNewSong(newSongObject).then(function(){
+      var files = document.getElementById(self.imageUpload.elementId).files;
+      var file = files[0];
+      SongFactory.saveNewSong(newSongObject, self.imageUpload, file).then(function(){
         console.log('saved!');
         self.titlePlaceholder = "New Song Title";
         self.songError = false;
@@ -115,44 +118,6 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', '$time
     buttonDefaultText: 'Select scale / mode'
   };
 
-  //
-  // var _selected;
-  //
-  // $scope.selected = undefined;
-  // $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-  // // Any function returning a promise object can be used to load values asynchronously
-  // $scope.getLocation = function(val) {
-  //   return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-  //     params: {
-  //       address: val,
-  //       sensor: false
-  //     }
-  //   }).then(function(response){
-  //     return response.data.results.map(function(item){
-  //       return item.formatted_address;
-  //     });
-  //   });
-  // };
-  //
-  // $scope.ngModelOptionsSelected = function(value) {
-  //   if (arguments.length) {
-  //     _selected = value;
-  //   } else {
-  //     return _selected;
-  //   }
-  // };
-  //
-  // $scope.modelOptions = {
-  //   debounce: {
-  //     default: 500,
-  //     blur: 250
-  //   },
-  //   getterSetter: true
-  // };
-  //
-  // $scope.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'};
-  //
-
   self.checkAndDisplayRhythm = function(string) {
     self.rhythm = SongFactory.prepareRhythmForFont(string);
   };
@@ -171,13 +136,32 @@ app.controller('NewSongController', ['SongFactory','$location', '$scope', '$time
       self.lightboxImage = SongFactory.notationUploaded[index].image_url;
     }
     if(type == 'attachments' && preview === true) {
-      self.lightboxImage = SongFactory.filesUploaded.list[0].url;
+      self.lightboxImage = SongFactory.previewUrl.attachment.url;
     } else if (type == 'notation' && preview === true) {
-      self.lightboxImage = SongFactory.notationUploaded.list[0].url;
+      self.lightboxImage = SongFactory.previewUrl.notation.url;
     }
 
   };
 
+  self.uploadButton =function(typeOfFile, elementId) {
+    self.imageUpload.typeOfFile = typeOfFile;
+    self.imageUpload.elementId = elementId;
+    console.log('typeOfFile', self.imageUpload);
+    document.getElementById(elementId).onchange = function () {
+      str = this.value;
+      if(typeOfFile === 'notation') {
+        self.imageUpload.isNotation = true;
+        console.log('notation!', typeOfFile);
+      self.previewUrl.notation.fileName = str.substring(str.lastIndexOf("\\") + 1);
+    } else if (typeOfFile === 'attachment') {
+      self.imageUpload.isNotation = false;
+      console.log('attachment!', typeOfFile);
+      self.previewUrl.attachment.fileName = str.substring(str.lastIndexOf("\\") + 1);
 
+    }
+      console.log('str' , self.previewUrl);
+      $scope.$apply();
+    };
+  };
 
 }]);

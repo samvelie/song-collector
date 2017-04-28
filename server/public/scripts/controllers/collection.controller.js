@@ -24,6 +24,7 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.lightboxImage = '';
   self.viewMore = false;
   self.previewUrl = SongFactory.previewUrl;
+  self.imageUpload = {typeOfFile: '', elementId: '', isNotation: ''};
 
   self.saveSongChanges = function(song) {//function for saving changes made on a song
     SongFactory.updateSong(song).then(function() {
@@ -141,6 +142,7 @@ function whenSongShouldShowOnClick(songId) {
   self.songClicked = true;
   self.editingRhythm = false;
   self.editingExtractableRhythm = false;
+  SongFactory.previewUrl = {notation: {}, attachment: {}};
   self.editSongObject.teachableElementsModel = SongFactory.oneSong.details.teachable_elements_id_group;
   if(self.songInfoForm) {
     self.songInfoForm.$dirty = false;
@@ -247,13 +249,17 @@ self.shareSong = function(emailAddress, index) {
 };
 
 self.uploadButton =function(typeOfFile, elementId) {
+  console.log(typeOfFile, elementId);
+  self.imageUpload.typeOfFile = typeOfFile;
+  self.imageUpload.elementId = elementId;
+  console.log('self.imageObject in cc', self.imageUpload);
   document.getElementById(elementId).onchange = function () {
     str = this.value;
-    if(typeOfFile === 'notation') {
-      console.log('notation!', typeOfFile);
+    if(self.imageUpload.typeOfFile === 'notation') {
+      console.log('notation!', self.imageUpload.typeOfFile);
     self.previewUrl.notation.fileName = str.substring(str.lastIndexOf("\\") + 1);
-  } else if (typeOfFile === 'attachment') {
-    console.log('attachment!', typeOfFile);
+  } else if (self.imageUpload.typeOfFile === 'attachment') {
+    console.log('attachment!', self.imageUpload.typeOfFile);
     self.previewUrl.attachment.fileName = str.substring(str.lastIndexOf("\\") + 1);
 
   }
@@ -262,13 +268,14 @@ self.uploadButton =function(typeOfFile, elementId) {
   };
 };
 
-self.initUpload = function(songId, isNotation, type, elementId){
-  var files = document.getElementById(elementId).files;
+self.initUpload = function(songId, isNotation){
+  self.imageUpload.isNotation = isNotation;
+  var files = document.getElementById(self.imageUpload.elementId).files;
   var file = files[0];
   console.log('file init', file);
   if(file === null){
     return alert('No file selected.');
   }
-  SongFactory.getSignedRequest(file, songId, isNotation, type);
+  SongFactory.getSignedRequest(file, songId, self.imageUpload);
 };
 }]);

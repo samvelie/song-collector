@@ -298,11 +298,10 @@
         <input id="notation-input" type="file" ng-click="cc.uploadButton('notation', 'notation-input')"/>
       </label>
       {{cc.previewUrl.notation.fileName}}
-      <!-- ^^^ needs to be updated on cc.uploadButton() click ^^^ -->
       <img class="small" id="preview" ng-src="{{cc.previewUrl.notation.url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, true)">
       <form>
         <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{cc.previewUrl.notation}}">
-        <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, true,'notation', 'notation-input')">
+        <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, true)">
       </form>
     </div>
     <!-- end upload new notation attachment container -->
@@ -338,20 +337,19 @@
     <div class="add-document-attachment">
 
       <label class="control-label">Attachments</label>
-      <!-- <button class="btn btn-primary" ng-click="cc.fileUpload(cc.oneSong.details.id)" title="Upload attachment">Upload</button> -->
       <label for="file-input" class="btn btn-primary">
         Select Attachment
         <input id="file-input" type="file" ng-click="cc.uploadButton('attachment','file-input')"/>
       </label>
       {{cc.previewUrl.attachment.fileName}}
-      <img class="small" id="preview" ng-src="{{cc.previewUrl.attachment.url}}" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, true)">
       <form>
         <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{cc.previewUrl.attachment}}">
-        <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, false, 'attachment', 'file-input')">
+        <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, false)">
       </form>
       <!-- start existing document attachments container -->
       <div>
-        <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+        <a href="{{doc.image_url}}" ng-repeat="doc in cc.attachments.attachments" target="_blank">{{doc.image_file_name}}
+
       </div>
       <!-- end existing document attachments container -->
 
@@ -376,6 +374,5 @@
 <div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
   <a class="btn-default pull-right" href=""><span class="glyphicon glyphicon-remove" aria-hidden="true" title="Close image"></span></a>
   <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
-  <!-- <button type="button" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove" title="Close image"></span></button> -->
 </div>
 <!-- end lightbox modal template -->

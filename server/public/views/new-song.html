@@ -1,8 +1,4 @@
 <!-- start full screen container -->
-
-<!-- <a href="javascript:(function(){s=document.createElement('script');s.type='text/javascript';s.src='https://cdn.filestackcontent.com/WbtK02w6Rxi10JUKShk7?v='+parseInt(Math.random()*99999999);document.body.appendChild(s);})();"><button ></button></a> -->
-
-
 <div class="col-sm-12" id="songInfoContainer">
 
   <form name="nsc.newSongForm" confirm-on-exit>
@@ -19,7 +15,7 @@
 
       <!-- start toolbar container -->
       <div class="toolbar-container">
-        <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
+        <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject);"></span></button>
         <button type="button" class="btn btn-primary" popover-placement="bottom-right"  uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
       </div>
       <!-- end toolbar container -->
@@ -224,17 +220,15 @@
         <div class="add-notation-attachment">
 
           <label class="control-label">Music Notation</label>
-          <button class="btn btn-primary" ng-click="nsc.notationUpload(nsc.oneSong.details.id)">Upload</button>
-
-          <!-- start preview new notation attachment image container -->
-          <div style="margin-top:10px;" ng-if="nsc.notationUploaded.list.length > 0">
-            <!-- Show the thumbnail only when the picture is uploaded -->
-            <!-- the picture is rendered with width: 500 and sharpened -->
-            <img class="small" ng-click="nsc.viewMoreOnClick(true, 'notation', $index, true)" ng-src="{{nsc.notationUploaded.list[0].url}}">
-            <!-- ^^^ will need to be an ng-repeat with multiple files ^^^ -->
-          </div>
-          <!-- end preview new notation attachment image container -->
-
+          <label for="notation-input" class="btn btn-primary">
+            Select Notation
+            <input id="notation-input" type="file" ng-click="nsc.uploadButton('notation', 'notation-input')"/>
+          </label>
+          {{nsc.previewUrl.notation.fileName}}
+          <img class="small" id="preview" ng-src="{{nsc.previewUrl.notation.url}}" ng-click="nsc.viewMoreOnClick(true, 'notation', $index, true)">
+          <form>
+            <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{nsc.previewUrl.notation}}">
+          </form>
         </div>
         <!-- end upload new notation attachment container -->
 
@@ -249,17 +243,15 @@
         <div class="add-document-attachment">
 
           <label class="control-label">Attachments</label>
-          <button class="btn btn-primary" ng-click="nsc.fileUpload(nsc.oneSong.details.id)" title="Upload attachment">Upload</button>
-
-          <!-- start preview new document attachment image container -->
-          <div style="margin-top:10px;" ng-if="nsc.filesUploaded.list.length > 0">
-            <!-- Show the thumbnail only when the picture is uploaded -->
-            <!-- the picture is rendered with width: 500 and sharpened -->
-            <img class="small" ng-click="nsc.viewMoreOnClick(true, 'attachments', $index, true)" ng-src="{{nsc.filesUploaded.list[0].url}}">
-            <!-- ^^^ will need to be an ng-repeat if we use multiple files ^^^ -->
-          </div>
-          <!-- end preview new document attachment image container -->
-
+          <label for="file-input" class="btn btn-primary">
+            Select Notation
+            <input id="file-input" type="file" ng-click="nsc.uploadButton('attachment', 'file-input')"/>
+          </label>
+          {{nsc.previewUrl.attachment.fileName}}
+          <img class="small" id="preview" ng-src="{{nsc.previewUrl.attachment.url}}" ng-click="nsc.viewMoreOnClick(true, 'attachment', $index, true)">
+          <form>
+            <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{nsc.previewUrl.attachment}}">
+          </form>
         </div>
         <!-- end upload new document attachment container -->
 
