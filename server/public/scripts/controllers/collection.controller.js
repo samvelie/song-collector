@@ -58,9 +58,9 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
       self.lightboxImage = SongFactory.attachments.notation[index].image_url;
       console.log('light box image', self.lightboxImage);
     } else if(type=='notation' && isNew === true) {
-      self.lightboxImage = SongFactory.previewUrl.notation.url;
+      self.lightboxImage = self.previewUrl.notation.url;
     } else if(type=='attachments' && isNew === true) {
-      self.lightboxImage = SongFactory.previewUrl.attachment.url;
+      self.lightboxImage = self.previewUrl.attachment.url;
     }
     console.log(self.lightboxImage);
 

@@ -299,7 +299,9 @@
         Select Notation
         <input id="notation-input" type="file" ng-click="cc.uploadButton('notation', 'notation-input')"/>
       </label>
-      {{cc.previewUrl.notation.fileName}}
+      <p>
+        {{cc.previewUrl.notation.fileName}}
+      </p>
       <img class="small" id="preview" ng-src="{{cc.previewUrl.notation.url}}" ng-click="cc.viewMoreOnClick(true, 'notation', $index, true)">
       <form>
         <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{cc.previewUrl.notation}}">
@@ -343,7 +345,9 @@
         Select Attachment
         <input id="file-input" type="file" ng-click="cc.uploadButton('attachment','file-input')"/>
       </label>
-      {{cc.previewUrl.attachment.fileName}}
+      <p>
+        {{cc.previewUrl.attachment.fileName}}
+      </p>
       <form>
         <input type="hidden" id="avatar-url" name="avatar-url" ng-value="{{cc.previewUrl.attachment}}">
         <input class="btn btn-primary" type="submit" value="Save" ng-click="cc.initUpload(cc.oneSong.details.id, false)">
