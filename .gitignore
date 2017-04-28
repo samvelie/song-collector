@@ -4,3 +4,4 @@ gmailpass.js
 .DS_Store
 textdump.html
 npm-debug.log
+.env

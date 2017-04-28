@@ -23,6 +23,8 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
   self.dropdowns = SongFactory.dropdowns; // retrieve dropdown values
   self.lightboxImage = '';
   self.viewMore = false;
+  self.previewUrl = SongFactory.previewUrl;
+  self.imageUpload = {typeOfFile: '', elementId: '', isNotation: ''};
 
   self.saveSongChanges = function(song) {//function for saving changes made on a song
     SongFactory.updateSong(song).then(function() {
@@ -56,9 +58,9 @@ app.controller('CollectionController', ['SongFactory', 'AuthFactory', '$uibModal
       self.lightboxImage = SongFactory.attachments.notation[index].image_url;
       console.log('light box image', self.lightboxImage);
     } else if(type=='notation' && isNew === true) {
-      self.lightboxImage = SongFactory.notationUploaded.list[0].url;
+      self.lightboxImage = SongFactory.previewUrl.notation.url;
     } else if(type=='attachments' && isNew === true) {
-      self.lightboxImage = SongFactory.filesUploaded.list[0].url;
+      self.lightboxImage = SongFactory.previewUrl.attachment.url;
     }
     console.log(self.lightboxImage);
 
@@ -140,6 +142,7 @@ function whenSongShouldShowOnClick(songId) {
   self.songClicked = true;
   self.editingRhythm = false;
   self.editingExtractableRhythm = false;
+  SongFactory.previewUrl = {notation: {}, attachment: {}};
   self.editSongObject.teachableElementsModel = SongFactory.oneSong.details.teachable_elements_id_group;
   if(self.songInfoForm) {
     self.songInfoForm.$dirty = false;
@@ -245,4 +248,34 @@ self.shareSong = function(emailAddress, index) {
   console.log('SongFactory.attachments.notation[index].image_url', SongFactory.attachments.notation[index].image_url);
 };
 
+self.uploadButton =function(typeOfFile, elementId) {
+  console.log(typeOfFile, elementId);
+  self.imageUpload.typeOfFile = typeOfFile;
+  self.imageUpload.elementId = elementId;
+  console.log('self.imageObject in cc', self.imageUpload);
+  document.getElementById(elementId).onchange = function () {
+    str = this.value;
+    if(self.imageUpload.typeOfFile === 'notation') {
+      console.log('notation!', self.imageUpload.typeOfFile);
+    self.previewUrl.notation.fileName = str.substring(str.lastIndexOf("\\") + 1);
+  } else if (self.imageUpload.typeOfFile === 'attachment') {
+    console.log('attachment!', self.imageUpload.typeOfFile);
+    self.previewUrl.attachment.fileName = str.substring(str.lastIndexOf("\\") + 1);
+
+  }
+    console.log('str' , self.previewUrl);
+    $scope.$apply();
+  };
+};
+
+self.initUpload = function(songId, isNotation){
+  self.imageUpload.isNotation = isNotation;
+  var files = document.getElementById(self.imageUpload.elementId).files;
+  var file = files[0];
+  console.log('file init', file);
+  if(file === null){
+    return alert('No file selected.');
+  }
+  SongFactory.getSignedRequest(file, songId, self.imageUpload);
+};
 }]);

@@ -10,6 +10,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
   var client = filestack.init(fileStackAPI);
   var selectedSong = {};
   var songClicked = false;
+  var previewUrl = {notation: {}, attachment:{}};
   auth.$onAuthStateChanged(getAllSongs);
   auth.$onAuthStateChanged(getDropdownValues);
 
@@ -247,7 +248,7 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         }
       }
 
-      function saveNewSong(newSong) {
+      function saveNewSong(newSong, imageObject, file) {
         console.log('newSong', newSong);
         var firebaseUser = auth.$getAuth();
         if(firebaseUser) {
@@ -260,33 +261,13 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
                 id_token: idToken
               }
             }).then(function(response) {
-              var idBackFromNewSong = response.data.id;
-              if(notationUploaded.list.length > 0) {
-                $http({
-                  method: 'POST',
-                  url: '/songs/addImage/' + idBackFromNewSong,
-                  data: notationUploaded,
-                  headers: {
-                    id_token: idToken
-                  }
-                }).then(function(response) {
-                  getAllSongs();
-                  getAttachments(idBackFromNewSong);
-                });
-              } else if(filesUploaded.list.length > 0) {
-                $http({
-                  method: 'POST',
-                  url: '/songs/addImage/' + idBackFromNewSong,
-                  data: filesUploaded,
-                  headers: {
-                    id_token: idToken
-                  }
-                }).then(function(response) {
-                  console.log('song saved!');
-                  getAllSongs();
-                  getAttachments(idBackFromNewSong);
-
-                });
+              var newSongId = response.data.id;
+              console.log('file init', file);
+              if(file === null){
+                return alert('No file selected.');
+              } else {
+                getSignedRequest(file, newSongId, imageObject);
+                console.log('song saved!');
               }
             });
           });
@@ -444,6 +425,62 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         }
       }
 
+function getSignedRequest(file, songId, imageObject){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/sign-s3?file-name=' + file.name + '&file-type=' + file.type);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        var response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.signedRequest, response.url, songId, imageObject);
+      }
+      else{
+        alert('Could not get signed URL.');
+      }
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, signedRequest, url, songId, imageObject){
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        if(imageObject.typeOfFile == 'notation') {
+        previewUrl.notation.url = url;
+      } else if (imageObject.typeOfFile == 'attachment') {
+        previewUrl.attachment.url = url;
+      }
+      console.log('songId', songId);
+        imageObject.url = url;
+        imageObject.fileName = file.name;
+        console.log('imageObject in factory', imageObject);
+        var firebaseUser = auth.$getAuth();
+        if(firebaseUser) {
+          firebaseUser.getToken().then(function (idToken) {
+            $http({
+              method: 'POST',
+              url: '/songs/addImageNewProcess/' + songId,
+              data: imageObject,
+              headers: {
+                id_token: idToken
+              }
+            }).then(function(response){
+              console.log('response', response);
+              getAllSongs();
+            });
+          });
+        }
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(file);
+}
       return {
         showSong: showSong,
         getAllSongs: getAllSongs,
@@ -466,7 +503,9 @@ app.factory('SongFactory', ['FirebaseAuthFactory', '$http', 'angularFilepicker',
         songClicked: songClicked,
         shareSong: shareSong,
         addNewSort: addNewSort,
-        deleteSort: deleteSort
+        deleteSort: deleteSort,
+        getSignedRequest: getSignedRequest,
+        previewUrl: previewUrl
         // removeImage: removeImage
       };
     }]);
