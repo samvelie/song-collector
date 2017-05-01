@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport(smtpTransport({
   }
 }));
 
-transporter.verify(function (error, success) {
+transporter.verify(function(error, success) {
   if (error) {
     console.log(error);
   } else {
@@ -40,7 +40,7 @@ router.post('/shareSong', function(req, res) {
     text: 'message',
     html: emailMessage(imageUrl, userInfo, songName).message
   };
-  transporter.sendMail(message, function (error, info) { // sends on server start -- send on button click?
+  transporter.sendMail(message, function(error, info) { // sends on server start -- send on button click?
     if (error) {
       console.log(error);
       res.sendStatus(500);

@@ -20,7 +20,7 @@
       <!-- start toolbar container -->
       <div class="toolbar-container">
         <button type="submit" class="btn btn-primary" title="Save this song"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-click="nsc.saveCatches(nsc.newSongObject)"></span></button>
-        <button type="button" class="btn btn-primary" popover-placement="bottom-right"  uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-primary" popover-placement="bottom-right" uib-popover-template="nsc.cancelPopover.templateUrl" popover-title="{{nsc.cancelPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isCancelOpen" title="Do not save this song"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
       </div>
       <!-- end toolbar container -->
 
@@ -65,7 +65,8 @@
         <!-- start teachable elements -->
         <div class="form-group">
           <label for="teachableElements" class="control-label">Teachable Elements</label>
-          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" translation-texts="nsc.teachableElementsCustomTexts" class="multiselect"></div>
+          <div name="teachableElements" ng-dropdown-multiselect="" options="nsc.dropdowns.teachableElements" selected-model="nsc.newSongObject.teachableElementsModel" extra-settings="nsc.teachableElementsSettings" translation-texts="nsc.teachableElementsCustomTexts"
+            class="multiselect"></div>
         </div>
         <!-- end teachable elements -->
 
@@ -271,10 +272,10 @@
 
 
 
-  </div>
-  <!-- end song info column -->
+</div>
+<!-- end song info column -->
 
-  <!-- end attachements column -->
+<!-- end attachements column -->
 
 </div>
 <!-- end full screen container -->

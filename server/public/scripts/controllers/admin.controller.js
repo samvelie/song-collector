@@ -18,7 +18,7 @@ app.controller('AdminController', ['SongFactory', 'UserFactory', function(SongFa
     SongFactory.deleteSort(sort, tableName);
   };
 
-  self.addNewSort = function(newSort, tableName){
+  self.addNewSort = function(newSort, tableName) {
     SongFactory.addNewSort(newSort, tableName).then(function() {
       // for (var i = 0; i < dropdowns.scaleMode.length; i++) {
       //   console.log(dropdowns.scaleMode[i].scale_mode);

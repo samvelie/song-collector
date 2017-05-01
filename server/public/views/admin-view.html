@@ -13,14 +13,15 @@
   <div class="col-md-12">
     <h3 class="adminDropdownEditing">Scale / Mode</h3><span style="margin-bottom: 5px;" ng-class="['glyphicon', ac.expandScaleMode ? 'glyphicon-minus' : 'glyphicon-plus']" ng-click="ac.expandScaleMode = !ac.expandScaleMode"></span>
     <input type="text" class="form-control" ng-model="ac.newSort.newScaleModeOption" placeholder="Example: Plagal do Hexachord">
-    <div ng-if="ac.expandScaleMode == false && ac.newSort.newScaleModeOption" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newScaleModeOption, 'scale_mode')"><p>{{ac.newSort.newScaleModeOption}}</p><span class="glyphicon glyphicon-plus"></span></div>
+    <div ng-if="ac.expandScaleMode == false && ac.newSort.newScaleModeOption" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newScaleModeOption, 'scale_mode')">
+      <p>{{ac.newSort.newScaleModeOption}}</p><span class="glyphicon glyphicon-plus"></span></div>
     <!--expanded section-->
     <div ng-if="ac.expandScaleMode">
       <div ng-if="ac.newSort.newScaleModeOption" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newScaleModeOption, 'scale_mode')">
         <p>{{ac.newSort.newScaleModeOption}}</p><span class="glyphicon glyphicon-plus"></span>
       </div>
       <div class="list-of-options" ng-repeat="scaleMode in ac.dropdowns.scaleMode" ng-click="ac.deleteSort(scaleMode, 'scale_mode')">
-         <!--  NOTE: add somewhere for animation on dropdown add-->
+        <!--  NOTE: add somewhere for animation on dropdown add-->
         <p>{{scaleMode.scale_mode}}</p><span class="glyphicon glyphicon-minus"></span>
       </div>
     </div>
@@ -32,7 +33,8 @@
   <div class="col-md-12">
     <h3 class="adminDropdownEditing">Teachable Elements</h3><span style="margin-bottom: 5px;" ng-class="['glyphicon', ac.expandTeachableElements ? 'glyphicon-minus' : 'glyphicon-plus']" ng-click="ac.expandTeachableElements = !ac.expandTeachableElements"></span>
     <input type="text" class="form-control" ng-model="ac.newSort.newTeachableElement" placeholder="Example: Harmonic Minor">
-    <div ng-if="ac.expandTeachableElements == false && ac.newSort.newTeachableElement" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newTeachableElement, 'teachable_elements')"><p>{{ac.newSort.newTeachableElement}}</p><span class="glyphicon glyphicon-plus"></span></div>
+    <div ng-if="ac.expandTeachableElements == false && ac.newSort.newTeachableElement" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newTeachableElement, 'teachable_elements')">
+      <p>{{ac.newSort.newTeachableElement}}</p><span class="glyphicon glyphicon-plus"></span></div>
     <!--expanded section-->
     <div ng-if="ac.expandTeachableElements">
       <div ng-if="ac.newSort.newTeachableElement" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newTeachableElement, 'teachable_elements')">
@@ -50,7 +52,8 @@
   <div class="col-md-12">
     <h3 class="adminDropdownEditing">Meter</h3><span style="margin-bottom: 5px;" ng-class="['glyphicon', ac.expandMeter ? 'glyphicon-minus' : 'glyphicon-plus']" ng-click="ac.expandMeter = !ac.expandMeter"></span>
     <input type="text" class="form-control" ng-model="ac.newSort.newMeter" placeholder="Example: 3/4">
-    <div ng-if="ac.expandMeter == false && ac.newSort.newMeter" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newMeter, 'meter')"><p>{{ac.newSort.newMeter}}</p><span class="glyphicon glyphicon-plus"></span></div>
+    <div ng-if="ac.expandMeter == false && ac.newSort.newMeter" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newMeter, 'meter')">
+      <p>{{ac.newSort.newMeter}}</p><span class="glyphicon glyphicon-plus"></span></div>
     <!--expanded section-->
     <div ng-if="ac.expandMeter">
       <div ng-if="ac.newSort.newMeter" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newMeter, 'meter')">
@@ -68,7 +71,8 @@
   <div class="col-md-12">
     <h3 class="adminDropdownEditing">Form Type</h3><span style="margin-bottom: 5px;" ng-class="['glyphicon', ac.expandFormType ? 'glyphicon-minus' : 'glyphicon-plus']" ng-click="ac.expandFormType = !ac.expandFormType"></span>
     <input type="text" class="form-control" ng-model="ac.newSort.newFormType" placeholder="Example: Strophic">
-    <div ng-if="ac.expandFormType == false && ac.newSort.newFormType" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newFormType, 'form_type')"><p>{{ac.newSort.newFormType}}</p><span class="glyphicon glyphicon-plus"></span>
+    <div ng-if="ac.expandFormType == false && ac.newSort.newFormType" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newFormType, 'form_type')">
+      <p>{{ac.newSort.newFormType}}</p><span class="glyphicon glyphicon-plus"></span>
     </div>
     <!--expanded section-->
     <div ng-if="ac.expandFormType">
@@ -87,7 +91,8 @@
   <div class="col-md-12">
     <h3 class="adminDropdownEditing">Song Type</h3><span style="margin-bottom: 5px;" ng-class="['glyphicon', ac.expandSongType ? 'glyphicon-minus' : 'glyphicon-plus']" ng-click="ac.expandSongType = !ac.expandSongType"></span>
     <input type="text" class="form-control" ng-model="ac.newSort.newSongType" placeholder="Example: Comic">
-    <div ng-if="ac.expandSongType == false && ac.newSort.newSongType" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newSongType, 'song_type')"><p>{{ac.newSort.newSongType}}</p><span class="glyphicon glyphicon-plus"></span>
+    <div ng-if="ac.expandSongType == false && ac.newSort.newSongType" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newSongType, 'song_type')">
+      <p>{{ac.newSort.newSongType}}</p><span class="glyphicon glyphicon-plus"></span>
     </div>
     <!--expanded section-->
     <div ng-if="ac.expandSongType">
@@ -106,7 +111,8 @@
   <div class="col-md-12">
     <h3 class="adminDropdownEditing">Language</h3><span style="margin-bottom: 5px;" ng-class="['glyphicon', ac.expandLanguage ? 'glyphicon-minus' : 'glyphicon-plus']" ng-click="ac.expandLanguage = !ac.expandLanguage"></span>
     <input type="text" class="form-control" ng-model="ac.newSort.newLanguage" placeholder="Example: French">
-    <div ng-if="ac.expandLanguage == false && ac.newSort.newLanguage" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newLanguage, 'language')"><p>{{ac.newSort.newLanguage}}</p><span class="glyphicon glyphicon-plus"></span>
+    <div ng-if="ac.expandLanguage == false && ac.newSort.newLanguage" class="list-of-options" ng-click="ac.addNewSort(ac.newSort.newLanguage, 'language')">
+      <p>{{ac.newSort.newLanguage}}</p><span class="glyphicon glyphicon-plus"></span>
     </div>
     <!--expanded section-->
     <div ng-if="ac.expandLanguage">
@@ -114,7 +120,7 @@
         <p>{{ac.newSort.newLanguage}}</p><span class="glyphicon glyphicon-plus"></span>
       </div>
       <div class="list-of-options" ng-repeat="language in ac.dropdowns.language" ng-click="ac.deleteSort(language, 'language')">
-        <p >{{language.language}}</p><span class="glyphicon glyphicon-minus"></span>
+        <p>{{language.language}}</p><span class="glyphicon glyphicon-minus"></span>
       </div>
     </div>
     <!-- end expanded section-->
@@ -146,8 +152,10 @@
           <td><img ng-class="user.is_active ? '' : 'image-muted'" class="profileThumb" ng-src="{{user.user_photo}}" /></td>
           <td>{{user.user_name}}</td>
           <td>{{user.user_email}}</td>
-          <td><p>{{user.is_admin ? 'Administrator' : 'Standard'}}</p><button class="btn btn-primary" ng-click="ac.setAdminStatus(user.is_admin, user.id)">{{user.is_admin ? 'Demote' : 'Promote'}}</button></td>
-          <td><p>{{user.is_active ? 'Active' : 'Inactive'}}</p><button class="btn btn-primary" ng-click="ac.setActiveStatus(user.is_active, user.id)">{{user.is_active ? 'Deactivate' : 'Activate'}}</button></td>
+          <td>
+            <p>{{user.is_admin ? 'Administrator' : 'Standard'}}</p><button class="btn btn-primary" ng-click="ac.setAdminStatus(user.is_admin, user.id)">{{user.is_admin ? 'Demote' : 'Promote'}}</button></td>
+          <td>
+            <p>{{user.is_active ? 'Active' : 'Inactive'}}</p><button class="btn btn-primary" ng-click="ac.setActiveStatus(user.is_active, user.id)">{{user.is_active ? 'Deactivate' : 'Activate'}}</button></td>
         </tr>
       </tbody>
     </table>

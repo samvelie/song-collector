@@ -1,6 +1,6 @@
 <nav ng-controller="LoginController as lc" class="navbar navbar-default">
   <div class="container">
-  <!-- <h1>iSongCollect</h1> -->
+    <!-- <h1>iSongCollect</h1> -->
     <div class="navbar-header">
       <a class="navbar-brand" ng-click="lc.songClicked=false" title="iSongCollect Home">iSongCollect</a>
     </div>
@@ -21,7 +21,9 @@
       <li ng-if="!!lc.loggedIn.loginStatus" ng-click="lc.logout()" title="Sign out"><a href="#!logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
 
       <!-- user photo -->
-      <li><div class="profileThumb" style="background: url('{{lc.user.info.user_photo}}');"></div></li>
+      <li>
+        <div class="profileThumb" style="background: url('{{lc.user.info.user_photo}}');"></div>
+      </li>
 
     </ul>
   </div>

@@ -9,13 +9,13 @@ var pool = require('../modules/pg-pool');
 router.get('/form-type', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM form_type_options ORDER BY form_type_options.form_type ASC;', function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -30,13 +30,13 @@ router.get('/form-type', function(req, res) {
 router.get('/song-type', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM song_type_options ORDER BY song_type_options.song_type ASC;', function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -51,13 +51,13 @@ router.get('/song-type', function(req, res) {
 router.get('/language', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM language_options ORDER BY language_options.language ASC;', function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -72,13 +72,13 @@ router.get('/language', function(req, res) {
 router.get('/meter', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM meter_options ORDER BY meter_options.meter ASC;', function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -93,13 +93,13 @@ router.get('/meter', function(req, res) {
 router.get('/scale-mode', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM scale_mode_options ORDER BY scale_mode_options.scale_mode ASC;', function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -114,13 +114,13 @@ router.get('/scale-mode', function(req, res) {
 router.get('/teachable-elements', function(req, res) {
   var userId = req.userInfo.id; // will become user id pulled from decoder token
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM teachable_elements_options ORDER BY teachable_elements_options.teachable_elements ASC;', function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -137,15 +137,15 @@ router.post('/newSort/:table', function(req, res) {
   var tableName = req.params.table + '_options';
   var sortItem = req.body.newSortItem;
   console.log('user info in newsort', userInfo);
-  console.log('table name',columnName, tableName);
+  console.log('table name', columnName, tableName);
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
     } else {
-      client.query('INSERT INTO '+ tableName + ' (' + columnName + ') VALUES ($1);', [sortItem], function(err, result) {
+      client.query('INSERT INTO ' + tableName + ' (' + columnName + ') VALUES ($1);', [sortItem], function(err, result) {
         done();
-        if(err) {
+        if (err) {
           console.log('error making database query: ', err);
           res.sendStatus(500);
         } else {
@@ -162,44 +162,25 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
   var tableName = req.params.table + '_options';
   var songsColumnName = req.params.table + '_id';
   var deleteSortItem = req.params.id;
-  console.log('table name',columnName, tableName);
+  console.log('table name', columnName, tableName);
   console.log('songsColumnName', songsColumnName);
   console.log('deleteSortItem', deleteSortItem);
   pool.connect(function(err, client, done) {
-    if(err) {
+    if (err) {
       console.log('error connecting to the database: ', err);
       res.sendStatus(500);
-    }
-    else {
+    } else {
       if (songsColumnName != 'teachable_elements_id') {
         console.log('hit if');
-      client.query('UPDATE songs SET ' + songsColumnName +' = NULL WHERE ' + songsColumnName + ' = $1;', [deleteSortItem], function(err, result) {
-        done();
-        if(err) {
-          console.log('error making database query: ', err);
-          res.sendStatus(500);
-        } else {
-          client.query('DELETE FROM '+ tableName + ' WHERE id = $1;', [deleteSortItem], function(err, result) {
-            done();
-            if(err) {
-              console.log('error making database query: ', err);
-              res.sendStatus(500);
-            } else {
-              res.sendStatus(200);
-            }
-          }); // end client.query
-        }
-      }); // end client.query
-    } else {
-      client.query('DELETE FROM song_collection_teachable_elements WHERE teachable_elements_id = $1;', [deleteSortItem], function(err, result) {
-        done(); {
-          if(err) {
+        client.query('UPDATE songs SET ' + songsColumnName + ' = NULL WHERE ' + songsColumnName + ' = $1;', [deleteSortItem], function(err, result) {
+          done();
+          if (err) {
             console.log('error making database query: ', err);
             res.sendStatus(500);
           } else {
-            client.query('DELETE FROM teachable_elements_options WHERE id = $1;', [deleteSortItem], function(err, result) {
+            client.query('DELETE FROM ' + tableName + ' WHERE id = $1;', [deleteSortItem], function(err, result) {
               done();
-              if(err) {
+              if (err) {
                 console.log('error making database query: ', err);
                 res.sendStatus(500);
               } else {
@@ -207,10 +188,28 @@ router.delete('/deleteSort/:table/:id', function(req, res) {
               }
             }); // end client.query
           }
-        }
+        }); // end client.query
+      } else {
+        client.query('DELETE FROM song_collection_teachable_elements WHERE teachable_elements_id = $1;', [deleteSortItem], function(err, result) {
+          done(); {
+            if (err) {
+              console.log('error making database query: ', err);
+              res.sendStatus(500);
+            } else {
+              client.query('DELETE FROM teachable_elements_options WHERE id = $1;', [deleteSortItem], function(err, result) {
+                done();
+                if (err) {
+                  console.log('error making database query: ', err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(200);
+                }
+              }); // end client.query
+            }
+          }
 
-      }); // end client.query
-    }
+        }); // end client.query
+      }
     }
   }); // end pool.connect
 }); // end router.post

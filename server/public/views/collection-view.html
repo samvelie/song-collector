@@ -2,7 +2,7 @@
 <div class="col-md-12">
   <div class="search-bar text-center">
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-    <input type="text" class="search" placeholder="search..." ng-model="search.$"/>
+    <input type="text" class="search" placeholder="search..." ng-model="search.$" />
     <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click="cc.expandFilter()" title="Filter search results"></span>
 
     <div ng-show="cc.spanClicked" id="filterExpanded">
@@ -18,8 +18,8 @@
       <option value="teachable_elements">Teachable Elements</option>
     </select>
     <button class="btn" ng-click="cc.searchPage(searchForm)">Search</button> -->
+    </div>
   </div>
-</div>
 </div>
 <!-- end Search Bar area -->
 
@@ -42,9 +42,11 @@
       <div class="card-container scrollable ">
 
         <!-- start container for first "add song" card -->
-        <a href="#!new" title="Add a new song"><div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
-          <div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
-        </div></a>
+        <a href="#!new" title="Add a new song">
+          <div ng-if="!cc.songClicked" class="card vertical-center" id="first-card">
+            <div class="circle-around-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+          </div>
+        </a>
         <!-- end container for first "add song" card -->
 
         <!-- for users who have just logged in and don't yet have songs in the db -->
@@ -53,7 +55,7 @@
         <!-- ng-repeat="song in cc.filteredResults.list"  -->
         <div class="card" ng-repeat="song in cc.songs.list | filter:search" ng-click="cc.showSong(song.id)">
           <h3 class="text-center">{{song.song_title}}</h3>
-          <p><b>Tone Set: </b><span  ng-bind-html="song.tone_set"></span></p>
+          <p><b>Tone Set: </b><span ng-bind-html="song.tone_set"></span></p>
           <p><b>Scale / Mode:</b> {{song.scale_mode}}</p>
           <p><b>Teachable Elements:</b> <span ng-repeat="element in song.teachableElements">{{element.teachable_elements}}{{$last ? '' : ', '}}</span></p>
         </div>
@@ -75,7 +77,7 @@
 
       <!-- start song title container -->
       <div class="col-sm-6 half-gutter text-left">
-        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title" ng-change= "cc.makeDirty()"/>
+        <input class="form-control" id="songTitle" ng-model="cc.oneSong.details.song_title" ng-change="cc.makeDirty()" />
       </div>
       <!-- end song title container -->
 
@@ -130,7 +132,7 @@
         <!-- start scale/mode -->
         <div class="form-group">
           <label for="scaleMode" class="control-label">Scale / Mode</label>
-            <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode">
+          <select name="scaleMode" ng-model="cc.oneSong.details.scale_mode_id" class="form-control" placeholder="Scale / Mode" ng-options="scaleMode.id as scaleMode.scale_mode for scaleMode in cc.dropdowns.scaleMode">
             </select>
         </div>
         <!-- <div class="form-group">
@@ -146,7 +148,8 @@
         <!-- start teachable elements -->
         <div class="form-group">
           <label for="teachableElements" class="control-label">Teachable Elements</label>
-          <div ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts" events="cc.multiSelectChange" class="multiselect"></div>
+          <div ng-dropdown-multiselect="" options="cc.dropdowns.teachableElements" selected-model="cc.oneSong.details.teachable_elements_id_group" extra-settings="cc.teachableElementsSettings" translation-texts="cc.teachableElementsCustomTexts" events="cc.multiSelectChange"
+            class="multiselect"></div>
         </div>
         <!-- end teachable elements -->
 
@@ -164,8 +167,10 @@
 
         <!-- start extractable rhythm -->
         <div class="form-group" ng-click="cc.findFocus('extractableRhythm')">
-          <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label><a class="question-sign" target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-          <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')" focusing>
+          <label for="extractableRhythms" class="control-label" style="margin-right:10px;">Extractable Rhythms</label>
+          <a class="question-sign" target="_blank" href="http://i.fonts2u.com/mu/mp1_musisync_1.png" title="How to use the MusiSync font"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+          <input ng-if="cc.editingExtractableRhythm" type="text" class="form-control" ng-model="cc.oneSong.details.extractable_rhythms" placeholder="Extractable Rhythm" ng-change="cc.updateExtractableRhythmDisplay(cc.oneSong.details.extractable_rhythms)" ng-blur="cc.loseFocus('extractableRhythm')"
+            focusing>
           <div class="display">
             <span ng-repeat="extract in cc.oneSong.details.extractableRhythmArray track by $index">
               <span ng-class="{'music-font': $index % 2==0}">{{extract}}</span>
@@ -177,14 +182,14 @@
         <!-- start extractable melodies -->
         <div class="form-group">
           <label for="extractableMelodies" class="control-label">Extractable Melodies</label>
-          <input class="form-control" ng-model="cc.oneSong.details.extractable_melodies"/>
+          <input class="form-control" ng-model="cc.oneSong.details.extractable_melodies" />
         </div>
         <!-- end extractable melodies -->
 
         <!-- start meter -->
         <div class="form-group">
           <label for="meter" class="control-label">Meter</label>
-            <select name="formType" ng-model="cc.oneSong.details.meter_id" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in cc.dropdowns.meter">
+          <select name="formType" ng-model="cc.oneSong.details.meter_id" class="form-control" placeholder="Meter" ng-options="meter.id as meter.meter for meter in cc.dropdowns.meter">
               <option style="display:none" value="" disabled selected>No value selected</option>
             </select>
         </div>
@@ -200,35 +205,35 @@
         <!-- start intervals -->
         <div class="form-group">
           <label for="intervalNoteGroup" class="control-label">Intervals / Note Group</label>
-          <input class="form-control" ng-model="cc.oneSong.details.intervals_note_groups"/>
+          <input class="form-control" ng-model="cc.oneSong.details.intervals_note_groups" />
         </div>
         <!-- end intervals -->
 
         <!-- start phrases -->
         <div class="form-group">
           <label for="phrases" class="control-label">Phrases</label>
-          <input class="form-control" ng-model="cc.oneSong.details.phrases"/>
+          <input class="form-control" ng-model="cc.oneSong.details.phrases" />
         </div>
         <!-- end phrases -->
 
         <!-- start melodic form -->
         <div class="form-group">
           <label for="melodicForm" class="control-label">Melodic Form</label>
-          <input class="form-control" ng-model="cc.oneSong.details.melodic_form"/>
+          <input class="form-control" ng-model="cc.oneSong.details.melodic_form" />
         </div>
         <!-- end melodic form -->
 
         <!-- start rhythmic form -->
         <div class="form-group">
           <label for="rhythmicForm" class="control-label">Rhythmic Form</label>
-          <input class="form-control" ng-model="cc.oneSong.details.rhythmic_form"/>
+          <input class="form-control" ng-model="cc.oneSong.details.rhythmic_form" />
         </div>
         <!-- end melodic form -->
 
         <!-- start form type -->
         <div class="form-group">
           <label for="formType" class="control-label">Form Type</label>
-            <select name="formType" ng-model="cc.oneSong.details.form_type_id" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in cc.dropdowns.formType">
+          <select name="formType" ng-model="cc.oneSong.details.form_type_id" class="form-control" placeholder="Form Type" ng-options="formType.id as formType.form_type for formType in cc.dropdowns.formType">
               <option style="display:none" value="">No value selected</option>
             </select>
         </div>
@@ -237,7 +242,7 @@
         <!-- start song type -->
         <div class="form-group">
           <label for="songType" class="control-label">Song Type</label>
-            <select name="formType" ng-model="cc.oneSong.details.song_type_id" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in cc.dropdowns.songType">
+          <select name="formType" ng-model="cc.oneSong.details.song_type_id" class="form-control" placeholder="Song Type" ng-options="songType.id as songType.song_type for songType in cc.dropdowns.songType">
               <option style="display:none" value="">No value selected</option>
             </select>
         </div>
@@ -246,14 +251,14 @@
         <!-- start culture origin -->
         <div class="form-group">
           <label for="cultureOrigin" class="control-label">Culture / Origin</label>
-          <input class="form-control" ng-model="cc.oneSong.details.culture_origin"/>
+          <input class="form-control" ng-model="cc.oneSong.details.culture_origin" />
         </div>
         <!-- end culture origin -->
 
         <!-- start language -->
         <div class="form-group">
           <label for="language" class="control-label">Language</label>
-            <select name="formType" ng-model="cc.oneSong.details.language_id" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in cc.dropdowns.language">
+          <select name="formType" ng-model="cc.oneSong.details.language_id" class="form-control" placeholder="Language" ng-options="language.id as language.language for language in cc.dropdowns.language">
               <option style="display:none" value="">No value selected</option>
             </select>
         </div>
@@ -262,7 +267,7 @@
         <!-- start comfortable starting pitch -->
         <div class="form-group">
           <label for="csp" class="control-label">Comfortable Starting Pitch</label>
-          <input class="form-control" ng-model="cc.oneSong.details.csp"/>
+          <input class="form-control" ng-model="cc.oneSong.details.csp" />
         </div>
         <!-- start comfortable starting pitch -->
 
@@ -313,7 +318,7 @@
         <!-- start existing notation attachments container -->
         <div ng-repeat="notation in cc.attachments.notation" class="existing-notation-container">
 
-          <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, false)"  ng-src="{{notation.image_url}}"/>
+          <img class="small" ng-click="cc.viewMoreOnClick(true, 'notation', $index, false, false)" ng-src="{{notation.image_url}}" />
 
           <button class="btn btn-primary" popover-placement="left" uib-popover-template="cc.dynamicPopover.templateUrl" popover-title="{{cc.dynamicPopover.title}}" popover-trigger="'outsideClick'" popover-is-open="isOpen" class="btn btn-default"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;Share</button>
           <!-- <button class="btn btn-danger btn-xs" ng-click="cc.deleteAttachment(notation.image_url)">Delete Notation</button> -->
@@ -349,7 +354,7 @@
 
           <!-- start existing document attachments container -->
           <div>
-            <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}"/>
+            <img class="small" ng-click="cc.viewMoreOnClick(true, 'attachments', $index, false, false)" ng-repeat="photo in cc.attachments.attachments" ng-src="{{photo.image_url}}" />
           </div>
           <!-- end existing document attachments container -->
 
@@ -362,27 +367,28 @@
           </div>
           <!-- end preview new document attachment container -->
 
+        </div>
+        <!-- end upload new document attachment container -->
+
       </div>
-      <!-- end upload new document attachment container -->
+      <!-- end document attachments container -->
 
     </div>
-    <!-- end document attachments container -->
+    <!-- end expanded column for song details -->
 
   </div>
-  <!-- end expanded column for song details -->
-
 </div>
-<!-- end content container -->
+  <!-- end content container -->
 
-<!-- start lightbox modal template -->
+  <!-- start lightbox modal template -->
   <!-- start modal background template -->
   <div ng-if="cc.viewMore" class="backgroundDark">
   </div>
   <!-- end modal background template -->
 
-<div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
+  <div ng-if="cc.viewMore" class="imageModule text-center" ng-click="cc.viewMoreOnClick(false)">
     <a class="btn-default pull-right" href=""><span class="glyphicon glyphicon-remove" aria-hidden="true" title="Close image"></span></a>
-  <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
-  <!-- <button type="button" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove" title="Close image"></span></button> -->
-</div>
-<!-- end lightbox modal template -->
+    <img style="max-width:100%; max-height:100%;" ng-src="{{cc.lightboxImage}}" />
+    <!-- <button type="button" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove" title="Close image"></span></button> -->
+  </div>
+  <!-- end lightbox modal template -->

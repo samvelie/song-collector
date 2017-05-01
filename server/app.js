@@ -15,7 +15,7 @@ var email = require('./routes/email');
 // uses
 app.use(bodyParser.json());
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.sendFile(path.resolve('./server/public/views/index.html'));
 });
 

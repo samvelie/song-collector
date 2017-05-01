@@ -1,7 +1,7 @@
 var url = require('url');
 var pg = require('pg');
 
-if(process.env.DATABASE_URL) {
+if (process.env.DATABASE_URL) {
   var params = url.parse(process.env.DATABASE_URL);
   var auth = params.auth.split(':');
 

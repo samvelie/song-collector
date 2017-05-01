@@ -1,5 +1,6 @@
 /* imports */
-@font-face  {
+
+@font-face {
   font-family: 'Pacifico';
   src: url('../styles/fonts/Pacifico-Regular.ttf');
 }
@@ -10,18 +11,32 @@
 }
 
 @keyframes errorJiggle {
-    0% {margin-left: 0;}
-    50% {margin-left: 20px;}
-    100% {margin-left: 0;}
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 20px;
+  }
+  100% {
+    margin-left: 0;
+  }
 }
 
 @keyframes fadeWhenAdded {
-    0% {box-shadow: 0 0 10px gold;}
-    100% {box-shadow: none;}
+  0% {
+    box-shadow: 0 0 10px gold;
+  }
+  100% {
+    box-shadow: none;
+  }
 }
+
+
 /* end imports */
 
+
 /* body styles */
+
 html {
   /*height: 100%;*/
   /*padding-bottom: 100px;*/
@@ -30,9 +45,13 @@ html {
 body {
   height: 100vh;
 }
+
+
 /* end body styles */
 
+
 /* text styles */
+
 .card p {
   color: #5e5e5e;
 }
@@ -44,9 +63,13 @@ body {
 label {
   color: #5e5e5e;
 }
+
+
 /* end text styles */
 
+
 /* button styles */
+
 .btn-primary {
   background: none;
   color: #5e5e5e;
@@ -59,7 +82,10 @@ label {
   border: 1px solid lightblue;
   box-shadow: 0 0 10px lightblue;
 }
+
+
 /* end button styles */
+
 
 /*  header styles  */
 
@@ -80,9 +106,12 @@ header .navbar {
   color: #333;
 }
 
+
 /* end header styles */
 
+
 /* log in view styles */
+
 .log-in-photo {
   height: 200px;
   width: 200px;
@@ -110,35 +139,39 @@ header .navbar {
   display: block;
   margin: 10px auto;
 }
+
+
 /* end log in view styles */
+
 
 /* search bar styles */
 
 .search {
-    padding: 5px;
-    margin: 0 10px 10px 10px;
-    width: 50%;
+  padding: 5px;
+  margin: 0 10px 10px 10px;
+  width: 50%;
 }
+
 
 /* end search bar styles */
 
+
 /* toolbar styles */
+
 #toolbar {
   border-bottom: 1px solid lightblue;
   border-left: 1px solid lightblue;
   border-right: 1px solid lightblue;
-
   /*width: 100%;*/
   height: 60px;
-  padding:10px;
-
+  padding: 10px;
 }
 
 #toolbar:first-child {
   border-right: 0;
 }
 
-.songCount p{
+.songCount p {
   margin-top: 10px;
   color: #5e5e5e;
 }
@@ -152,10 +185,12 @@ header .navbar {
   color: #333;
 }
 
+
 /* end toolbar styles */
 
 
 /* edit song view styles */
+
 #songInfoContainer {
   /*height: 650px;*/
   /*height: 100%;*/
@@ -181,6 +216,7 @@ header .navbar {
   padding-right: 0 !important;
 }
 
+
 /*.center-block {
    margin-left:auto;
    margin-right:auto;
@@ -196,10 +232,12 @@ header .navbar {
   float: left;
 }
 
+
 /* end edit song view styles */
 
 
 /* card styles */
+
 .card {
   background: none;
   float: left;
@@ -207,7 +245,7 @@ header .navbar {
   height: 230px;
   margin: 10px 10px;
   padding: 10px;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   cursor: pointer;
 }
 
@@ -215,7 +253,7 @@ header .navbar {
   /*height:240px;
   z-index: 9999;
   display: block;*/
-  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.25), 0 2px 20px 0 rgba(0,0,0,0.25);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25), 0 2px 20px 0 rgba(0, 0, 0, 0.25);
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
@@ -229,36 +267,40 @@ header .navbar {
 .card h3, p {
   margin-top: 0px;
 }
+
+
 /* end card styles */
 
+
 /* start song view styles*/
+
 label:after {
-    content: ":";
+  content: ":";
 }
 
 .no-gutter {
-    padding-right: 0;
-    padding-left: 0;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .half-gutter {
-    padding-right: 7.5px;
-    padding-left: 7.5px;
+  padding-right: 7.5px;
+  padding-left: 7.5px;
 }
 
 .form-control:not(:focus) {
-    border: 0;
-    box-shadow: none;
+  border: 0;
+  box-shadow: none;
 }
 
 .form-group {
-    margin-bottom: 0 !important;
-    /*min-height: 150px;*/
+  margin-bottom: 0 !important;
+  /*min-height: 150px;*/
 }
 
 .form-control {
-    /*height: auto;*/
-    margin: 5px 0;
+  /*height: auto;*/
+  margin: 5px 0;
 }
 
 .btn-share {
@@ -267,15 +309,18 @@ label:after {
 }
 
 .form-control.share:not(:focus) {
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
+
 
 /* end song view styles*/
 
+
 /* begin admin view styles */
+
 .adminDropdownEditing {
-  display:inline;
+  display: inline;
   margin-right: 10px;
 }
 
@@ -295,7 +340,10 @@ label:after {
   animation-name: fadeWhenAdded;
   animation-duration: 1.5s;
 }
+
+
 /* end admin view styles */
+
 
 /* music note field style */
 
@@ -304,18 +352,24 @@ label:after {
   font-size: 28px;
 }
 
+
 /* end music note field style */
 
 
 /* footer styles */
+
 .panel-footer {
   height: 50px;
   padding: 0;
   z-index: 9999;
 }
+
+
 /* end footer styles */
 
+
 /* misc */
+
 .songErrorHighlight {
   border: 1px solid red !important;
   animation-name: errorJiggle;
@@ -327,7 +381,7 @@ span.glyphicon {
 }
 
 span.glyphicon-plus {
-  margin:auto;
+  margin: auto;
 }
 
 span.glyphicon-question-sign {
@@ -345,7 +399,7 @@ span.glyphicon-question-sign {
   cursor: pointer;
 }
 
-.list-of-options p{
+.list-of-options p {
   display: inline;
 }
 
@@ -354,7 +408,7 @@ span.glyphicon-question-sign {
 }
 
 .list-of-options:hover {
-  box-shadow:0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .circle-around-plus {
@@ -365,7 +419,7 @@ span.glyphicon-question-sign {
   display: flex;
   align-items: center;
   margin-left: 37%;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .circle-around-plus:hover {
@@ -385,12 +439,12 @@ span.glyphicon-question-sign {
   /*top: 27%;*/
   left: 20%;
   overflow: scroll;
-  z-index:1000;
+  z-index: 1000;
   /*padding-top:25px;*/
 }
 
 .backgroundDark {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   content: '';
   height: 1100px;
   position: absolute;
@@ -421,6 +475,7 @@ input.form-control:hover, textarea.form-control:hover, select.form-control:hover
 div.ql-editor {
   padding: 0;
 }
+
 .ql-bubble * {
   z-index: 1;
 }
@@ -433,7 +488,10 @@ div.ql-editor {
 #first-card a:hover {
   text-decoration: none;
 }
+
+
 /* end misc */
+
 
 /* print view stuff */
 
@@ -447,20 +505,25 @@ div.ql-editor {
   padding: 5px;
 }
 
+
 /*#setOne, #setTwo, #setThree, #setFour {
   display: inline-block;
   text-align: center;
 }*/
 
+
 /*end print view styling*/
 
+
 /* Image Alternator Click Example*/
+
 .small {
   color: blue;
   width: 25%;
   /*width: 100px;*/
   /*float: right;*/
 }
+
 
 /*.large {
   color: red;
@@ -472,8 +535,7 @@ div.ql-editor {
   right: 0;
 }*/
 
-.existing-notation-container {
-}
+.existing-notation-container {}
 
 .document-attachments {
   padding-top: 10px;
@@ -481,7 +543,6 @@ div.ql-editor {
 
 .multiselect {
   margin-bottom: 5px;
-
 }
 
 .form-control {

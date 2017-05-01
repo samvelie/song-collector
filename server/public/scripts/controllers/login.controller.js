@@ -1,4 +1,4 @@
-app.controller('LoginController', ['AuthFactory','SongFactory', '$scope', function(AuthFactory, SongFactory, $scope) {
+app.controller('LoginController', ['AuthFactory', 'SongFactory', '$scope', function(AuthFactory, SongFactory, $scope) {
   var self = this;
   self.login = AuthFactory.logIn;
   self.logout = AuthFactory.logOut;

@@ -1,14 +1,15 @@
 /* Print Style Sheet*/
+
 @media print {
   header navbar, footer, div .search-bar, .col-sm-2, .card col-sm-11, #printButton {
     display: none;
   }
   #printPage {
-  font-size: 12px;
-  color: black;
-  padding: 10px;
-  margin: 10px;
-}
+    font-size: 12px;
+    color: black;
+    padding: 10px;
+    margin: 10px;
+  }
   #songTitle {
     font-size: 14px;
     text-align: center;
@@ -19,5 +20,4 @@
     margin: auto;
     display: inline-block;
   }
-
 }
